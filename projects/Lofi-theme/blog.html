@@ -1,0 +1,1052 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="min-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/blog-min.css">
+    <link rel="icon" type="image/png" href="adlogo.png"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <title>Uxie | Blog</title>
+</head>
+<body id="darkbody">
+
+    <div class="main-container" id="Darkmode">
+        <div class="banner">
+            <div class="header">
+                <!-- left header -->
+                <div class="left-header">
+                    <!-- logo -->
+                    <div class="logo" onclick="backTohome()">
+                        <img src="bg-rem.png" alt="">
+                    </div>
+                    <!-- sitename -->
+                    <span onclick="backTohome()">
+                        <h1>Uxie</h1>
+                    </span>
+                </div>
+                <!-- searchbar -->
+                <!-- searchbar -->
+                <div class="searchbar">
+                    <input type="text">
+                    <span onclick="showSearch()">
+                        <ion-icon name="search"></ion-icon>
+                    </span>
+                </div>
+                <!-- menu bar -->
+                <div class="menubar" onclick="showMothCont()">
+                   <div class="line hover"></div>
+                   <div class="line"></div>
+                   <div class="line hover"></div>
+                </div>
+            </div>
+            <!-- navigation-social -->
+            <div class="navigation-social" id="navigation">
+
+                <!-- logo -->
+                <div class="logo hide-logo" id="show-logo">
+                    <img src="bg-rem.png" alt="">
+                </div>
+
+                <!-- navlinks -->
+                <div class="navlinks">
+                    <a href="index.html"><li>Home</li></a>
+                    <a href=""><li>Blog</li></a>
+                    <a href="Feature.html"><li>Feature</li></a>
+                </div>
+                <!-- social Icons -->
+                <div class="social-icon">
+                    <span onclick="social1()"><ion-icon name="logo-facebook"></ion-icon></span>
+                    <span onclick="social2()"><ion-icon name="logo-google"></ion-icon></span>
+                    <span onclick="social3()"><ion-icon name="logo-discord"></ion-icon></span>
+                </div>
+
+                <!-- menu bar -->
+                <div class="menubar hide-burger" id="hide-burgers" onclick="showMothCont()">
+                   <div class="line hover"></div>
+                   <div class="line"></div>
+                   <div class="line hover"></div>
+                </div>
+            </div>
+
+            <div class="about-icon">
+                <div class="team-icon">
+                    <div class="small-logo" id="main-logo" onclick="showAbout()">
+                        <img src="./images/logo.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay1" onclick="showLyndon()">
+                        <img src="./blog-team/lyndon.png" alt="">
+                    </div>
+                    <div class="small-logo delay2"  onclick="showRich()">
+                        <img src="./blog-team/Richaabout.png" alt="">
+                    </div>
+
+                    <div class="small-logo mt delay3" onclick="showReg()">
+                        <img src="./blog-team/RegineAbout.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay4" onclick="showFelix()">
+                        <img src="./blog-team/Felixabout.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay5" onclick="showShe()">
+                        <img src="./blog-team/Shellabout.png" alt="">
+                    </div>
+                 <!--    <div class="small-logo mt" onclick="showAbout()">
+                        <img src="./images/logo.png" alt="">
+                    </div> -->
+                </div>
+            </div>
+
+
+            <!-- side navigtion for menu bar -->
+            <div class="menu-cotainer" id="menu-cotainer">
+                <div class="menu-cont" id="menu-cont">
+                    <div class="menu-cont-header" onclick="CloseMenuCont()">
+                        <ion-icon name="close"></ion-icon>
+                    </div>
+
+                    <div class="user" style="height: 50px; padding: 20px;" >
+                        <h2  style="color: #cea2d7; font-family:'Poppins',san-serif;" id="userID">Hi</h2>
+                   </div>
+
+                    <!-- menu-content    -->
+                    <div class="menu-content">
+                        
+                        <ul>
+
+                            <!-- this will show for smallerdevice -->
+                            <a href="index.html" class="show-after"><ion-icon name="Home"></ion-icon><li>Home</li></a>    
+                            <a href="#" class="show-after"><ion-icon name="reader"></ion-icon><li>Blog</li></a>    
+                            <a href="Feature.html" class="show-after"><ion-icon name="sparkles"></ion-icon><li>Feature</li></a>   
+
+                            <a href="./main-login.html" onclick="Logout()"><ion-icon name="log-out"></ion-icon><li>Logout</li></a>
+                            <a href="#" onclick="toggleDark()"><ion-icon name="moon"></ion-icon><li>Darkmode</li></a>
+                            <a href="#" id="play-music-btn">
+                                <ion-icon class="mute" id="mute" name="volume-mute"></ion-icon>
+                                <ion-icon class="play" id="play" name="volume-high" ></ion-icon>
+                                <li>Music</li></a>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <!-- about us -->
+            <div class="about-cont" id="Show-About">
+                <div class="about-content">
+                    <div class="about-header">
+                        <h1>About us</h1>
+                        <span class="close-about" onclick="closeAbout()">
+                            <ion-icon name="close"></ion-icon>
+                        </span>
+                    </div>
+                    <div class="team">
+
+
+                        <!-- lyndon -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal()">
+                                <img src="./blog-team/lyndon.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Developer/Leader</small>
+                                <button onclick="showAboutusModal()">Lyndon Erl Ramirez</button>
+                            </span>
+                       </div>
+
+
+
+                       <!-- Richamille Ann Ricaforte -->
+                       <div class="team-cont" >
+                            <div class="team-pic" onclick="showAboutusModal1()">
+                                <img src="./blog-team/Richaabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>UI Designer</small>
+                                <button onclick="showAboutusModal1()">Richamille Ricaforte</button>
+                            </span>
+                        </div>
+
+
+
+                        <!-- Regine Cole Salas -->
+                       <div class="team-cont">
+                        <div class="team-pic" onclick="showAboutusModal2()">
+                            <img src="./blog-team/RegineAbout.png" alt="">
+                        </div>
+                        <span class="team-details">
+                            <small>UI Designer</small>
+                            <button onclick="showAboutusModal2()">Regine Cole Salas</button>
+                        </span>
+                        </div>
+
+
+
+                        <!-- Felix Alicante  -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal3()">
+                                <img src="./blog-team/Felixabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Developer</small>
+                                <button onclick="showAboutusModal3()">Felix Alicante </button>
+                            </span>
+                        </div>
+
+                       <!-- Shellou Frasco -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal4()">
+                                <img src="./blog-team/Shellabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Documentation</small>
+                                <button onclick="showAboutusModal4()">Shellou Frasco</button>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                    <!-- newslater -->
+                    <div class="news-later-cont">
+                        <input type="text" placeholder="Subscribe">
+                        <span><ion-icon name="send"></ion-icon></span>
+                    </div>
+
+                </div>
+            </div>
+
+
+<!-- Aboutus Popup1 -->
+<div class="aboutus-overlay" id="aboutus-overlay">
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card">
+        <div class="mypic">
+            <img src="./blog-team/lyndon.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Lyndon Erl Ramirez</small>
+                <small>21</small>
+                <small>IT 401</small>
+                <small>Developer</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog perc"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog perc1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog perc2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog perc3"></div>
+                </span> 
+                <span>
+                    <small>SQL</small>
+                    <div class="prog perc4"></div>
+                </span>
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/lyndon.erl" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/bungieegum/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=Lynked#0647" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=lyndonerlramirez@gmail.com&su=Greetings&body=Hello Lyndon&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#lyndon"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup1 -->
+
+
+
+
+<!-- Aboutus Popup2 -->
+<div class="aboutus-overlay" id="aboutus-overlay1" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal1()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card1">
+        <div class="mypic">
+            <img src="./blog-team/Richaabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Richamille Ann Ricaforte </small>
+                <small>19</small>
+                <small>IT 401</small>
+                <small>UI Designer</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog rich"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog rich1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog rich2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog rich3"></div>
+                </span> 
+                <span>
+                    <small>SQL</small>
+                    <div class="prog rich4"></div>
+                </span> 
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/ricaforte.richamille" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://twitter.com/Serenit71853266?t=Bkig6k6tHTwVmOgZS4lT0g&s=09  " target="_blank"><ion-icon name="logo-twitter"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=lumpiang_shanghai#7006" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=richamilleann@gmail.com&su=Greetings&body=Hello Richamel&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#rich"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup2 -->
+
+
+
+<!-- Aboutus Popup3 -->
+<div class="aboutus-overlay" id="aboutus-overlay2">
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal2()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card2">
+        <div class="mypic">
+            <img src="./blog-team/RegineAbout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Regine Cole Salas</small>
+                <small>19</small>
+                <small>IT 401</small>
+                <small>UI Designer</small>
+            </span>
+
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog regine"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog regine1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog regine2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog regine3"></div>
+                </span> 
+            </span>
+            
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/profile.php?id=100086415549740" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/wehgen_dump/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=pancitcantoon07#3817" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=salasregine282@gmail.com&su=Greetings&body=Hello Regine&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#regine"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup3 -->
+
+
+
+<!-- Aboutus Popup4 -->
+<div class="aboutus-overlay" id="aboutus-overlay3" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal3()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card3">
+        <div class="mypic">
+            <img src="./blog-team/Felixabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Felix Alicante</small>
+                <small>23</small>
+                <small>IT 401</small>
+                <small>Developer</small>
+            </span>
+
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog felix"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog felix1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog felix2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog felix3"></div>
+                </span>
+                <span>
+                    <small>SQL</small>
+                    <div class="prog felix4"></div>
+                </span> 
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/nilag.pad.3" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/felixalicante/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/invite/PdMgXc5t" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=salasregine282@gmail.com&su=Greetings&body=Hello Regine&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#felix"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup4 -->
+
+
+<!-- Aboutus Popup4 -->
+<div class="aboutus-overlay" id="aboutus-overlay4" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal4()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card4">
+        <div class="mypic">
+            <img src="./blog-team/Shellabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Shellou Frasco</small>
+                <small>22</small>
+                <small>IT 401</small>
+                <small>Documentation</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog shelou"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog shelou1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog shelou2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog shelou3"></div>
+                </span>
+                <span>
+                    <small>SQL</small>
+                    <div class="prog shelou4"></div>
+                </span>
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/noona.cheong" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/shll.frsco?r=nametag" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=itsmemeri#2535" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=shelloufrasco420@gmail.com&su=Greetings&body=Hello Shelou&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#she"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup4 -->
+
+            
+<!-- This will show only on the smaller screen -->
+<div class="search-cont-small" id="search-id">
+    <div class="small-searchbar" id="small-searchbar">
+        <input type="text" placeholder="Search here..">
+    </div>
+</div>
+
+
+
+
+            <!-- Banner -->
+            <div class="blog-banner" id="blog-banner">
+                 <img  src="./blog/blog.gif" >
+            </div>
+            <!-- Banner -->
+
+
+            <!-- Blog-content -->
+            <div class="blog-cont" id="blog-cont">
+
+
+
+                <!-- ==============================svg--- -->
+                <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" style="position: absolute;
+                top: 0;
+                left: 0; height: 100%; display: none">
+                    <defs>
+                    <radialGradient id="Gradient1" cx="50%" cy="50%" fx="0.441602%" fy="50%" r=".5"><animate attributeName="fx" dur="34s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(103,74,179, 1)"></stop><stop offset="100%" stop-color="rgba(103,74,179,0)"></stop></radialGradient>
+                    <radialGradient id="Gradient2" cx="50%" cy="50%" fx="2.68147%" fy="50%" r=".5"><animate attributeName="fx" dur="23.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(163,72,166, 1)"></stop><stop offset="100%" stop-color="rgba(163,72,166,0)"></stop></radialGradient>
+                    <radialGradient id="Gradient3" cx="50%" cy="50%" fx="0.836536%" fy="50%" r=".5"><animate attributeName="fx" dur="21.5s" values="0%;3%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(0, 255, 255, 1)"></stop><stop offset="100%" stop-color="rgba(0, 255, 255, 0)"></stop></radialGradient>
+                    <radialGradient id="Gradient4" cx="50%" cy="50%" fx="4.56417%" fy="50%" r=".5"><animate attributeName="fx" dur="23s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(159,99,196, 1)"></stop><stop offset="100%" stop-color="rgba(159,99,196,0)"></stop></radialGradient>
+                    <radialGradient id="Gradient5" cx="50%" cy="50%" fx="2.65405%" fy="50%" r=".5"><animate attributeName="fx" dur="24.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(144,117,216, 1)"></stop><stop offset="100%" stop-color="rgba(144,117,216,0)"></stop></radialGradient>
+                    <radialGradient id="Gradient6" cx="50%" cy="50%" fx="0.981338%" fy="50%" r=".5"><animate attributeName="fx" dur="25.5s" values="0%;5%;0%" repeatCount="indefinite"></animate><stop offset="0%" stop-color="rgba(206,162,215, 1)"></stop><stop offset="100%" stop-color="rgba(206,162,215,0)"></stop></radialGradient>
+                    
+                   
+                    </defs>
+                  
+                  
+                  <rect x="13.744%" y="1.18473%" width="100%" height="100%" fill="url(#Gradient1)" transform="rotate(334.41 50 50)"><animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite"></animateTransform></rect>
+                    <rect x="-2.17916%" y="35.4267%" width="100%" height="100%" fill="url(#Gradient2)" transform="rotate(255.072 50 50)"><animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite"></animate><animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="12s" repeatCount="indefinite"></animateTransform>
+                    </rect>
+                    <rect x="9.00483%" y="14.5733%" width="100%" height="100%" fill="url(#Gradient3)" transform="rotate(139.903 50 50)"><animate attributeName="x" dur="25s" values="0%;25%;0%" repeatCount="indefinite"></animate><animate attributeName="y" dur="12s" values="0%;25%;0%" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="9s" repeatCount="indefinite"></animateTransform>
+                    </rect>
+                </svg>
+                <!-- ======================================== -->
+                
+
+                <!-- LYDON CARD -->
+
+                    <div class="student-cont  lyndonanim" id="lyndon">
+                        <div class="student-pic">
+                            <img src="./blog-team/lyndonBlog.png">
+                        </div>
+                        <div class="student-prof">
+                            <span class="stud-head">
+                                <h1>Lyndon Erl Ramirez</h1>
+                                <small>Developer</small>
+                            </span>
+                            <span class="stud-moto">
+                                <p>"The Completion of one's Dream is the process of stepping on the dreams of others, the bigger the dream the more steps you needed to take"</p>
+                            </span>
+                            <div class="prem-mid">
+                                <button onclick="ShowPrelim()">Prelim</button>
+                                <button onclick="ShowMidterm()">Midterm</button>
+                            </div>
+                        </div>
+    
+                        <div class="stud-social">
+                            <span onclick="lyndsoc()"><ion-icon name="logo-facebook"></ion-icon></span>
+                            <span onclick="lyndsoc1()"><ion-icon name="logo-google"></ion-icon></span>
+                            <span onclick="lyndsoc2()"><ion-icon name="logo-discord"></ion-icon></span>
+                        </div>
+    
+                    </div>
+
+                <!-- LYDON CARD -->
+
+
+                 <!-- RICH CARD -->
+
+                <div class="student-cont richamelanim" id="rich">
+                    <div class="student-pic">
+                        <img src="./blog-team/RichaBlog.png">
+                    </div>
+                    <div class="student-prof">
+                        <span class="stud-head">
+                            <h1>Richamille Ricaforte</h1>
+                            <small>Ui Designer</small>
+                        </span>
+                        <span class="stud-moto">
+                            <p>"Just because it's what's done, doesn't mean it's what should be done."</p>
+                        </span>
+                        <div class="prem-mid">
+                            <button onclick="ShowPrelim1()">Prelim</button>
+                            <button onclick="ShowMidterm1()">Midterm</button>
+                        </div>
+                    </div>
+
+                    <div class="stud-social">
+                        <span onclick="richsoc()"><ion-icon name="logo-facebook"></ion-icon></span>
+                        <span onclick="richsoc1()"><ion-icon name="logo-google"></ion-icon></span>
+                        <span onclick="richsoc2()"><ion-icon name="logo-twitter"></ion-icon></span>
+                    </div>
+
+                </div>
+
+                <!-- RICH CARD -->
+
+
+                <!-- REGINE CARD -->
+
+                <div class="student-cont regineanim" id="regine">
+                    <div class="student-pic">
+                        <img src="./blog-team/RegineBlog.png">
+                    </div>
+                    <div class="student-prof">
+                        <span class="stud-head">
+                            <h1>Regine Cole Salas</h1>
+                            <small>Ui Designer</small>
+                        </span>
+                        <span class="stud-moto">
+                            <p>"The only way to do great work is to love what you do."</p>
+                        </span>
+                        <div class="prem-mid">
+                            <button onclick="ShowPrelim2()">Prelim</button>
+                            <button onclick="ShowMidterm2()">Midterm</button>
+                        </div>
+                    </div>
+
+                    <div class="stud-social">
+                        <span onclick="regsoc()"><ion-icon name="logo-facebook"></ion-icon></span>
+                        <span onclick="regsoc1()"><ion-icon name="logo-google"></ion-icon></span>
+                        <span onclick="regsoc2()"><ion-icon name="logo-instagram"></ion-icon></span>
+                    </div>
+
+                </div>
+
+                <!-- REGINE CARD -->
+
+
+                <!-- FELIX CARD -->
+
+                <div class="student-cont felixanim" id="felix">
+                    <div class="student-pic">
+                        <img src="./blog-team/FelixBlog.png ">
+                    </div>
+                    <div class="student-prof">
+                        <span class="stud-head">
+                            <h1>Felix Alicante</h1>
+                            <small>Developer</small>
+                        </span>
+                        <span class="stud-moto">
+                            <p>"Knowledge will bring you the opportunity to make a difference"</p>
+                        </span>
+                        <div class="prem-mid">
+                            <button onclick="ShowPrelim3()">Prelim</button>
+                            <button onclick="ShowMidterm3()">Midterm</button>
+                        </div>
+                    </div>
+
+                    <div class="stud-social">
+                        <span onclick="felixsoc()"><ion-icon name="logo-facebook"></ion-icon></span>
+                        <span onclick="felixsoc1()"><ion-icon name="logo-google"></ion-icon></span>
+                        <span onclick="felixsoc2()"><ion-icon name="logo-discord"></ion-icon></span>
+                    </div>
+
+                </div>
+
+                <!-- FELIX CARD -->
+
+                <!-- SHELOU CARD -->
+
+                <div class="student-cont shelouanim" id="she">
+                    <div class="student-pic">
+                        <img src="./blog-team/ShellBlog.png">
+                    </div>
+                    <div class="student-prof">
+                        <span class="stud-head">
+                            <h1>Shelou Frasco</h1>
+                            <small>Documention</small>
+                        </span>
+                        <span class="stud-moto">
+                            <p>"There's no harm in hoping for the best, as long as you prepare for the worst - stephen king"</p>
+                        </span>
+                        <div class="prem-mid">
+                            <button onclick="ShowPrelim4()">Prelim</button>
+                            <button onclick="ShowMidterm4()">Midterm</button>
+                        </div>
+                    </div>
+
+                    <div class="stud-social">
+                        <span onclick="shesoc()"><ion-icon name="logo-facebook"></ion-icon></span>
+                        <span onclick="shesoc1()"><ion-icon name="logo-google"></ion-icon></span>
+                        <span onclick="shesoc2()"><ion-icon name="logo-twitter"></ion-icon></span>
+                    </div>
+
+                </div>
+
+                <!-- SHELOU CARD -->
+
+            </div>
+            <!-- Blog-content -->
+
+<!-- ============================================================================== -->
+            <!-- blog-oberlay  LYDON  PRELIM-->
+            <div class="blog-overlay" id="blog-overlaylyn">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Prelim</label>
+                        <span onclick="ClosePrem()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./lyndonAct/act1/Story.html" >Activity 1</a>
+                        <a href="./lyndonAct/act2/MyProfile/Index.html" >Activity 2</a>
+                        <a href="./lyndonAct/act3/MyProfile2/index.html" >Activity 3</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  LYDON  PRELIM-->
+
+            <!-- blog-oberlay  LYDON  PRELIM-->
+            <div class="blog-overlay" id="blog-overlaylen1">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Midterm</label>
+                        <span onclick="ClosePrem()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./lyndonAct/My Bootstrap Calculator/index.html" >Bootstrap Calculator</a>
+                        <a href="./lyndonAct/My Simple Calculator/index.html" >Calculator</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  LYNDOn  PRELIM-->
+
+<!-- ============================================================================== -->            
+
+
+<!-- ============================================================================== -->
+            <!-- blog-oberlay  RICH  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayrich">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Prelim</label>
+                        <span onclick="ClosePrem1()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./richamel/PRELIM/LABEXERCISE1/LAB1.html" >Activity 1</a>
+                        <a href="./richamel/PRELIM/LABEXERCISE2/LAB2.html" >Activity 2</a>
+                        <a href="./richamel/PRELIM/LABEXERCISE3/LAB3.html" >Activity 3</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  RICH  PRELIM-->
+
+            <!-- blog-oberlay  RICH  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayrich2">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Midterm</label>
+                        <span onclick="ClosePrem1()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./richamel/MIDTERM/LAB 1/My Simple Calculator/index.html" >Bootstrap Calculator</a>
+                        <a href="./richamel/MIDTERM/LAB 2/My Bootstrap Calculator/index.html" >Calculator</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  RCIH  PRELIM-->
+
+<!-- ============================================================================== -->
+
+
+
+
+
+
+
+<!-- ============================================================================== -->
+            <!-- blog-oberlay  REGINE  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayReg1">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Prelim</label>
+                        <span onclick="ClosePrem2()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./Regine/LAB1(PRELIM)/story.html" >Activity 1</a>
+                        <a href="./Regine/LAB3(PRELIM)/index.html" >Activity 2</a>
+                        <a href="./Regine/LAB2(PRELIM)/index.html" >Activity 3</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  REGINE  PRELIM-->
+
+            <!-- blog-oberlay  REGINE  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayReg">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Midterm</label>
+                        <span onclick="ClosePrem2()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./Regine/LAB4(MIDTERM)/index.html" >Calculator</a>
+                        <a href="./Regine/LAB5(MIDTERM)/My Bootstrap Calculator/index.html" >Bootstrap Calculator</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  REGINE  PRELIM-->
+
+<!-- ============================================================================== -->
+
+<!-- ============================================================================== -->
+            <!-- blog-oberlay  FELIX  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayFel1">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Prelim</label>
+                        <span onclick="ClosePrem3()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./felix/PRELIM/lab1/Tortoise.html" >Activity 1</a>
+                        <a href="./felix/PRELIM/lab2/Information.html" >Activity 2</a>
+                        <a href="./felix/PRELIM/lab3/index.html" >Activity 3</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  FELIX  PRELIM-->
+
+            <!-- blog-oberlay  FELIX  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayFel">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Midterm</label>
+                        <span onclick="ClosePrem3()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./felix/MIDTERM/BCalculator-20230512T053344Z-001/BCalculator/index1.html" >Calculator</a>
+                        <a href="./felix/MIDTERM/SCalculator-20230512T053441Z-001/SCalculator/index.html" >Bootstrap Calculator</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  FELIX  PRELIM-->
+
+<!-- ============================================================================== -->
+
+<!-- ============================================================================== -->
+            <!-- blog-oberlay  SHELOU  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayshe1">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Prelim</label>
+                        <span onclick="ClosePrem4()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./shelou/LAB1/story.html" >Activity 1</a>
+                        <a href="./shelou/LAB2/Frasco.html" >Activity 2</a>
+                        <a href="./shelou/LAB3/Frasco.html" >Activity 3</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  SHELOU  PRELIM-->
+
+            <!-- blog-oberlay  SHELOU  PRELIM-->
+            <div class="blog-overlay" id="blog-overlayshe">
+                <div class="blog-modal">
+                    <div class="blog-modal-header">
+                        <label>Midterm</label>
+                        <span onclick="ClosePrem4()"><ion-icon name="close"></ion-icon></span>
+                    </div>
+
+                    <div class="prelim-cont">
+                        <a href="./shelou/LAB4(MIDTERM)/index.html">Calculator</a>
+                        <a href="./shelou/LAB5(MIDTERM)/My Bootstrap Calculator/index.html">Bootstrap Calculator</a>
+                    </div>
+                    
+                </div> 
+            </div>
+
+            <!-- blog-oberlay  SHELOU  PRELIM-->
+
+<!-- ============================================================================== -->
+
+
+
+
+
+
+
+
+
+            <!-- Fotter -->
+            <div class="Footer-cont" id="Footer-cont">
+
+                <!-- floting image -->
+                <div class="floating-img">
+                    <img src="./images/anim_process1.svg" alt="">
+                </div>
+
+                <div class="floating-img2">
+                    <img src="./images/anim_process3.svg" alt="">
+                </div>
+
+                <div class="footer-header">
+                    <h1>Uxie</h1>
+                    <small>©2023 Created By Group 7  All rights reserved.</small>
+                </div>
+
+                <div class="footer-icon">
+                    <span onclick="social1()"><ion-icon name="logo-facebook"></ion-icon></span>
+                    <span onclick="social2()"><ion-icon name="logo-google"></ion-icon></span>
+                    <span onclick="social3()"><ion-icon name="logo-discord"></ion-icon></span>
+                    <span onclick="social4()"><ion-icon name="logo-twitter"></ion-icon></span>
+                    <span onclick="social5()"><ion-icon name="logo-instagram"></ion-icon></span>
+                </div>
+
+                <div class="send-message">
+                    <div class="send-box">
+                        <input type="email" placeholder=" Input Email to Subscribe">
+                        <a href="https://mail.google.com/mail/u/0/?fs=1&to=Uxiweb0007@gmail.com&su=Greetings&body=Hello Uxie&tf=cm"><span><ion-icon name="send"></ion-icon></span></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    
+</body>
+
+<!-- icon cdn -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+<script src="./js/swiper-element-bundle.min.js"></script>
+
+
+<script src="./js/header.js"></script>
+<script src="./js/aboutus.js"></script>
+<script src="./js/sound.js"></script>
+<script src="./js/news-app.js"></script>
+<script src="./js/sendmail.js"></script>
+<script src="./js/aboutusModal.js"></script>
+<script src="./js/anim.js"></script>
+<script src="./js/blog.js"></script>
+<script src="./js/feature-slider.js"></script>
+<script src="./js/gsap.js"></script>
+
+<script src="./js/navi.js"></script>
+</html>

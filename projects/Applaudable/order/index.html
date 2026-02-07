@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Applaudable | Order Now</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../style.min.css">
+        <link rel="stylesheet" href="order.min.css">
+        <!--========== BOX ICONS ==========-->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" href="style.min.css">
+        <script src="https:unpkg.com/scrollreveal"></script>
+        <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    </head>
+    <body>
+        <!--========== SCROLL TOP ==========-->
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class='bx bx-chevron-up scrolltop__icon'></i>
+        </a>
+    
+        <!--========== HEADER ==========-->
+        <header class="l-header" id="header">
+            <nav class="nav bd-container">
+                <a href="/Applaudable/" class="nav__logo">Applaudable</a>
+    
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="/Applaudable/" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="/Applaudable/#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="/Applaudable/#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="/Applaudable/#menu" class="nav__link">Menu</a></li>
+                        <li class="nav__item"><a href="/Applaudable/#contact" class="nav__link">Contact us</a></li>
+                        <li class="nav__item"><a href="javascript:;" class="nav__link active-link">POS</a></li>
+    
+                        <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
+                    </ul>
+                </div>
+    
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <!-- cart-holder -->
+        <div class="cart_holder" id="show_cart">
+            <span>
+            <i class='bx bx-cart-alt'></i>
+            <small id="cart_counter">0</small>
+            </span>
+        </div>
+        <div class="cart_popup_con" id="cart_popup_con">
+            <div class="cart_close_btn" id="cart_close_btn">
+                <i class='bx bx-x'></i>
+            </div>
+            <div class="cart_items_con">
+                <div class="cart_item_header">
+                    <h2>Your Order</h2>
+                </div>
+                <div class="cart_items">
+                   <div class="cart_item_price_quant">
+                    <h3>Item</h3>
+                    <h3>Price</h3>
+                    <h3>Quantity</h3>
+                   </div>
+                   <div class="cart_display_con">
+                    <ul id="ListHolder">
+                        <li style="display:none;">
+                            <div class="item_img_name">
+                                <figure>
+                                    <img id="user_choice_img" src="" alt="" width="70px">
+                                </figure>   
+                                <label id="user_choice_name">Item Name</label>
+                                <!-- BARCODE -->
+                                <img id="user_barcode_choice" src="" alt="" width="70px">
+                                <!-- BARCODE END  -->
+                            </div>
+                            <span id="user_choice_price">$00.00</span>
+                            <span>0x</span>
+                            <div class="remove_item">
+                                <i class='bx bx-trash'></i>
+                            </div>
+                        </li>
+                    </ul>
+                   </div>
+                </div>
+                <div class="cart_items_footer">
+                    <div class="item_total">
+                        <h2>Total:</h2>
+                        <span id="totalAmount">$00.00</span>
+                        <span id="Quantity">00x</span>
+                    </div>
+                    <div class="cart_generate_qr_btn" id="cart_generate_qr_btn">
+                        Confirm Order
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart-holder -->
+
+        <div class="qr_code_con" id="qr_code_con">
+            <div class="close_qr" id="close_qr">
+                <i class='bx bx-x'></i>
+            </div>
+            <div class="qr_con">
+                <div style="text-align: center;padding-bottom: 10px;">
+                    <h2>Thank You For Your Order</h2>
+                    <small>Have a good day</small>
+                </div>
+                <div class="qr_img_con">
+                    <div class="loader" id="loader"></div>
+                    <img id="qr_img" src="" alt="qr-code">
+                </div>
+                <div class="shar_down">
+                    <span id="download_button">Download <i class='bx bx-cloud-download'></i></span>
+                    <span>Print <i class='bx bx-printer'></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- main_con -->
+        <section class="menu section bd-container">
+        <main class="l-main">
+
+            <div class="nh_header">
+                <h2>Choose your cravings</h2>
+            </div>
+                <!--========== MENU-CONT ==========-->
+                <nav class="menu-bar">
+                    <input class="search" type="search" name="gsearch" placeholder="Search Food..." id="Product" onkeyup="search()">
+                    <!-- <input type="text" name="genre" placeholder="Search genre" id="genre" onkeyup="search()"> -->
+                    <ul id="menu_list">
+                        <li class="menubar_function allmenu active_menu" >All Menu</li>
+                        <li class="menubar_function brunch">Brunch</li>
+                        <li class="menubar_function beverages">Drinks</li>
+                        <li class="menubar_function desserts">Desserts</li>
+                        <li class="menubar_function snacks">Snacks</li>
+                    </ul>
+                </nav>
+
+                <!-- menu -->
+                <div class="menu_container_sorted">
+                    <div class="product_not_found" id="product_not_found"><h3>Oops we think your choices is not in the kitchen yet!</h3></div>
+                    <ul id="menu_container_sorted">
+                        <li class="menu_cat_con" data-keywords="Matcha">
+                            <figure>
+                                <img class="food_image" id="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">1001</h6> 
+                                <h3 class="food_id" id="food_id">Matcha</h3>
+                                <img class +="food_bar" id="food_bar" src="../assets/img/matchabar.png" alt="">
+                                <span>
+                                    ₱
+                                   <small class="food_price"  id="food_price">50.00</small>
+                                   <!-- <h6 class="food_id" id="food_id">1001</h6>  -->
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Brunch -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1011</h6> 
+                                <h3 class="food_id" id="food_id">Brunch</h3>
+                                <img class +="food_bar" id="food_bar" src="../assets/img/brunchbar.png" alt="">
+                                <span>
+                                    ₱
+                                   <small  class="food_price"  id="food_price">51.00</small> 
+                                </span>
+                            </div>
+                        </li>
+                        <!-- Brunch Item 2 -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch Eggs Benedict Breakfast">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1010</h6> 
+                                <h3 class="food_id" id="food_id">Eggs Benedict</h3>
+                                <img class +="food_bar" id="food_bar" src="../assets/img/benedictbar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">60.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Brunch Item 3 -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch Pancake Syrup Breakfast">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1110</h6> 
+                                <h3 class="food_id" id="food_id">Pancakes</h3>
+                                <img class="food_bar" src="../assets/img/pancakebar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">45.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Brunch Item 4 -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch Avocado Toast Breakfast">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1111</h6> 
+                                <h3 class="food_id" id="food_id">Avocado Toast</h3>
+                                <img class="food_bar" src="../assets/img/avocadobar.png" alt=""> 
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">55.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Brunch Item 5 -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch Granola Parfait Breakfast">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1101</h6> 
+                                <h3 class="food_id" id="food_id">Granola Parfait</h3>
+                                <img class="food_bar" src="../assets/img/granolabar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">50.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Brunch Item 6 -->
+                        <li class="menu_cat_con" data-keywords="Coffee Brunch Bagel Lox Breakfast">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det food_det_flex">
+                                <h6 class="food_name" id="food_name">1011</h6> 
+                                <h3 class="food_id" id="food_id">Bagel with Lox</h3>
+                                <img class="food_bar" src="../assets/img/bagelbar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">65.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Bruch -->
+
+                        <!-- Drinks -->
+                        <li class="menu_cat_con" data-keywords="Beef Shawarmaa Drink">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0001</h6> 
+                                <h3 class="food_id" id="food_id">Drink1</h3>    
+                                <img class="food_bar" src="../assets/img/drink1bar.png" alt="">
+                                <span>
+                                    ₱
+                                   <small class="food_price"  id="food_price">52.00</small> 
+                                </span>
+                            </div>
+                        </li>
+                        <!-- Drink Item 2 -->
+                        <li class="menu_cat_con" data-keywords="Beef Shawarma Drink">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0011</h6> 
+                                <h3 class="food_id" id="food_id">Drink2</h3>
+                                <img class="food_bar" src="../assets/img/drink2bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">52.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Drink Item 3 -->
+                        <li class="menu_cat_con" data-keywords="Beef Shawarma Drink">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0111</h6> 
+                                <h3 class="food_id" id="food_id">Drink3</h3>
+                                <img class="food_bar" src="../assets/img/drink3bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">52.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Drink Item 4 -->
+                        <li class="menu_cat_con" data-keywords="Beef Shawarma Drink">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">1100</h6> 
+                                <h3 class="food_id" id="food_id">Drink4</h3>
+                                <img class="food_bar" src="../assets/img/drink4bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">52.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+
+                        <!-- Dessert -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Dessert">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0002</h6> 
+                                <h3 class="food_id" id="food_id">Dessert1</h3>
+                                <img class="food_bar" src="../assets/img/dessert1bar.png" alt="">
+                                <span>
+                                    ₱
+                                   <small class="food_price"  id="food_price">53.00</small> 
+                                </span>
+                            </div>
+                        </li>
+                        <!-- Dessert Item 2 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Dessert">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0020</h6> 
+                                <h3 class="food_id" id="food_id">Dessert2</h3>
+                                <img class="food_bar" src="../assets/img/dessert2bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">53.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Dessert Item 3 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Dessert">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0200</h6> 
+                                <h3 class="food_id" id="food_id">Dessert3</h3>
+                                <img class="food_bar" src="../assets/img/dessert3bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">53.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Dessert Item 4 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Dessert">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">2000</h6> 
+                                <h3 class="food_id" id="food_id">Dessert4</h3>
+                                <img class="food_bar" src="../assets/img/dessert4bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">53.00</small> 
+                                </span>
+                            </div>
+                        </li>   
+
+
+                        <!-- Snacks -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Snack">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0003</h6> 
+                                <h3 class="food_id" id="food_id">Snack1</h3>
+                                <img class="food_bar" src="../assets/img/snack1bar.png" alt="">
+                                <span>
+                                    ₱
+                                   <small class="food_price"  id="food_price">54.00</small> 
+                                </span>
+                            </div>
+                        </li>
+                        <!-- Snack Item 2 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Snack">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate1.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0030</h6> 
+                                <h3 class="food_id" id="food_id">Snack2</h3>
+                                <img class="food_bar" src="../assets/img/snack2bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">54.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Snack Item 3 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Snack">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate2.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">0300</h6> 
+                                <h3 class="food_id" id="food_id">Snack3</h3>
+                                <img class="food_bar" src="../assets/img/snack3bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">54.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                        <!-- Snack Item 4 -->
+                        <li class="menu_cat_con" data-keywords="Chicken Leg Snack">
+                            <figure>
+                                <img class="food_image" src="../assets/img/plate3.png" alt="">
+                            </figure>
+                            <div class="food_det">
+                                <h6 class="food_name" id="food_name">3000</h6> 
+                                <h3 class="food_id" id="food_id">Snack4</h3>
+                                <img class="food_bar" src="../assets/img/snack4bar.png" alt="">
+                                <span>
+                                    ₱
+                                    <small class="food_price" id="food_price">54.00</small> 
+                                </span>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- menu -->
+                <!-- single menu viewer modal -->
+                <!-- menu viewr overlay -->
+                <div class="viewer_overlay" id="viewer_overlay">
+                    <div class="viewer_close_btn" id="viewer_close_btn">
+                        <i class='bx bx-x'></i>
+                    </div>
+                    <div class="menu_viewer">
+                    <figure>
+                        <img id="product_img_viewer" src="" alt="">
+                    </figure>
+                    <div class="food_det_viewer">
+                        <h3 id="product_name_viewer"></h3>
+                        <span>₱<small id="product_price_viewer"></small></span>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam voluptas quia sunt repellat itaque sint.</p>
+                        <div class="addto_order">Order now</div>
+                    </div>
+                    </div>
+                </div>
+                <!-- menu viewer overlay -->
+
+                <!-- single menu viewer modal -->
+            </section>
+
+
+            <!-- added item popup -->
+            <div class="added_item_pop" id="added_item_pop">
+                <i class='bx bxs-check-circle'></i>
+                <small id="added_item_name">Successfuly added!</small>
+            </div>
+            <!-- added item popup -->
+
+            <!-- remove item popup -->
+            <!-- remove item popup -->
+
+
+        </main>
+
+        <!--========== FOOTER ==========-->
+        <footer class="footer section bd-container">
+            <div class="footer__container bd-grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">Affooodable</a>
+                    <span class="footer__description">Restaurant</span>
+                    <div>
+                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                    </div>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Services</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Delivery</a></li>
+                        <li><a href="#" class="footer__link">Pricing</a></li>
+                        <li><a href="#" class="footer__link">Fast food</a></li>
+                        <li><a href="#" class="footer__link">Reserve your spot</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Information</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Event</a></li>
+                        <li><a href="#" class="footer__link">Contact us</a></li>
+                        <li><a href="#" class="footer__link">Privacy policy</a></li>
+                        <li><a href="#" class="footer__link">Terms of services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Address</h3>
+                    <ul>
+                        <li>Cebu City - Philippines</li>
+                        <li>Basta Lugar full location</li>
+                        <li>0923-basta-number-ni</li>
+                        <li>JiTECHSOLUTIONS@email.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="footer__copy">&#169; 2024 @Powered by JiTECH SOLUTIONS</p>
+    </footer>
+
+    <!-- ======= MENU MODAL JS ======= -->
+    <script src="../assets/js/menu.min.js"></script>
+    <script src="order_menu.min.js"></script>
+    <script src="../assets/js/addtoCart.min.js"></script>
+
+    <!--========== MAIN JS ==========-->
+    <script src="../assets/js/main.min.js"></script>
+    <script src="../assets/js/search.min.js"></script>
+    <!--========== SCROLL REVEAL ==========-->
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    </body>
+</html>

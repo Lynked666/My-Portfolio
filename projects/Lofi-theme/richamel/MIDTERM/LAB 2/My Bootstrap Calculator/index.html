@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <title>My Simple Calculator</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css"> 
+</head>
+<body>
+    <div class="container">
+
+
+        <a href="javascript:history.back()">
+            <span 
+            style="position: absolute;top: 30px;left: 30px; width: 30px; height: 30px;
+            width: 60px;height: 30px; background: #170B3B; cursor: pointer; color: #fff; font-size: 30px; border-radius: 5px; display: flex;align-items: center; justify-content: center;">
+            <ion-icon name="return-up-back-outline"></ion-icon>
+            </span>
+        </a>
+
+        <div class="row">
+            <br>
+            <div class="col">
+                <div class="col">
+                    <div class="card mx-auto">
+                        <div class="card-header" style="text-align: center;">My Bootstrap Calculator</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Number 1:</label>
+                                <input type="email" class="form-control" id="txtNum1" placeholder="Enter number 1"><br>
+                                <label for="exampleFormControlInput1" class="form-label">Number 2:</label>
+                                <input type="email" class="form-control" id="txtNum2" placeholder="Enter number 2"><br>
+                              </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="d-grid gap-2"> 
+                                                <button type="button" style="background-color: blue;" class="btn btn-primary btn-lg" onclick="btnA()">+</button>                                           
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-grid gap-2">
+                                                <button type="button" style="background-color: yellow; color: black;" class="btn btn-primary btn-lg"  onclick="btnS()">-</button>    
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-grid gap-2">
+                                                <button type="button" style="background-color: green;" class="btn btn-primary btn-lg" onclick="btnM()">*</button>        
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-grid gap-2">
+                                                <button type="button" style="background-color: red;" class="btn btn-primary btn-lg" onclick="btnD()">/</button>  
+                                            </div>
+                                        </div>
+                                    </div><br>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="d-grid gap-2">
+                                                <button type="button" style="background-color: gray;" class="btn btn-primary btn-lg" onclick="btnC()">Clear</button>       
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                        </div>                                                   
+                    </div>
+                    <div class="col"></div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</html>

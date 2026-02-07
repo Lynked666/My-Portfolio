@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="min-style.css">
+    <link rel="stylesheet" type="text/css" href="./css/feature-min.css">
+    <link rel="icon" type="image/png" href="adlogo.png"/>
+
+    
+
+    <!-- BOOTSRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <title>Uxie | Feature</title>
+</head>
+<body id="darkbody">
+
+    <div class="main-container" id="Darkmode">
+        <div class="banner">
+            <div class="header">
+                <!-- left header -->
+                <div class="left-header">
+                    <!-- logo -->
+                    <div class="logo" onclick="backTohome()">
+                        <img src="bg-rem.png" alt="">
+                    </div>
+                    <!-- sitename -->
+                    <span onclick="backTohome()">
+                        <h1>Uxie</h1>
+                    </span>
+                </div>
+                <!-- searchbar -->
+                <div class="searchbar">
+                    <input type="text">
+                    <span onclick="showSearch()">
+                        <ion-icon name="search"></ion-icon>
+                    </span>
+                </div>
+                <!-- menu bar -->
+                <div class="menubar" onclick="showMothCont()">
+                   <div class="line hover"></div>
+                   <div class="line"></div>
+                   <div class="line hover"></div>
+                </div>
+            </div>
+            <!-- navigation-social -->
+            <div class="navigation-social" id="navigation">
+
+                <!-- logo -->
+                <div class="logo hide-logo" id="show-logo">
+                    <img src="bg-rem.png" alt="">
+                </div>
+
+                <!-- navlinks -->
+                <div class="navlinks">
+                    <a href="index.html"><li>Home</li></a>
+                    <a href="blog.html"><li>Blog</li></a>
+                    <a href="#"><li>Feature</li></a>
+                </div>
+                <!-- social Icons -->
+                <div class="social-icon">
+                    <span onclick="social1()"><ion-icon name="logo-facebook"></ion-icon></span>
+                    <span onclick="social2()"><ion-icon name="logo-google"></ion-icon></span>
+                    <span onclick="social3()"><ion-icon name="logo-discord"></ion-icon></span>
+                </div>
+
+                <!-- menu bar -->
+                <div class="menubar hide-burger" id="hide-burgers" onclick="showMothCont()">
+                   <div class="line hover"></div>
+                   <div class="line"></div>
+                   <div class="line hover"></div>
+                </div>
+            </div>
+
+            <div class="about-icon">
+                <div class="team-icon">
+                    <div class="small-logo" id="main-logo" onclick="showAbout()">
+                        <img src="./images/logo.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay1" onclick="showLyndon()">
+                        <img src="./blog-team/lyndon.png" alt="">
+                    </div>
+                    <div class="small-logo delay2"  onclick="showRich()">
+                        <img src="./blog-team/Richaabout.png" alt="">
+                    </div>
+
+                    <div class="small-logo mt delay3" onclick="showReg()">
+                        <img src="./blog-team/RegineAbout.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay4" onclick="showFelix()">
+                        <img src="./blog-team/Felixabout.png" alt="">
+                    </div>
+                    <div class="small-logo mt delay5" onclick="showShe()">
+                        <img src="./blog-team/Shellabout.png" alt="">
+                    </div>
+                 <!--    <div class="small-logo mt" onclick="showAbout()">
+                        <img src="./images/logo.png" alt="">
+                    </div> -->
+                </div>
+            </div>
+
+
+            <!-- side navigtion for menu bar -->
+            <div class="menu-cotainer" id="menu-cotainer">
+                <div class="menu-cont" id="menu-cont">
+                    <div class="menu-cont-header" onclick="CloseMenuCont()">
+                        <ion-icon name="close"></ion-icon>
+                    </div>
+
+                    <div class="user" style="height: 50px; padding: 20px;" >
+                        <h2  style="color: #cea2d7; font-family:'Poppins',san-serif;" id="userID">Hi</h2>
+                   </div>
+
+                    <!-- menu-content    -->
+                    <div class="menu-content">
+                        
+                        <ul>
+
+                            <!-- this will show for smallerdevice -->
+                            <a href="index.html" class="show-after"><ion-icon name="Home"></ion-icon><li>Home</li></a>    
+                            <a href="blog.html" class="show-after"><ion-icon name="reader"></ion-icon><li>Blog</li></a>    
+                            <a href="#" class="show-after"><ion-icon name="sparkles"></ion-icon><li>Feature</li></a>  
+
+                            <a href="./main-login.html" onclick="Logout()"><ion-icon name="log-out"></ion-icon><li>Logout</li></a>
+                            <a href="#" onclick="toggleDark()"><ion-icon name="moon"></ion-icon><li>Darkmode</li></a>
+                            <a href="#" id="play-music-btn">
+                                <ion-icon class="mute" id="mute" name="volume-mute"></ion-icon>
+                                <ion-icon class="play" id="play" name="volume-high" ></ion-icon>
+                                <li>Music</li></a>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+             <!-- about us -->
+            <div class="about-cont" id="Show-About">
+                <div class="about-content">
+                    <div class="about-header">
+                        <h1>About us</h1>
+                        <span class="close-about" onclick="closeAbout()">
+                            <ion-icon name="close"></ion-icon>
+                        </span>
+                    </div>
+                    <div class="team">
+
+
+                        <!-- lyndon -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal()">
+                                <img src="./blog-team/lyndon.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Developer/Leader</small>
+                                <button onclick="showAboutusModal()">Lyndon Erl Ramirez</button>
+                            </span>
+                       </div>
+
+
+
+                       <!-- Richamille Ann Ricaforte -->
+                       <div class="team-cont" >
+                            <div class="team-pic" onclick="showAboutusModal1()">
+                                <img src="./blog-team/Richaabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>UI Designer</small>
+                                <button onclick="showAboutusModal1()">Richamille Ricaforte</button>
+                            </span>
+                        </div>
+
+
+
+                        <!-- Regine Cole Salas -->
+                       <div class="team-cont">
+                        <div class="team-pic" onclick="showAboutusModal2()">
+                            <img src="./blog-team/RegineAbout.png" alt="">
+                        </div>
+                        <span class="team-details">
+                            <small>UI Designer</small>
+                            <button onclick="showAboutusModal2()">Regine Cole Salas</button>
+                        </span>
+                        </div>
+
+
+
+                        <!-- Felix Alicante  -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal3()">
+                                <img src="./blog-team/Felixabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Developer</small>
+                                <button onclick="showAboutusModal3()">Felix Alicante </button>
+                            </span>
+                        </div>
+
+                       <!-- Shellou Frasco -->
+                       <div class="team-cont">
+                            <div class="team-pic" onclick="showAboutusModal4()">
+                                <img src="./blog-team/Shellabout.png" alt="">
+                            </div>
+                            <span class="team-details">
+                                <small>Documentation</small>
+                                <button onclick="showAboutusModal4()">Shellou Frasco</button>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                    <!-- newslater -->
+                    <div class="news-later-cont">
+                        <input type="text" placeholder="Subscribe">
+                        <span><ion-icon name="send"></ion-icon></span>
+                    </div>
+
+                </div>
+            </div>
+
+
+<!-- Aboutus Popup1 -->
+<div class="aboutus-overlay" id="aboutus-overlay">
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card">
+        <div class="mypic">
+            <img src="./blog-team/lyndon.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Lyndon Erl Ramirez</small>
+                <small>21</small>
+                <small>IT 401</small>
+                <small>Developer</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog perc"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog perc1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog perc2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog perc3"></div>
+                </span> 
+                <span>
+                    <small>SQL</small>
+                    <div class="prog perc4"></div>
+                </span>
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/lyndon.erl" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/bungieegum/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=Lynked#0647" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=lyndonerlramirez@gmail.com&su=Greetings&body=Hello Lyndon&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#lyndon"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup1 -->
+
+
+
+
+<!-- Aboutus Popup2 -->
+<div class="aboutus-overlay" id="aboutus-overlay1" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal1()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card1">
+        <div class="mypic">
+            <img src="./blog-team/Richaabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Richamille Ann Ricaforte </small>
+                <small>19</small>
+                <small>IT 401</small>
+                <small>UI Designer</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog rich"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog rich1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog rich2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog rich3"></div>
+                </span> 
+                <span>
+                    <small>SQL</small>
+                    <div class="prog rich4"></div>
+                </span> 
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/ricaforte.richamille" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://twitter.com/Serenit71853266?t=Bkig6k6tHTwVmOgZS4lT0g&s=09  " target="_blank"><ion-icon name="logo-twitter"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=lumpiang_shanghai#7006" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=richamilleann@gmail.com&su=Greetings&body=Hello Richamel&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#rich"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup2 -->
+
+
+
+<!-- Aboutus Popup3 -->
+<div class="aboutus-overlay" id="aboutus-overlay2">
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal2()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card2">
+        <div class="mypic">
+            <img src="./blog-team/RegineAbout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Regine Cole Salas</small>
+                <small>19</small>
+                <small>IT 401</small>
+                <small>UI Designer</small>
+            </span>
+
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog regine"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog regine1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog regine2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog regine3"></div>
+                </span> 
+            </span>
+            
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/profile.php?id=100086415549740" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/wehgen_dump/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=pancitcantoon07#3817" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=salasregine282@gmail.com&su=Greetings&body=Hello Regine&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#regine"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup3 -->
+
+
+
+<!-- Aboutus Popup4 -->
+<div class="aboutus-overlay" id="aboutus-overlay3" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal3()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card3">
+        <div class="mypic">
+            <img src="./blog-team/Felixabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Felix Alicante</small>
+                <small>23</small>
+                <small>IT 401</small>
+                <small>Developer</small>
+            </span>
+
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog felix"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog felix1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog felix2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog felix3"></div>
+                </span>
+                <span>
+                    <small>SQL</small>
+                    <div class="prog felix4"></div>
+                </span> 
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/nilag.pad.3" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/felixalicante/" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/invite/PdMgXc5t" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=salasregine282@gmail.com&su=Greetings&body=Hello Regine&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#felix"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup4 -->
+
+
+<!-- Aboutus Popup4 -->
+<div class="aboutus-overlay" id="aboutus-overlay4" >
+    <!-- closebutton -->
+    <span class="close-news" onclick="closeABoutusModal4()">
+        <ion-icon name="close"></ion-icon>
+    </span>
+
+    <div class="aboutus-card" id="aboutus-card4">
+        <div class="mypic">
+            <img src="./blog-team/Shellabout.png">
+        </div>
+        <div class="mydetails">
+            <span class="label">
+                <small>Name:</small>
+                <small>Age:</small>
+                <small>Section:</small>
+                <small>Position:</small>  
+            </span>
+            <span class="about-me">
+                <small>Shellou Frasco</small>
+                <small>22</small>
+                <small>IT 401</small>
+                <small>Documentation</small>
+            </span>
+            <span class="prog-cont">
+                <span>
+                    <small>Html</small>
+                    <div class="prog shelou"></div>
+                </span>
+                <span>
+                    <small>Css</small>
+                    <div class="prog shelou1"></div>
+                </span>
+                <span>
+                    <small>JavaScript</small>
+                    <div class="prog shelou2"></div>
+                </span>
+                <span>
+                    <small>C#</small>
+                    <div class="prog shelou3"></div>
+                </span>
+                <span>
+                    <small>SQL</small>
+                    <div class="prog shelou4"></div>
+                </span>
+            </span>
+        </div>
+        <div class="my-social">
+            <span><a href="https://www.facebook.com/noona.cheong" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span><a href="https://www.instagram.com/shll.frsco?r=nametag" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+            <span><a href="https://discord.com/channels/@me/search?author=itsmemeri#2535" target="_blank"><ion-icon name="logo-discord"></ion-icon></a></span>
+            <span><a href="https://mail.google.com/mail/u/0/?fs=1&to=shelloufrasco420@gmail.com&su=Greetings&body=Hello Shelou&tf=cm" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+        </div>
+        <div class="newsletter">
+            <div class="news-box">
+                <input type="" name="" placeholder="Send me a message">
+                <span><ion-icon name="send"></ion-icon></span>
+            </div>
+        </div>
+        <div class="activity-holder">
+            <span>
+                <a href="blog.html#she"><small>Activities</small></a>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- Aboutus Popup4 -->
+
+          <!-- This will show only on the smaller screen -->
+          <div class="search-cont-small" id="search-id">
+            <div class="small-searchbar" id="small-searchbar">
+                <input type="text" placeholder="Search here..">
+            </div>
+        </div>  
+
+
+            <!-- Banner -->
+            <div class="feature-banner">
+                  <!-- https://brisseaux.tumblr.com/post/91018371936 -->
+                  <div class="rot-img">
+                      <img src="https://45.media.tumblr.com/263e52c5f30e213c099a62a245242289/tumblr_n8bsno0htg1qmzbpoo1_1280.gif" alt="" class="imgMasked" />
+                  </div>
+                  <div class="circ1"></div>
+                  <div class="circ2"></div>
+                  <div class="show-fet">
+                    <label for="">Feature</label>
+                  </div>
+                  <!-- <p class="Project-name">FEATURE </p> -->
+            </div>
+            <!-- Banner -->
+
+
+
+            <!-- Feature radio cont -->
+            <div class="feature-cont-radio">
+               <div class="feature-slider">
+                    <swiper-container class="mySwiper" pagination="true" pagination-dynamic-bullets="true">
+                    <swiper-slide>
+                        <div class="feature1">
+                            <div class="fe-img">
+                                <img src="./feature/fea-img.png">
+                            </div>
+                            <div class="feature-cont-details">
+                                <span class="fe-head-text"><h1>PROEL</h1></span>
+                                <span class="fea-text-cont">
+                                    <p>
+                                    Uses our creative skills, knowledge of design principles, and specialized software tools to create designs for a wide range of mediums, including print, digital platforms, and multimedia presentations. It work on projects such as logos, brochures, posters, websites, social media graphics, packaging, and more.</p>
+                                </span>
+                                <span class="fe-btn">
+                                    <button onclick="Showproel()">View More</button>
+                                </span>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="feature1">
+                            <div class="fe-img">
+                                <img src="./feature/fea-img1.png">
+                            </div>
+                            <div class="feature-cont-details">
+                                <span class="fe-head-text"><h1>INMANA</h1></span>
+                                <span class="fea-text-cont">
+                                    <p>Acquiring expertise in organizing, storing, and retrieving vast amounts of information efficiently, enabling effective data management and analysis.</p>
+                                </span>
+                                <span class="fe-btn">
+                                    <button onclick="inmana()">View More</button>
+                                </span>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="feature1">
+                            <div class="fe-img">
+                                <img src="./feature/fea-img2.png">
+                            </div>
+                            <div class="feature-cont-details">
+                                <span class="fe-head-text"><h1>WEBTEC</h1></span>
+                                <span class="fea-text-cont">
+                                    <p>Acquiring proficiency in designing and building dynamic websites and web applications, combining creativity and technical knowledge to create engaging online experiences. </p>
+                                </span>
+                                <span class="fe-btn">
+                                    <button onclick="webtech()">View More</button>
+                                </span>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="feature1">
+                            <div class="fe-img">
+                                <img src="./feature/fea-img3.png">
+                            </div>
+                            <div class="feature-cont-details">
+                                <span class="fe-head-text"><h1>MOBAPP</h1></span>
+                                <span class="fea-text-cont">
+                                    <p>
+                                     
+                                    Examining the interaction between humans and computer systems, focusing on user experience design to create intuitive and user-friendly interfaces for software and applications.</p>
+                                </span>
+                                <span class="fe-btn">
+                                    <button onclick="mobapp()">View More</button>
+                                </span>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="feature1">
+                            <div class="fe-img move-left">
+                                <img  src="./feature/fea-img4.png">
+                            </div>
+                            <div class="feature-cont-details">
+                                <span class="fe-head-text"><h1>TECHNO</h1></span>
+                                <span class="fea-text-cont">
+                                    <p>Understanding the strategic role of technology in organizations, leveraging IT resources to streamline processes, enhance decision-making, and drive business success.</p>
+                                </span>
+                                <span class="fe-btn">
+                                    <button onclick="techno()">View More</button>
+                                </span>
+                            </div>
+                        </div>
+                    </swiper-slide>
+                </swiper-container>
+               </div>
+            </div>
+
+
+
+
+            <!-- PROEl -->
+            <!-- =================================================== -->
+            <!-- Modal -->
+
+            <div class="proel-overlay" id="proel">
+                <span class="close-over" onclick="closeover()">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+
+                <div class="overlay-card" id="proelcard">
+                    <div class="overhead">
+                        <label for="">Subject Detail</label>
+                    </div>
+                    <div class="sub-detail">
+                        <span>
+                            <label for="">Subject:</label>
+                            <small>PROEL</small>
+                        </span>
+                        <span>
+                            <label for="">Teacher:</label>
+                            <small>Enrique Manal III</small>
+                        </span>
+                        <span>
+                            <label for="">Subject Type:</label>
+                            <small>Graphic Designing</small>
+                        </span>
+                        <span>
+                            <label for="">Ratings:</label>
+                            <small>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star-half"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal -->
+            <!-- =================================================== -->
+            <!-- INMANA -->
+            
+            <div class="proel-overlay" id="inmana">
+                <span class="close-over" onclick="closeover()">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+
+                <div class="overlay-card" id="proelcard">
+                    <div class="overhead">
+                        <label for="">Subject Detail</label>
+                    </div>
+                    <div class="sub-detail">
+                        <span>
+                            <label for="">Subject:</label>
+                            <small>INMANA</small>
+                        </span>
+                        <span>
+                            <label for="">Teacher:</label>
+                            <small>Cybel Maloon</small>
+                        </span>
+                        <span>
+                            <label for="">Subject Type:</label>
+                            <small>Database Management<small>
+                        </span>
+                        <span>
+                            <label for="">Ratings:</label>
+                            <small>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INMANA -->
+            <!-- =================================================== -->
+            <!-- Modal -->
+
+            <div class="proel-overlay" id="webtech">
+                <span class="close-over" onclick="closeover()">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+
+                <div class="overlay-card" id="proelcard">
+                    <div class="overhead">
+                        <label for="">Subject Detail</label>
+                    </div>
+                    <div class="sub-detail">
+                        <span>
+                            <label for="">Subject:</label>
+                            <small>WEBTECH</small>
+                        </span>
+                        <span>
+                            <label for="">Teacher:</label>
+                            <small>Francis Jigsy Galua</small>
+                        </span>
+                        <span>
+                            <label for="">Subject Type:</label>
+                            <small>Web Development<small>
+                        </span>
+                        <span>
+                            <label for="">Ratings:</label>
+                            <small>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="proel-overlay" id="mobapp">
+                <span class="close-over" onclick="closeover()">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+
+                <div class="overlay-card" id="proelcard">
+                    <div class="overhead">
+                        <label for="">Subject Detail</label>
+                    </div>
+                    <div class="sub-detail">
+                        <span>
+                            <label for="">Subject:</label>
+                            <small>MOBAPP</small>
+                        </span>
+                        <span>
+                            <label for="">Teacher:</label>
+                            <small>Anthony Belarmino</small>
+                        </span>
+                        <span>
+                            <label for="">Subject Type:</label>
+                            <small>Application Development<small>
+                        </span>
+                        <span>
+                            <label for="">Ratings:</label>
+                            <small>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="proel-overlay" id="techno">
+                <span class="close-over" onclick="closeover()">
+                    <ion-icon name="close"></ion-icon>
+                </span>
+
+                <div class="overlay-card" id="proelcard">
+                    <div class="overhead">
+                        <label for="">Subject Detail</label>
+                    </div>
+                    <div class="sub-detail">
+                        <span>
+                            <label for="">Subject:</label>
+                            <small>TECHNO</small>
+                        </span>
+                        <span>
+                            <label for="">Teacher:</label>
+                            <small>Aysa Asas</small>
+                        </span>
+                        <span>
+                            <label for="">Subject Type:</label>
+                            <small>Information Systems<small>
+                        </span>
+                        <span>
+                            <label for="">Ratings:</label>
+                            <small>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                                <ion-icon name="star-outline"></ion-icon>
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- cards -->
+            <div class="card-conts">
+
+                <div class="feature-courses">
+                    <h1>Feature Courses Activities</h1>
+                </div>
+
+               <div class="card-holder-cont">
+                   <div class="card" id="card-responsive">
+                      <div class="card-body">
+                        <h5 class="card-title">WEBTECH</h5>
+                        <img src="./feature/web.png" class="card-img-top" alt="...">
+                        <span class="card-btn">
+                            <button  class="btn active" onclick="regineAct()">View More</button>
+                        </span>
+                      </div>
+                    </div>
+
+                <div class="card" id="card-responsive1">
+                      <div class="card-body">
+                        <h5 class="card-title">PROEL</h5>
+                         <img src="./feature/proel.png" class="card-img-top" alt="...">
+                        <span class="card-btn">
+                            <button href="#" class="btn active" onclick="proelAct()">View More</button>
+                        </span>
+                      </div>
+                </div>
+
+                <div class="card" id="card-responsive2">
+                      <div class="card-body">
+                        <h5 class="card-title">MOBAPP</h5>
+                        <img src="./feature/mobapp.png" class="card-img-top" alt="...">
+                        <span class="card-btn">
+                            <button class="btn active" onclick="mobappAct()">View More</button>
+                        </span>
+                      </div>
+                </div>
+               </div>
+            </div>
+
+
+
+
+
+            <!-- Modal 1 -->
+                <!-- Modal -->
+
+                <div class="feature-card-overlay" id="regineAct" onclick="closeFeatureOverlay()">
+                    <span class="closefeature-overlay" onclick="closeFeatureOverlay()">
+
+                        <ion-icon name="close"></ion-icon>
+                    </span>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-card-logo">
+                                <img src="./blog-team/RegineAbout.png" alt="">
+                            </div>
+                            <label for="">WEBTECH Activity</label>
+                        </div>
+                        <div class="featur-card-content">
+                            <div class="feature-card-img">
+                                <img src="./feature/r.jpg" alt="">
+                            </div>
+                            <div class="feature-card-details">
+                                <label>WEBTECH Activity</label>
+                                <p>Overcome and Accomplishments By Regine</p>
+
+                                <p>The difficulties i encounter in webtech subject  is making the laboratory  3, the laboratory  3 is about styling my profile using css. I found it challenging  because I'm not good in styling, specially that time i have no idea on how to style my profile using css. Also I'm struggling  in finding  a reference  that would be fit in styling  my profile.</p>
+                                
+                               <p> I overcome  those circumstances  I encounter   in a way that  I ask our professor to teach me step by step on  how to use it correctly and also i ask for help of my classmates. Now i already know how to property  use css and I'm done making my laboratory  3 activity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Modal 1 -->
+
+            <!-- Modal 2 -->
+
+                <div class="feature-card-overlay" id="proelAct" onclick="closeFeatureOverlay()">
+                    <span class="closefeature-overlay" onclick="closeFeatureOverlay()">
+
+                        <ion-icon name="close"></ion-icon>
+                    </span>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-card-logo">
+                                <img src="./blog-team/Shellabout.png" alt="">
+                            </div>
+                            <label for="">PROEL Activity</label>
+                        </div>
+                        <div class="featur-card-content">
+                            <div class="feature-card-img">
+                                <img src="./feature/s.png" alt="">
+                            </div>
+                            <div class="feature-card-details">
+                                <label>PROEL Activity</label>
+                                <p>Overcome and Accomplishments By Shellou</p>
+                        
+                            <p>This Activity that is shown on the picture involve on how to come up with the idea on creating a character using these provided vegetables pictures, this task tests our ability for editing that now leads me on a difficult spot on assembling this pictures to one as I am not the type who is very good at editing. </p>
+
+                            <p>This picture shows that I have the capability to edit pictures, which gives me the strength to think and have a wide imagination. I bring vegetables to life and enhance my editing skills through this accomplishment. It proves that I can do anything with imagination and with the use of the correct application that helps me to create this output which is Adobe Photoshop.orum.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Modal 2 -->
+
+            <!-- Modal 3 -->
+                <!-- Modal -->
+
+
+                <div class="feature-card-overlay" id="mobappAct" onclick="closeFeatureOverlay()">
+                    <span class="closefeature-overlay" onclick="closeFeatureOverlay()">
+
+                        <ion-icon name="close"></ion-icon>
+                    </span>
+                    <div class="feature-card">
+                        <div class="feature-card-header">
+                            <div class="feature-card-logo">
+                                <img src="./blog-team/Felixabout.png" alt="">
+                            </div>
+                            <label for="">MOBAPP Activity</label>
+                        </div>
+                        <div class="featur-card-content">
+                            <div class="feature-card-img showleft">
+                                <img src="./feature/f.png" alt="">
+                            </div>
+                            <div class="feature-card-details">
+                                <label>MOBAPP Activity</label>
+                                <p>Overcome and Accomplishments By Felix</p>
+                                
+                                <p></p>I find difficulties in doing the first activity which is the lucky number. I have no idea how to make a UI using the xamarin and what the syntax is. On the other hand, the framework itself that has a bug(which was the problem ) may hinder /difficult to solve, if you have no idea about it you cant solve it</p>
+                        
+                            <p> I overcome the challenges and difficulties by asking to my peers about UI, how to create and solve the problem i may encounter.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Modal 3 -->
+
+
+
+
+            <!-- Fotter -->
+            <div class="Footer-cont" id="Footer-cont">
+
+                <!-- floting image -->
+                <div class="floating-img">
+                    <img src="./images/anim_process1.svg" alt="">
+                </div>
+
+                <div class="floating-img2">
+                    <img src="./images/anim_process3.svg" alt="">
+                </div>
+
+                <div class="footer-header">
+                    <h1>Uxie</h1>
+                    <small>©2023 Created By Group 7  All rights reserved.</small>
+                </div>
+
+                <div class="footer-icon">
+                    <span onclick="social1()"><ion-icon name="logo-facebook"></ion-icon></span>
+                    <span onclick="social2()"><ion-icon name="logo-google"></ion-icon></span>
+                    <span onclick="social3()"><ion-icon name="logo-discord"></ion-icon></span>
+                    <span onclick="social4()"><ion-icon name="logo-twitter"></ion-icon></span>
+                    <span onclick="social5()"><ion-icon name="logo-instagram"></ion-icon></span>
+                </div>
+
+                <div class="send-message">
+                    <div class="send-box">
+                        <input type="email" placeholder=" Input Email to Subscribe">
+                        <a href="https://mail.google.com/mail/u/0/?fs=1&to=Uxiweb0007@gmail.com&su=Greetings&body=Hello Uxie&tf=cm"><span><ion-icon name="send"></ion-icon></span></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    
+</body>
+
+<!-- icon cdn -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+<script src="./js/swiper-element-bundle.min.js"></script>
+
+<!-- slider/Swiper -->
+
+
+
+<script src="./js/navi.js"></script>
+<script src="./js/header.js"></script>
+<script src="./js/aboutus.js"></script>
+<script src="./js/sound.js"></script>
+<script src="./js/news-app.js"></script>
+<script src="./js/sendmail.js"></script>
+<script src="./js/aboutusModal.js"></script>
+<script src="./js/anim.js"></script>
+<script src="./js/feature-slider.js"></script>
+<script src="./js/feature-slider.js"></script>
+<script src="./js/feature-modal.js"></script>
+
+
+
+
+</html>
