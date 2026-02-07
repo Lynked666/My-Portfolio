@@ -1,0 +1,357 @@
+﻿    @model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+    <div class="container  p-0">
+
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Set Booking</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container p-0 ">
+           <div class="pt-5 p-3">
+                <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning btn-cancel btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Existing Record</button>   
+           </div>                 
+    </div>
+
+    <form asp-action="Create" method="post" class="p-0"><div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row row-appointments">
+                <!-- Owner fields -->
+                <div class="form-group col-lg-4 visually-hidden" id="apppad">
+                    <label asp-for="Appointment.ownerId" class="control-label" id="apppad"></label>
+                    <input id="ownerId" asp-for="Appointment.ownerId" class="form-control" readonly />
+                    <span asp-validation-for="Appointment.ownerId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.fname" class="control-label"></label>
+                    <input id="fname" asp-for="Appointment.fname" class="form-control" />
+                    <span asp-validation-for="Appointment.fname" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.lname" class="control-label"></label>
+                    <input id="lname" asp-for="Appointment.lname" class="form-control" />
+                    <span asp-validation-for="Appointment.lname" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.mname" class="control-label"></label>
+                    <input id="mname" asp-for="Appointment.mname" class="form-control" />
+                    <span asp-validation-for="Appointment.mname" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.contact" class="control-label"></label>
+                    <input id="contact" asp-for="Appointment.contact" class="form-control" />
+                    <span asp-validation-for="Appointment.contact" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.date" class="control-label"></label>
+                    <input asp-for="Appointment.date" class="form-control minDate" id="appointmentDate" type="date" />
+                    <span asp-validation-for="Appointment.date" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-4 col-12 col-md-6" id="apppad">
+                    <label asp-for="Appointment.time" class="control-label"></label>
+                    <select id="timeDropdown" name="Appointment.time" class="form-control" required>
+                        <!-- Times will be loaded here -->
+                    </select>
+                    <span asp-validation-for="Appointment.time" class="text-danger"></span>
+                </div>
+
+
+
+                <!-- Services Table -->
+                <div class="table-responsive  text-center p-0">
+                    <div class="container p-3">
+                        <div class="table-responsive text-center ">
+                            <table class="table table-striped hover text-center mt-2" id="DetailsTable">
+                                <thead>
+                                    <tr class="no-col">
+                                        <th class="col-lg-8">Select Service</th>
+                                        <th colspan="1" class="col-lg-5">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="detailRow">
+                                        <td>
+                                            <select name="Appointment.IAppDetails[0].serviceId" class="service-select form-select" required>
+                                                <option value="" data-price="0" disabled selected>Select Service</option>
+                                                @foreach (var service in Model.IlistServices.Where(s => s.serviceType == "NA"))
+                                                {
+                                                    <option value="@service.serviceId" data-price="@service.serviceCharge" data-service-type="@service.serviceType.ToLower()" data-service-name="@service.serviceName.ToLower()">
+                                                        @service.serviceName
+                                                    </option>
+                                                }
+
+                                                <!-- For displaying laboratory items -->
+                                                @{
+                                                    var checkTypes = Model.IlistServices
+                                                    .Select(s => s.serviceType)
+                                                    .Distinct();
+                                                    var type = string.Join(",", checkTypes).ToLower();
+                                                }
+                                                @if (type.Contains("lab"))
+                                                {
+                                                    <optgroup label="Laboratory test">
+                                                        @foreach (var service in Model.IlistServices.Where(s => s.serviceType != "NA"))
+                                                        {
+                                                            <option value="@service.serviceId" data-price="@service.serviceCharge" data-service-type="@service.serviceType.ToLower()" data-service-name="@service.serviceName.ToLower()">
+                                                                @service.serviceName
+                                                            </option>
+                                                        }
+                                                    </optgroup>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-md removeRow">Remove</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group text-end">
+
+                                <th class="text-end"><button type="button" class="btn btn-confirm btn-md" id="addRow">Add Row</button> </th>
+
+                            </div>
+                        </div>
+                    </div>
+ 
+
+                </div>
+
+                
+        
+
+            <!-- Submit and Cancel buttons -->
+            <div class="form-group text-end mt-3 mb-4 pt-5">
+                <a asp-action="Dashboard" class="btn btn-secondary btn-cancel px-4 btn-lg">Cancel</a>
+                <input type="submit" value="Create" class="btn btn-primary btn-success btn-confirm btn-lg px-4" />
+            </div>
+        </div>
+    </form>
+</div>
+    <!-- Modal for selecting existing records -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" id="modalapp">
+                <div class="modal-header" id="headapp">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="OwnerSelectionForm">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered compact" id="modalTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Selector</th>
+                                        <th class="text-center">Fullname</th>
+                                        <th class="text-center">Address</th>
+                                        <th class="text-center">Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var owner in Model.IOwner)
+                                    {
+                                        <tr>
+                                            <td class="text-center">
+                                                <input type="radio" name="SelectedOwnerId"
+                                                       value="@owner.id"
+                                                       data-ownerId="@owner.id"
+                                                       data-fname="@owner.fname"
+                                                       data-lname="@owner.lname"
+                                                       data-mname="@owner.mname"
+                                                       data-contact="@owner.contact" />
+                                            </td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => owner.fname) @Html.Raw(" ") @Html.DisplayFor(modelItem => owner.lname)</td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => owner.address)</td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => owner.contact)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-cancel btn-lg px-4" data-bs-dismiss="modal" >Back</button>
+                            <button type="button" class="btn btn-confirm btn-lg px-4" id="SelectOwnerButton" >Select</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to initialize DataTable on modal open -->
+    <script src="~/js/Modal/ModalTable.js" defer></script>
+ </div>
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+            <script>
+                $(document).ready(function () {
+                    // Function to update row names
+                    function updateRowNames() {
+                        $('#DetailsTable tbody tr').each(function (index) {
+                            $(this).find('input, select').each(function () {
+                                var name = $(this).attr('name');
+                                if (name) {
+                                    var newName = name.replace(/\d+/, index);
+                                    $(this).attr('name', newName);
+                                }
+                            });
+                        });
+                    }
+
+                    // Add row
+                    $('#addRow').click(function () {
+                        var rowCount = $('#DetailsTable tbody tr').length;
+                        var newRow = $('.detailRow').first().clone();
+
+                        newRow.find('input, select').each(function () {
+                            var name = $(this).attr('name');
+                            if (name) {
+                                var newName = name.replace(/\d+/, rowCount);
+                                $(this).attr('name', newName);
+                            }
+                            $(this).val(''); // Clear the value of the input/select
+                        });
+
+                        newRow.appendTo($('#DetailsTable tbody'));
+                        updateRowNames();
+                    });
+
+                    // Remove row
+                    $(document).on('click', '.removeRow', function () {
+                        if ($('#DetailsTable tbody tr').length > 1) {
+                            $(this).closest('tr').remove();
+                            updateRowNames(); // Update the name attributes of the remaining rows
+                        }
+                    });
+
+                    $('#SelectOwnerButton').click(function () {
+                        var selectedOwner = $('input[name="SelectedOwnerId"]:checked');
+                        if (selectedOwner.length > 0) {
+                            var ownerId = selectedOwner.data('ownerid');  // Ensure this matches the data attribute used
+                            var fname = selectedOwner.data('fname');
+                            var lname = selectedOwner.data('lname');
+                            var mname = selectedOwner.data('mname');
+                            var contact = selectedOwner.data('contact');
+
+                            // Populate the form fields
+                            $('#ownerId').val(ownerId);
+                            $('#fname').val(fname);
+                            $('#lname').val(lname);
+                            $('#mname').val(mname);
+                            $('#contact').val(contact);
+
+                            // Hide the modal
+                            $('#staticBackdrop').modal('hide');
+                        } else {
+                            alert("Please select an owner.");
+                        }
+                    });
+
+
+                    function fetchAvailableTimes() {
+                        var selectedDate = $('#appointmentDate').val();
+
+                        if (selectedDate) {
+                            $.ajax({
+                                url: '@Url.Action("GetAvailableTimes", "Appointments")',
+                                type: 'GET',
+                                data: { date: selectedDate },
+                                success: function (data) {
+                                    var timeDropdown = $('#timeDropdown');
+                                    timeDropdown.empty(); // Clear existing options
+
+                                    var hasAvailableTimes = false;
+
+                                    // Add AM options
+                                    if (data.availableAM && data.availableAM.length > 0) {
+                                        var amGroup = $('<optgroup>', { label: 'Morning' });
+                                        $.each(data.availableAM, function (index, value) {
+                                            amGroup.append($('<option>', {
+                                                value: value,
+                                                text: value + ' am'
+                                            }));
+                                        });
+                                        timeDropdown.append(amGroup);
+                                        hasAvailableTimes = true;
+                                    }
+
+                                    // Add PM options
+                                    if (data.availablePM && data.availablePM.length > 0) {
+                                        var pmGroup = $('<optgroup>', { label: 'Afternoon' });
+                                        $.each(data.availablePM, function (index, value) {
+                                            pmGroup.append($('<option>', {
+                                                value: value,
+                                                text: value
+                                            }));
+                                        });
+                                        timeDropdown.append(pmGroup);
+                                        hasAvailableTimes = true;
+                                    }
+
+                            // If no available times, add "Fully booked" option
+                            if (!hasAvailableTimes) {
+                                timeDropdown.append($('<option>', {
+                                    value: '',
+                                    text: 'Not Available',
+                                    disabled: true,
+                                    selected: true
+                                }));
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching available times:', error);
+                        }
+                    });
+                }
+            }
+
+
+                    // Trigger the date change event on page load if date is pre-filled
+                    if ($('#appointmentDate').val()) {
+                        fetchAvailableTimes();
+                    }
+
+            $('#appointmentDate').change(fetchAvailableTimes);
+        });
+
+        // Initialize DataTable on modal open to ensure alignment
+        $('#staticBackdrop').on('shown.bs.modal', function () {
+            if ($.fn.DataTable.isDataTable('#modalTable')) {
+                $('#modalTable').DataTable().destroy();
+            }
+
+            $('#modalTable').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "info": true,
+                "autoWidth": true
+              
+            });
+        });
+     </script>
+
+ }
+
+
+

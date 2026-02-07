@@ -1,0 +1,49 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Purchase Billing History";
+}
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table HistoryTbl table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="text-center"> Billing Id</th>
+                <th class="text-center"> Name </th>
+                <th class="text-center"> Date</th>
+                <th class="text-center">Total Payment</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.IBilling)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.billingId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.purchase.customerName)
+                    </td>
+                    <td> @item.date.ToString("MMM. dd, yyyy")</td>
+                    <td>
+                        @{
+                            var total = item.grandTotal;
+                            var totalV1 = (double)total;
+                            var grandTotal = totalV1.ToString("C");
+                        }
+                        @Html.DisplayFor(modelItem => grandTotal)
+                    </td>
+
+                    <td>
+                        <a asp-action="BillingHistoryView" asp-route-billingId="@item.billingId" asp-asp-controller="Billing" class="btn btn-cancel btn-sm">View Receipt</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<script src="~/js/History/History.js" defer></script>

@@ -1,0 +1,150 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Index Pet FollowUp";
+}
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+          <div>
+            <div class="container p-2">
+                <h1>Follow Up Visit</h1>
+            </div>
+          </div>
+        </div>
+
+        <table class="table" id="PetFollowUpTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Pet Name</th>
+                    <th>Owner Name</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.IPetFollowUps)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Diagnostics.pet.petName)</td>
+                        
+                        @{
+                            var ownerName = $"{item.Diagnostics.pet.owner.fname} {item.Diagnostics.pet.owner.lname}";
+                        }
+                        <td>@ownerName</td>
+
+                        @{
+                            var Services = Model.Services.FirstOrDefault(s => s.serviceId == item.serviceId);
+
+                        }
+                        <td>@Services.serviceName</td>
+
+                       <td>
+                           @Html.DisplayFor(modelItem => item.date)
+                       </td>
+
+                      
+                        <td>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary me-1" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdropCancel">
+                                Cancel
+                            </button>
+                            <button type="button" class="btn btn-success me-1" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdropAttended">
+                                Attend
+                            </button>
+                        </td>
+                    </tr>
+                } 
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Cancel Modal -->
+<div class="modal fade" id="staticBackdropCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger bg-opacity-50">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Warning</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this record?
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <form asp-action="Cancel" method="post">
+                    <input type="hidden" name="id" id="followupId" />
+                    <input type="submit" value="Confirm" class="btn btn-primary" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Attended Modal -->
+<div class="modal fade" id="staticBackdropAttended" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success bg-opacity-50">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure that this record is currently attended?
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <form asp-action="Attend" method="post">
+                    <input type="hidden" name="id" id="followupIdAttend" />
+                    <input type="submit" value="Confirm" class="btn btn-primary" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/AppointmentDataTables/PetFollowUpTable.js" defer> </script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#staticBackdropCancel').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id'); // Extract data-id from the button
+                var modalInput = $('#followupId'); // Find the hidden input field
+                modalInput.val(id); // Set the input value
+            });
+
+
+            $('#staticBackdropAttended').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id'); // Extract data-id from the button
+                var modalInput = $('#followupIdAttend'); // Find the hidden input field
+                modalInput.val(id); // Set the input value
+            });
+
+        });
+
+     
+    </script>
+
+}
+

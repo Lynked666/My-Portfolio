@@ -1,0 +1,36 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "Create Staff";
+}
+        <div class="container p-3 d-flex  justify-content-center">
+            <div class="col-12 col-md-8 ">
+
+                <form method="post" asp-action="CreateStaff" asp-controller="UserAccounts">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                    <div class="card w-80 d-flex ">
+                        <div class="container  w-50">
+                            <div class="form-group" id="apppad">
+                                <label asp-for="userAccount.fname" class="control-label"></label>
+                                <input name="fname" class="form-control" />
+                            </div>
+
+                            <div class="form-group" id="apppad">
+                                <label asp-for="userAccount.lname" class="control-label"></label>
+                                <input name="lname" class="form-control" />
+                            </div>
+
+                            <div class="form-group text-end mt-4">
+                                <input type="submit" value="Create" class="btn btn-confirm bt-lg px-4" />
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+        </div>
+

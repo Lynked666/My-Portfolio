@@ -1,0 +1,107 @@
+﻿@model IEnumerable<PAWS_NDV_PetLovers.Models.Records.Pet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Pet Dashboard</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end pt-5 p-3">
+             <a class="btn btn-cancel btn-lg " asp-action="Index" asp-controller="Owners">View Owner List</a>
+        </div>
+  
+        <div class="card p-3">
+            <div class="table-responsive">
+                 <table class="table table-bordered" id="PetTable">
+            <thead>
+                    <tr>
+                   @*  <th class="text-center">
+                       Pet Id
+                    </th> *@
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.petName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.species)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.breed)
+                    </th class="text-center">
+                @*     <th>
+                        @Html.DisplayNameFor(model => model.bdate)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.age)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.color)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.gender)
+                    </th> *@
+                     <th class="text-center">
+                        <p style="margin:0;"> Owner Name</p>
+                    </th>
+                     <th class="text-center">
+                        @Html.DisplayNameFor(model => model.registeredDate)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    @* <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td> *@
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.petName)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.species)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.breed)
+                    </td>
+                 @*    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.bdate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.age)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.color)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.gender)
+                    </td> *@
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.owner.fname)
+                        @Html.Raw(' ')
+                        @Html.DisplayFor(Modelitem => item.owner.lname)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.registeredDate)
+                    </td>
+             
+           
+                </tr>
+        }
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/RecordsDataTables/PetDataTable.js" defer></script>

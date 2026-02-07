@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PAWS_NDV_PetLovers.Models.Records.Services>
+@{
+    ViewData["Title"] = "Void Services";
+}
+
+
+<div class="container p-0 bg container-bord">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Void Service</h1>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-primary px-4" asp-action="Index">Back</a>
+
+                <table class="table hover " id="VoidServicesTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Service ID</th>
+                            <th class="text-center">Service Name</th>
+                            <th class="text-center">Service Charge</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Where(s => !string.IsNullOrEmpty(s.status)))
+                        {
+                            <tr>
+                                <td class="text-center">@item.serviceId</td>
+                                <td class="text-center">@item.serviceName</td>
+                                <td class="text-center">@item.serviceCharge</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+    </div>
+
+</div>
+<script src="~/js/RecordsDataTables/ServicesTable.js" defer></script>

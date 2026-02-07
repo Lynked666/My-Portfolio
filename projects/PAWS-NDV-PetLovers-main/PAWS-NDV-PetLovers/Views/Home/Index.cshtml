@@ -1,0 +1,54 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.ReportsVm
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mt-5">
+    <div class="row justify-content-center ">
+        <!-- Booking Card -->
+        <div class="col-lg-3 col-md-5 col-sm-8 mb-4 dash-card">
+            <div class="card text-center card-custom">
+                <div class="card-header card-header-custom">
+                    <i class="fas fa-calendar-alt mx-2"></i> Booking
+                </div>
+                <div class="card-body card-body-custom my-auto">
+                    <h1 class="display-5">@Model.IAppointment.Count().ToString()</h1>
+                </div>
+                <div class="card-footer card-footer-custom">
+                    Today
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow-up Visit Card -->
+        <div class="col-lg-3 col-md-5 col-sm-8 mb-4">
+            <div class="card text-center card-custom">
+                <div class="card-header card-header-custom">
+                    <i class="fas fa-calendar-check mx-2"></i> Follow-up Visit
+                </div>
+                <div class="card-body card-body-custom my-auto">
+                    <h1 class="display-5">@Model.IPetFollowUps.Count().ToString()</h1>
+                </div>
+                <div class="card-footer card-footer-custom">
+                    Today
+                </div>
+            </div>
+        </div>
+
+        <!-- Low Stock Level Card -->
+        <div class="col-lg-3 col-md-5 col-sm-8 mb-4">
+            <div class="card text-center card-custom">
+                <div class="card-header card-header-custom">
+                    <i class="fas fa-exclamation-triangle mx-2"></i> Low Stock Level
+                </div>
+                <div class="card-body card-body-custom my-auto">
+                    <h1 class="display-5">@Model.IProducts.Count().ToString()</h1>
+                </div>
+                <div class="card-footer card-footer-custom">
+                    Today
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,309 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Create Purchase --- PURCHASING";
+}
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+
+    <div class="container p-0 ">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Purchase Product</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <form method="post" asp-action="CreatePurchase">
+
+            <div class="container ">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-4 pt-3 d-flex justify-content-center align-items-center vh-10 "></div>
+                <!-- Center-aligned wrapper for the form content -->
+                <div class="d-flex justify-content-center align-items-center vh-10 pt-5">
+                   
+
+                        <!-- Validation Summary -->
+                       
+
+                        <!-- Customer Name Field -->
+                        <div class="form-group mb-3 me-3">
+                            <label asp-for="Purchase.customerName" class="control-label"></label>
+                            <input asp-for="Purchase.customerName" class="form-control" placeholder="(Optional)" />
+                        </div>
+
+                        <!-- Date Field -->
+                        <div class="form-group mb-3 me-3">
+                            <label asp-for="Purchase.date" class="control-label"></label>
+                            <input type="hidden" asp-for="Purchase.date" class="form-control dateInput" />
+                            <input class="form-control" value="@DateTime.Now.ToString("MMM. dd, yyyy")" readonly />
+                        </div>
+                         
+                        <!-- Select Product Button -->
+                        <div class="form-group mt-2">
+                            <button type="button" id="AddProductBtn" class="btn btn-confirm btn-sm " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Select Product
+                            </button>
+                        </div>
+                    
+                </div>
+
+
+
+            
+            
+
+                <div class="card p-3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center hover  mt-4" id="purchaseTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center visually-hidden">Product Id</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Order Quantity</th>
+                                    <th class="text-center">Action</th>
+                                
+                                </tr>
+                            </thead>
+
+                            <tbody>
+      
+                                <!--PRODUCT WILL DISPLAY HERE-->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                 <div class="modal-footer text-end mt-2 px-3">
+                    <a asp-action="SwitchToDboardTab" asp-route-tabName="DBoard_Purchase" class=" btn  btn-cancel btn-lg px-4">Cancel</a>
+                    <button type="submit" class="btn  btn-confirm btn-lg px-4" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+       
+        </form>
+    
+</div>
+
+
+<!-- Modal for selecting Products  / Select Product - INDEX-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @* <h1 class="modal-title fs-5" id="staticBackdropLabel">Select Product</h1>  *@
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="card p-3">
+                        <div class="table-responsive text-center">
+                         <table class="table table-bordered text-center hover" id="modalProductTbl">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Select</th>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Order Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+
+                                @{
+                                    var Iproducts = Model.IProducts.Where(p => p.quantity > 0).Select(p => p);
+                                }
+                                @foreach (var product in @Iproducts)
+                                {
+                                    <tr>
+                                        <td class="text-center"><input type="checkbox" class="selectProduct form-check-input" data-id="@product.id" data-name="@product.productName" data-category="@product.category.categoryName" data-qty="@product.quantity" data-price="@product.sellingPrice" /></td>
+                                        <td class="text-center">@product.id</td>
+                                        <td class="text-center">@product.productName</td>
+                                        <td class="text-center">@product.category.categoryName</td>
+                                        <td class="text-center">@product.quantity</td>
+                                        <td class="text-center">@product.sellingPrice</td>
+                                        <td><input type="number" class="form-control orderQtyInput orderItemQty" min="1" max="@product.quantity" value="1" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="text-danger me-2" id="selectionWarning" style="display:none;">Product is already selected.</div>
+                        <button type="button" class="btn btn-cancel btn-lg px-4 " id="ViewSelectedProduct">Cancel</button>
+
+                        @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+                        <button type="button" class="btn  btn-confirm btn-lg px-4" id="SelectProductButton">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/TransactionsDT/modalProductTable.js" defer></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var rowIndex = 0; // Initialize row index counter
+
+            // Reset the quantity input fields when the modal is shown
+            $('#staticBackdrop').on('show.bs.modal', function () {
+                $('.orderQtyInput').val(1); // Reset quantity to 1 or any default value
+                $('#selectionWarning').hide(); // Hide warning when showing the modal
+            });
+
+            $('#AddProductBtn').on('click', function () {
+                $('#staticBackdropSelectedProduct').modal('hide');
+            });
+
+            $('#ViewSelectedProduct').on('click', function () {
+                $('#selectionWarning').hide();
+                // Dismiss the modal after adding the products
+                $('#staticBackdrop').modal('hide');
+                $('#staticBackdropSelectedProduct').modal('show');
+            });
+
+            // Add selected products to the main table -- Modal
+            $('#SelectProductButton').on('click', function () {
+                var productAlreadySelected = false;
+                var quantityExceedsLimit = false;
+
+                // Check if any products are selected
+                if ($('.selectProduct:checked').length === 0) {
+                    $('#selectionWarning').text('Please select a product.').show();
+                    return; // Exit the function to prevent further processing
+                }
+
+                $('.selectProduct:checked').each(function () {
+                    var productId = $(this).data('id');
+                    var productName = $(this).data('name');
+                    var productCategory = $(this).data('category');
+                    var qtyOnHand = $(this).data('qty');
+                    var price = $(this).data('price');
+                    var orderQty = $(this).closest('tr').find('.orderQtyInput').val();
+
+                    // Check if product is already selected
+                    if ($("#purchaseTable input[type='hidden'][value='" + productId + "']").length > 0) {
+                        productAlreadySelected = true;
+                        return;
+                    }
+
+                    // Check if selected quantity exceeds available quantity
+                    if (parseInt(orderQty) > parseInt(qtyOnHand)) {
+                        quantityExceedsLimit = true;
+                        return;
+                    }
+
+                    // Create a new row with the selected product details and include the unique index
+                    var newRow = `
+                        <tr class="detailRow">
+                            <td class="text-center visually-hidden"><input type="hidden" name="Purchase.purchaseDetails[${rowIndex}].ProductId" value="${productId}" /> ${productId}</td>
+                            <td class="text-center">${productName}</td>
+                            <td class="text-center">${productCategory}</td>
+                            <td class="text-center">${qtyOnHand}</td>
+                            <td class="text-center">${price}</td>
+                            <td class="text-center"><input type="number" name="Purchase.purchaseDetails[${rowIndex}].quantity" class="form-control orderItemQty" value="${orderQty}" min="1" max="${qtyOnHand}" /></td>
+                            <input type="hidden" name="Purchase.purchaseDetails[${rowIndex}].sellingPrice" class="form-control w-50" value="${price}"/>
+                            <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                        </tr>
+                    `;
+
+                    $('#purchaseTable tbody').append(newRow);
+                    rowIndex++; // Increment the row index counter
+                });
+
+                if (productAlreadySelected) {
+                    $('#selectionWarning').text('Product is already selected.').show();
+                } else if (quantityExceedsLimit) {
+                    $('#selectionWarning').text('Selected quantity exceeds available stock.').show();
+                } else {
+                    $('#selectionWarning').hide();
+                    // Dismiss the modal after adding the products
+                    $('#staticBackdrop').modal('hide');
+                    $('#staticBackdropSelectedProduct').modal('show');
+                }
+
+                // Uncheck all checkboxes after adding
+                $('.selectProduct').prop('checked', false);
+            });
+
+            $('.removeButtonMdl').on('click', function () {
+                var productId = $(this).data('id');
+                $('#ProdId_Receiver').val(productId);
+            });
+
+            // Remove row from the table and update row index
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove(); // Remove the selected row
+
+                // Update the rowIndex of all remaining rows in the table
+                $('#purchaseTable tbody tr').each(function (index) {
+                    $(this).find('input[name^="Purchase.purchaseDetails"]').each(function () {
+                        // Update the name attributes to reflect the new index
+                        var name = $(this).attr('name');
+                        var updatedName = name.replace(/\[\d+\]/, '[' + index + ']'); // Replace the index in the name
+                        $(this).attr('name', updatedName);
+                    });
+                });
+
+                // Adjust rowIndex variable to the current number of rows
+                rowIndex = $('#purchaseTable tbody tr').length;
+            });
+
+            // Validate quantity input on change
+            $(document).on('input', '.orderItemQty', function () {
+                var max = $(this).attr('max');
+                var value = $(this).val();
+                if (parseInt(value) < 1) {
+                    $(this).val(1); // Set value to 1 if less than 1
+                } else if (parseInt(value) > parseInt(max)) {
+                    $(this).val(max); // Limit value to max if exceeds
+                }
+            });
+
+            // Check if there's an error message and open the modal automatically
+            if ('@ViewData["ErrorMessage"]' !== '') {
+                $('#staticBackdropSelectedProduct').modal('show');
+            }
+
+            // Check if there's an error message and open the modal automatically
+            if ('@ViewData["RemoveErrorMessage"]' !== '') {
+                $('#staticBackdropRemove').modal('show');
+            }
+            // Initialize DataTable on modal open to ensure alignment
+            $('#staticBackdrop').on('shown.bs.modal', function () {
+                if ($.fn.DataTable.isDataTable('#modalProductTbl')) {
+                    $('#modalProductTbl').DataTable().destroy();
+                }
+
+                $('#modalProductTbl').DataTable({
+                    "ordering": true,
+                    "paging": true,
+                    "searching": true,
+                    "info": true,
+                    "autoWidth": true
+
+                });
+            });
+        });
+
+    </script>
+}

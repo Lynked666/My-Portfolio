@@ -1,0 +1,67 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Purchase History";
+}
+@*this index view is abandoned *@
+
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Purchase History</h1>
+                </div>
+            </div>
+        </div>
+
+
+        @*     <a asp-action="Purchase" class="btn btn-secondary">All Transactions</a> *@
+        <a asp-action="DiagnosticHistory" class="btn btn-secondary">Diagnostics</a>
+  
+
+
+        <table class="table" id="History">
+            <thead class="">
+                <tr>
+                    <th class="text-center">Purchase Id</th>
+                    <th class="text-center">Customer Name</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Total Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var purchase in Model.IPurchase)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => purchase.purchaseId)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => purchase.customerName)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => purchase.date)</td>
+                        @* <td class="text-center"> @Html.DisplayFor(modelItem=> purchase.totalProductPayment)</td> *@
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/js/TransactionsDT/History.js" defer></script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $('#History').DataTable({
+
+            paging: false,
+            scrollY: 400,
+            responsive: true,
+            searching: true,
+            ordering: true,
+
+        });
+    </script>
+}

@@ -1,0 +1,325 @@
+﻿@{
+    #region == Abandone View ==
+
+
+ @* @model PAWS_NDV_PetLovers.ViewModels.ReportsVm
+@{
+    ViewData["Title"] = "AppointmentsReport";
+}
+THIS VIEW IS ABANDONED
+
+<div class="bg-custom-color bg-secondary bg-opacity-10 mb-3 py-2">
+    <div class="container">
+        <h1>Appointment Report</h1>
+    </div>
+</div>
+<div class="container">
+    <form method="post" asp-action="AppointmentsReport" asp-controller="PawsReport" id="viewForm">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row">
+
+                <div class="form-group col-lg-2 col-auto">
+                    <label for="reportType">Report Type</label>
+                    @switch (Model.reportType)
+                    {
+                        case "booking":
+                            <select name="reportType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Select</option>
+                                <option value="booking" selected>Booking</option>
+                                <option value="followUp">Follow Up</option>
+                            </select>
+                            break;
+
+                        case "followUp":
+                            <select name="reportType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Select</option>
+                                <option value="booking">Booking</option>
+                                <option value="followUp" selected>Follow Up</option>
+                            </select>
+                            break;
+
+                        default:
+                            <select name="reportType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Select</option>
+                                <option value="booking">Booking</option>
+                                <option value="followUp">Follow Up</option>
+                            </select>
+                            break;
+                    }
+                </div>
+
+                <div class="form-group col-lg-2 col-auto">
+                    <label for="startingDate" class="control-label">Start Date</label>
+                    <input type="date" name="startDate" class="form-control" value="@Model.startDate?.ToString("yyyy-MM-dd")" required />
+                </div>
+
+                <div class="form-group col-lg-2 col-auto">
+                    <label for="endingDate" class="control-label">End Date</label>
+                    <input type="date" name="endDate" class="form-control" value="@Model.endDate?.ToString("yyyy-MM-dd")" required />
+                </div>
+
+                <div class="form-group mt-auto col-lg-2 col-auto">
+                    @switch (Model.SelectType)
+                    {
+                        case "custom":
+                            <select id="selectType" name="SelectType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Select</option>
+                                <option value="custom" selected>Custom</option>
+                                <option value="all">All</option>
+                            </select>
+                            break;
+
+                        case "all":
+                            <select id="selectType" name="SelectType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Select</option>
+                                <option value="custom">Custom</option>
+                                <option value="all" selected>All</option>
+                            </select>
+                            break;
+
+                        default:
+                            <select id="selectType" name="SelectType" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden selected>--Select</option>
+                                <option value="custom">Custom</option>
+                                <option value="all">All</option>
+                            </select>
+                            break;
+                    }
+                </div>
+
+                <div id="statusVisibility" class="form-group mt-auto col-lg-2 col-auto statusVisibility">
+                    @switch (Model.Status)
+                    {
+                        case "inProgress":
+                            <select name="Status" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Status</option>
+                                <option value="inProgress" selected>In Progress</option>
+                                <option value="complete">Complete</option>
+                            </select>
+                            break;
+
+                        case "complete":
+                            <select name="Status" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Status</option>
+                                <option value="inProgress">In Progress</option>
+                                <option value="complete" selected>Complete</option>
+                            </select>
+                            break;
+
+                        default:
+                            <select name="Status" class="form-control bg-light me-4 form-select" required>
+                                <option value="" hidden>--Status</option>
+                                <option value="inProgress">In Progress</option>
+                                <option value="complete">Complete</option>
+                            </select>
+                            break;
+                    }
+                </div>
+
+                <div class="form-group col-lg-2 col-4 col-md-6 mt-auto">
+                    <input type="submit" value="View" class="btn btn-primary ms-3 mt-3 px-5" />
+                </div>
+            </div>
+        </form>
+
+
+        <!-- Display the filtered report -->
+        @if (Model.reportType != null)
+        {
+            @switch (Model.reportType)
+            {
+                case "booking":
+                    <div class="mt-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Filtered)
+                                {
+                                    @if (Model.IAppointment != null && Model.IAppointment.Any())
+                                    {
+                                        foreach (var appointment in Model.IAppointment)
+                                        {
+                                            <tr>
+
+                                                @if (appointment.ownerId == null)
+                                                {
+                                                    var fullname = $"{appointment.fname} {appointment.lname}";
+                                                    <td>@fullname</td>
+                                                }
+                                                else
+                                                {
+                                                    var fullname = $"{appointment.OwnerNav.fname} {appointment.OwnerNav.lname}";
+                                                    <td>@fullname</td>
+                                                }
+
+
+                                                <td>@appointment.date.ToString("MMM. dd, yyyy")</td>
+
+                                                @{
+                                                    var services = appointment.IAppDetails.Select(d => d.Services.serviceName).ToList();
+                                                    var serviceDisplay = services.Take(2);
+
+                                                    var remainingServices = services.Skip(2);
+                                                }
+                                                <td>
+                                                    @string.Join(", ", serviceDisplay)
+                                                    @if (services.Count > 2)
+                                                    {
+                                                        <strong>
+                                                            <span title="@string.Join(", ", remainingServices)">...</span>
+                                                        </strong>
+                                                    }
+                                                </td>
+                                                <!-- Modern Status Design with Badge and Icons -->
+                                                <td>
+                                                    @if (appointment.remarks == "Completed")
+                                                    {
+                                                        <span class="badge bg-success text-white rounded-pill">
+                                                            <i class="bi bi-check-circle-fill"></i> Complete
+                                                        </span>
+                                                    }
+                                                    else if (appointment.remarks == "Cancelled")
+                                                    {
+                                                        <span class="badge bg-danger text-white rounded-pill">
+                                                            <i class="bi bi-hourglass-split"></i> Cancelled
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary text-white rounded-pill">
+                                                            <i class="bi bi-exclamation-circle-fill"></i> In Progress
+                                                        </span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4" class="text-center">No appointments found for the selected date range.</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    break;
+
+
+                case "followUp":
+                    <div class="mt-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Owner Name</th>
+                                    <th>Pet Name</th>
+                                    <th>Date</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <!-- Add other relevant columns here -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Filtered)
+                                {
+                                    @if (Model.IPetFollowUps != null && Model.IPetFollowUps.Any())
+                                    {
+                                        foreach (var followUp in Model.IPetFollowUps)
+                                        {
+                                            <tr>
+
+                                                @{
+                                                    var fullname = $"{followUp.Diagnostics.pet.owner.fname} {followUp.Diagnostics.pet.owner.lname}";
+
+                                                }
+                                                <td>@fullname</td>
+                                                <td>@followUp.Diagnostics.pet.petName</td>
+                                                <td>@followUp.date.ToString("MMM. dd, yyyy")</td>
+
+                                                <td>
+                                                    @followUp.Services.serviceName
+                                                </td>
+                                                <!-- Modern Status Design with Badge and Icons -->
+                                                <td>
+
+                                                    @if (followUp.status == "Attended")
+                                                    {
+                                                        <span class="badge bg-success text-white rounded-pill">
+                                                            <i class="bi bi-check-circle-fill"></i> Complete
+                                                        </span>
+                                                    }
+                                                    else if (followUp.status == "Cancelled")
+                                                    {
+                                                        <span class="badge bg-danger text-white rounded-pill">
+                                                            <i class="bi bi-hourglass-split"></i> Cancelled
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-secondary text-white rounded-pill">
+                                                            <i class="bi bi-exclamation-circle-fill"></i> In Progress
+                                                        </span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="5" class="text-center">No appointments found for the selected date range.</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    break;
+            }
+
+        }
+   
+    </div>
+</div>
+ *@
+#endregion
+}
+
+
+
+@{
+    #region == DEFAULT FORM WITH JS DATE CHANGE ==
+    /*    < form method = "post" asp - action = "AppointmentsReport" >
+        < div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="row">
+                <div class="form-group col-lg-3 col-12 col-md-6">
+                    <label for="startingDate" class="control-label">Start Date</label>
+                    <input type = "date" id= "startingDate" name= "startDate" class="form-control"  />
+                </div>
+
+                <div class="form-group col-lg-3 col-12 col-md-6">
+                    <label for="endingDate" class="control-label">End Date</label>
+                    <input type = "date" id= "endingDate" name= "endDate" class="form-control" />
+                </div>
+
+                <div class="form-group col-lg-3 col-12 col-md-6 d-flex align-items-end">
+                    <select name = "selection" class="form-control bg-light me-2 ">
+                        <option value = "custom" class="text-center" selected>Custom</option>
+                        <option value = "all" class="text-center">All</option>
+
+                    </select>
+                    <input type = "submit" value="View" class="btn btn-primary mt-3 px-5" />
+            </div>
+            </div>
+      </form>
+    */
+    #endregion
+}

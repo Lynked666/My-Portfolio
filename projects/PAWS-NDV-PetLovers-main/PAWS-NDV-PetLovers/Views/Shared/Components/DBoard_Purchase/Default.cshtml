@@ -1,0 +1,70 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "DBoard Purchase VC  -> Invoice Purchase";
+}
+<!-- Alert Placeholder -->
+@if (TempData["Message"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="card p-3">
+    <div class="table-responsive">
+ @*    <div class="text-end py-2">
+        <a class="btn btn-primary" asp-action="CreatePurchase">Create Purchase</a>
+    </div> *@
+    <table class="table table-bordered ComponentTable text-center">
+
+        <thead>
+            <tr>
+                <th class="text-center">Purchase ID</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Total Payment</th>
+                <th class="text-center">Actions</th>
+          
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.IPurchase)
+            {
+                <tr>
+        
+                    <td class="text-center" >@Html.DisplayFor(modelItem => item.purchaseId)</td>
+                    <td>@Html.DisplayFor(modelItem =>item.customerName)</td>
+                    <td>@item.date?.ToString("MMM. dd, yyyy")</td>
+                    <td>
+                        @{
+                            // Calculate the total payment for the purchase
+                            var totalPayment = item.purchaseDetails.Sum(pd => pd.sellingPrice * pd.quantity);
+                        }
+                        @totalPayment.ToString("C") 
+                    </td>
+                 
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-update btn-sm" asp-action="EditPurchase" asp-route-purchaseId="@item.purchaseId">Payment</a>
+                            @if (totalPayment == 0)
+                            {
+                                <form method="post" asp-action="DeletePurchase">
+                                    <input type="hidden" name="purchaseId" value="@item.purchaseId" />
+                                    <input type="submit" value="Delete" class="btn btn-outline-danger" />
+                                </form>
+                            }
+                         </div>
+                    </td>
+
+                 
+                      
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script src="~/js/ComponentsTable/ComponentsTable.js" defer></script>

@@ -1,0 +1,375 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "DiagnosAppointment";
+
+    // Retrieve the list of selected service IDs from the ViewModel
+    List<int> selectedServiceIds = Model.SelectedServices;
+}
+
+@*this view is abandoned*@
+
+
+<div class="container p-0 bg container-bord">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Diagnostics Appointment</h1>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="Create" asp-controller="C_Diagnostics">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Owner ID - Name</label>
+                    @{
+                        var fullName = $"{Model.Owner.id} - {Model.Owner.fname} {Model.Owner.lname}";
+                    }
+                    <input name="id" class="form-control" value="@fullName" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6 mt-4">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Select Pet
+                    </button>
+                </div>
+
+                <!-- Modal for selecting existing records -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Select Record</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="OwnerSelectionForm">
+                                    <table class="table table-striped w-100" id="OwnerTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Selector</th>
+                                                <th class="text-center">Pet ID</th>
+                                                <th class="text-center">Pet Name</th>
+                                                <th class="text-center">Breed</th>
+                                                <th class="text-center">Gender</th>
+                                                <th class="text-center">Age</th>
+                                                <th class="text-center">Bdate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var pet in Model.Owner.Pets)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <input type="radio" name="SelectedPetId"
+                                                               value="@pet.id"
+                                                               data-petid="@pet.id"
+                                                               data-petname="@pet.petName"
+                                                               data-breed="@pet.breed"
+                                                               data-gender="@pet.gender"
+                                                               data-age="@pet.age"
+                                                               data-bdate="@pet.bdate" />
+                                                    </td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.id)</td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.petName)</td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.breed)</td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.gender)</td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.age)</td>
+                                                    <td class="text-center">@Html.DisplayFor(modelItem => pet.bdate)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="SelectPetButton">Select</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h3>Pet Information</h3>
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6 visually-hidden ">
+                    <label asp-for="Diagnostics.petId" class="control-label"></label>
+                    <input asp-for="Diagnostics.petId" class="form-control petId" readonly required />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Pet Id</label>
+                    <input class="form-control petId" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Pet Name</label>
+                    <input id="petName" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Breed</label>
+                    <input id="breed" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Gender</label>
+                    <input id="gender" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Age</label>
+                    <input id="age" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Birth Date</label>
+                    <input id="bdate" class="form-control" readonly />
+                </div>
+
+                <div class="row mt-3">
+                    <div class="form-group col-lg-3">
+                        <!-- Hidden Field for Date -->
+                        <label asp-for="Diagnostics.date" class="control-label"></label>
+                        <input asp-for="Diagnostics.date" class="form-control dateInput" readonly />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <!-- Hidden Field for Date -->
+                        <label asp-for="Diagnostics.weight" class="control-label"></label>
+                        <input asp-for="Diagnostics.weight" class="form-control bg-light decimal-input" placeholder="Input weight" required />
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <table class="table mt-2" id="DetailsTable">
+                        <thead>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < selectedServiceIds.Count; i++)
+                            {
+                                // Get the selected service ID for the current row
+                                var selectedServiceId = selectedServiceIds[i];
+
+                                <tr class="detailRow">
+                                    <td>
+                                        <div class="form-group mt-2">
+                                            <!-- Dropdown for selecting a service -->
+                                            <select name="Diagnostics.IdiagnosticDetails[@i].serviceId" class="form-control service-select" required>
+                                                <option value="" data-price="0" disabled>Select Service</option>
+
+                                                <!-- Loop through NA-type services and set the selected service -->
+                                                @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                {
+                                                    if (service.serviceId == selectedServiceId)
+                                                    {
+                                                        <option value="@service.serviceId"
+                                                                data-price="@service.serviceCharge"
+                                                                data-service-type="@service.serviceType.ToLower()"
+                                                                data-service-name="@service.serviceName.ToLower()"
+                                                                selected="selected">
+                                                            @service.serviceName
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@service.serviceId"
+                                                                data-price="@service.serviceCharge"
+                                                                data-service-type="@service.serviceType.ToLower()"
+                                                                data-service-name="@service.serviceName.ToLower()">
+                                                            @service.serviceName
+                                                        </option>
+                                                    }
+                                                }
+
+                                                @* Laboratory services grouped under "Laboratory test" optgroup *@
+                                                @{
+                                                    // Get all distinct service types for conditional rendering
+                                                    var checkTypes = Model.Services
+                                                    .Select(s => s.serviceType)
+                                                    .Distinct();
+
+                                                    // Convert types to lowercase for easier comparison
+                                                    var type = string.Join(",", checkTypes).ToLower();
+                                                }
+
+                                                @if (type.Contains("lab"))
+                                                {
+                                                    <optgroup label="Laboratory test">
+                                                        @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                        {
+                                                            if (service.serviceId == selectedServiceId)
+                                                            {
+                                                                <option value="@service.serviceId"
+                                                                        data-price="@service.serviceCharge"
+                                                                        data-service-type="@service.serviceType.ToLower()"
+                                                                        data-service-name="@service.serviceName.ToLower()"
+                                                                        selected="selected">
+                                                                    @service.serviceName
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@service.serviceId"
+                                                                        data-price="@service.serviceCharge"
+                                                                        data-service-type="@service.serviceType.ToLower()"
+                                                                        data-service-name="@service.serviceName.ToLower()">
+                                                                    @service.serviceName
+                                                                </option>
+                                                            }
+                                                        }
+                                                    </optgroup>
+                                                }
+                                            </select>
+
+                                            <!-- Hidden input to store the service charge for this row -->
+                                            <input type="hidden" name="Diagnostics.IdiagnosticDetails[@i].totalServicePayment" class="service-charge" value="" />
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="prescription">
+                                            <!-- Textarea for entering details or prescription, if needed -->
+                                            <textarea name="Diagnostics.IdiagnosticDetails[@i].details" class="form-control bg-light" rows="5" style="resize: none;" placeholder="(Optional)"></textarea>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <!-- Button to remove the current row from the table -->
+                                        <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Button to add a new service row to the table -->
+                    <button type="button" class="btn btn-success" id="addRow">Add Service</button>
+                </div>
+
+                <!-- Total Payment -->
+
+                <div class="form-group text-end">
+                    @* <label asp-for="Diagnostics.totalServicePayment" class="control-label fw-bold visually-hidden"></label>
+                    <input class="visually-hidden" asp-for="Diagnostics.totalServicePayment" id="totalPayment" class="form-control" readonly /> *@
+                    <a asp-action="Index" asp-controller="Appointments" class="btn btn-secondary">Cancel</a>
+                    <input type="hidden" name="ownerId" value="@Model.Owner.id" />
+                    <input type="submit" value="Save" class="btn btn-primary btn-md px-4 my-2" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        $('#SelectPetButton').click(function () {
+            var selectedPet = $('input[name="SelectedPetId"]:checked');
+            if (selectedPet.length > 0) {
+
+                var petId = selectedPet.data('petid'); // Corrected case
+                var petName = selectedPet.data('petname'); // Corrected case
+                var breed = selectedPet.data('breed');
+                var gender = selectedPet.data('gender');
+                var age = selectedPet.data('age');
+                var bdate = selectedPet.data('bdate');
+
+                $('.petId').val(petId);
+                $('#petName').val(petName);
+                $('#breed').val(breed);
+                $('#gender').val(gender);
+                $('#age').val(age);
+                $('#bdate').val(bdate);
+
+                $('#staticBackdrop').modal('hide');
+            }
+            else {
+                alert("Please select a Pet.");
+            }
+
+        });
+
+        $(document).ready(function () {
+
+            // Function to update the name attributes of input/select elements in each row
+            function updateRowNames() {
+                $('#DetailsTable tbody tr').each(function (index) {
+                    $(this).find('input, select').each(function () {
+                        var name = $(this).attr('name');
+                        if (name) {
+                            var newName = name.replace(/\d+/, index); // Update index for each element
+                            $(this).attr('name', newName);
+                        }
+                    });
+                });
+            }
+
+            // Function to calculate and update the total price based on service charges
+            function updateTotalPrice() {
+                var totalPrice = 0;
+
+                $('#DetailsTable tbody tr').each(function () {
+                    var $select = $(this).find('select.service-select');
+                    var price = parseFloat($select.find('option:selected').data('price')) || 0;
+                    $(this).find('input.service-charge').val(price); // Update hidden input with price
+                    totalPrice += price; // Accumulate total price
+                });
+
+                $('#totalPayment').val(totalPrice.toFixed(2)); // Display total payment with 2 decimal places
+            }
+
+            // Event handler for when a service is selected
+            $(document).on('change', 'select.service-select', function () {
+                updateTotalPrice(); // Update total price whenever a service is selected or changed
+            });
+
+            // Add a new row to the table when "Add Service" button is clicked
+            $('#addRow').click(function () {
+                var rowCount = $('#DetailsTable tbody tr').length;
+                var newRow = $('.detailRow').first().clone(); // Clone the first row
+
+                newRow.find('input, select, textarea').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\d+/, rowCount); // Update name attribute for the new row
+                        $(this).attr('name', newName);
+                    }
+                    $(this).val(''); // Clear the value of the input/select
+                });
+
+                newRow.appendTo($('#DetailsTable tbody')); // Append new row to table body
+                updateRowNames(); // Update names for all rows
+                updateTotalPrice(); // Recalculate total price
+            });
+
+            // Remove a row when "Remove" button is clicked
+            $(document).on('click', '.removeRow', function () {
+                if ($('#DetailsTable tbody tr').length > 1) {
+                    $(this).closest('tr').remove(); // Remove the closest row
+                    updateRowNames(); // Update names for remaining rows
+                    updateTotalPrice(); // Recalculate total price
+                }
+            });
+
+            // Initial total price calculation on page load
+            updateTotalPrice();
+        });
+
+    </script>
+}

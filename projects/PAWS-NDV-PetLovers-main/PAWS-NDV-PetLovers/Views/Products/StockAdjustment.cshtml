@@ -1,0 +1,66 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.RecordsVm
+@{
+    ViewData["Title"] = "Stock Adjustment";
+}
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center ">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Stock Adjustments</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-3 pt-5">
+            <a asp-action="Index" class="btn btn-cancel btn-lg">Back to Product List</a>
+        </div>
+        
+           <div class="card p-3">
+             <div class="table-responsive"> 
+                <table class="table table-bordered text-center" id="StockAdjTable">
+                        <thead>
+                            <tr class="text-center">
+                                @* <th class="text-center">Product Id</th> *@
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Product Name</th>
+                                <th class="text-center">Source</th>
+                                <th class="text-center">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var stock in Model.IstockAdjustment)
+                            {
+                                if (stock.source == "Sales")
+                                {
+                                    <tr class="text-center">
+                                        @* <td class="text-center">@stock.productId</td> *@
+                                        <td>@stock.date.ToString("MMM. dd, yyyy")</td>
+                                        <td>@stock.productsNav.productName</td>
+                                        <td> @stock.source</td>
+                                        <td class="text-danger fw-bold text-center">-@stock.stock</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="text-center">
+                                       @*  <td class="text-center">@stock.productId</td> *@
+                                        <td>@stock.date.ToString("MMM. dd, yyyy")</td>
+                                        <td>@stock.productsNav.productName</td>
+                                        <td>@stock.source</td>
+                                        <td class="text-success fw-bold text-center">+@stock.stock</td>
+                                    </tr>
+                                }
+
+                             }
+
+                             </tbody>
+                </table>
+            </div>
+           </div>
+    </div>
+</div>
+
+<script src="~/js/stockAdjTable/StockAdjTable.js" defer></script>

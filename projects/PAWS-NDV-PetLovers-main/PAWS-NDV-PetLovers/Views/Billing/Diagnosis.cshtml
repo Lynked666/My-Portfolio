@@ -1,0 +1,97 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Diagnosis";
+}
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Check-up</h1>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row pt-5 p-3 d-flex justify-content-center align-content-center ">
+            <div class="col-4">
+                <!-- Search Form -->
+                <form id="searchForm" method="get" asp-action="Diagnosis" class="input-group mb-3">
+                    <input type="text" name="searchTerm" class="form-control" placeholder="Search client name..." />
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </form>
+            </div>
+        </div>
+  
+        <!-- Search Results -->
+        <div id="results">
+            @if (Model.IOwner?.Any() == true)
+            {
+                <div class="card p-3">
+                      <div class="table-responsive">
+                    <table class="table table-hover table-bordered mt-3 text-center">
+                        <thead>
+                            <tr>@* 
+                                <th class="text-center">Client Id</th> *@
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Home Address</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var owner in Model.IOwner)
+                            {
+                                <tr>
+                                    @{
+                                        var fullname = $"{owner.fname} {owner.lname}";
+                                    }
+                                   @*  <td>@owner.id</td> *@
+                                    <td>@fullname</td>
+                                    <td>@owner.address</td>
+                                    <td>
+                                        <a asp-action="CreateDiagnosis" asp-route-id="@owner.id" class="btn btn-sm btn-confirm">
+                                            <i class="bi bi-pencil-square"></i> Select
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            }
+            else
+            {
+                <div class="row justify-content-center mt-5">
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No results found</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();
+                var searchTerm = $('input[name="searchTerm"]').val();
+
+                $.get('/Billing/Diagnosis', { searchTerm: searchTerm }, function (data) {
+                    $('#results').html($(data).find('#results').html());
+                });
+            });
+        });
+    </script>
+}

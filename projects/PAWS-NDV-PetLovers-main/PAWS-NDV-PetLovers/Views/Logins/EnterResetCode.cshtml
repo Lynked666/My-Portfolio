@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Enter Reset Code";
+    Layout = "_Login.cshtml";
+}
+
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card w-100" style="max-width: 500px; border-radius: 20px;">
+        <div class="card-body p-4">
+            <h2 class="card-title mb-4">Reset Your Password</h2>
+            <p>Please enter the reset code you received via email and set a new password.</p>
+
+            <form asp-action="VerifyResetCode" method="post" asp-controller="Logins">
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <!-- Reset Code Input -->
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="ResetCode" name="resetCode" placeholder="Reset Code" required>
+                    <label for="ResetCode">Reset Code</label>
+                </div>
+
+                <!-- New Password Input -->
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="NewPassword" name="newPassword" placeholder="New Password" required>
+                    <label for="NewPassword">New Password</label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+                <div class="text-center mt-2">
+                    <a asp-action="Login" class="text-primary text-decoration-none">Cancel</a>
+                </div>
+            
+            </form>
+        </div>
+    </div>
+</div>

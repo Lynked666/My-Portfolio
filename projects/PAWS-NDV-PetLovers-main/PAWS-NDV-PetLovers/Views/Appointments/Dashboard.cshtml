@@ -1,0 +1,54 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Appointment Dashboard";
+}
+
+
+<div class="container-fluid bg p-0 container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+
+            <div class="container p-0 bg-custom-color text-center ">
+                <div>
+                    <div class="container p-2">
+                        <h1 class="fw-bold">Appointments</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="btn-group btn-group-toggle pt-5 mx-3 " data-toggle="buttons">
+                  
+                    <a role="presentation" asp-action="SwitchToTab" asp-route-tabName="booking" class="@(Model.activeAppointTab == PAWS_NDV_PetLovers.ViewModels.AppointmentTab.booking ? "active" : string.Empty) btn btn-success btn-lg ">Booking</a>
+                 
+                    <a role="presentation" asp-action="SwitchToTab" asp-route-tabName="followUp" class="@(Model.activeAppointTab == PAWS_NDV_PetLovers.ViewModels.AppointmentTab.followUp ? "active" : string.Empty) btn btn-success btn-lg">Follow-up</a>
+               
+                    <a role="presentation" asp-action="SwitchToTab" asp-route-tabName="monitoring" class="@(Model.activeAppointTab == PAWS_NDV_PetLovers.ViewModels.AppointmentTab.monitoring ? "active" : string.Empty) btn btn-success btn-lg">Monitoring</a>
+                 
+            </div> 
+
+
+            @switch (Model.activeAppointTab)
+            {
+                case PAWS_NDV_PetLovers.ViewModels.AppointmentTab.booking:
+                    @await Component.InvokeAsync("Booking", new { updated = Model.updated, created = Model.created })
+                    break;
+
+                case PAWS_NDV_PetLovers.ViewModels.AppointmentTab.followUp:
+                    @await Component.InvokeAsync("FollowUp", new {updated = Model.updated})
+                    break;
+
+                case PAWS_NDV_PetLovers.ViewModels.AppointmentTab.monitoring:
+                    @await Component.InvokeAsync("Monitoring", new {vcm = Model})
+                break;
+
+            default:
+                @await Component.InvokeAsync("Booking", new { updated = Model.updated, created = Model.created })
+                break;
+        }
+
+    
+
+   
+    </div>
+</div>

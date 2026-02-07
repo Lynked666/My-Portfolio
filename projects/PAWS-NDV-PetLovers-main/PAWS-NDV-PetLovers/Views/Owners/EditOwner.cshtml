@@ -1,0 +1,83 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Owner
+@{
+    ViewData["Title"] = "Edit Owner";
+}
+
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+    <div class="container p-0 ">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Update Client</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+            <form asp-action="EditOwner">
+
+                    <div class="card p-3">
+
+                          <div class="row" >
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                <div class="form-group col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="id" class="control-label"></label>
+                                    <input type="text" asp-for="id" class="form-control bg-light" readonly />
+                                </div>
+                                <div class="form-group col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="fname" class="control-label"></label>
+                                    <input asp-for="fname" class="form-control"  />
+                                    <span asp-validation-for="fname" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="lname" class="control-label"></label>
+                                    <input asp-for="lname" class="form-control"  />
+                                    <span asp-validation-for="lname" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="mname" class="control-label"></label>
+                                    <input asp-for="mname" class="form-control"  />
+                                    <span asp-validation-for="mname" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="gender" class="control-label"></label>
+                                    <input asp-for="gender" class="form-control"  />
+                                    <span asp-validation-for="gender" class="text-danger"></span>
+                                </div>
+                                <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="contact" class="control-label"></label>
+                                    <input asp-for="contact" class="form-control" />
+                                    <span asp-validation-for="contact" class="text-danger"></span>
+                                </div>
+                                <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="email" class="control-label"></label>
+                                    <input asp-for="email" class="form-control" />
+                                    <span asp-validation-for="email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                                    <label asp-for="address" class="control-label"></label>
+                                    <input asp-for="address" class="form-control" />
+                                    <span asp-validation-for="address" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group col-lg-3 " id="apppad">
+                                    <label asp-for="registeredDate" class="control-label"></label>
+                                    <input type="hidden" asp-for="registeredDate" class="form-control" readonly />
+                                    <input value="@Model.registeredDate?.ToString("MMM. dd, yyyy")" class="form-control" readonly />
+                                </div>
+                                <div class="button-group pt-5 pb-3 text-end" id="apppad">
+                                    <a class="btn btn-cancel btn-lg px-4" asp-action="Edit" asp-route-id="@Model.id">Cancel</a>
+                                    <input type="submit" class="btn btn-confirm btn-lg px-4" value="Save" />
+                                </div>
+
+
+                          </div>
+              </form>
+   
+</div>

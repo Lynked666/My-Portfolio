@@ -1,0 +1,139 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Billing";
+}
+@* 
+this index view is abandoned *@
+
+
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Billing</h1>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card p-3">
+            <div class="table-responsive">
+                <table class="table  table-bordered hover" id="diagnosticTable">
+                <thead>
+                    <tr>
+                        <th>Diagnostic Id</th>
+                        <th>Owner ID - Name</th>
+                        <th>Pet Id - Name</th>
+                        <th>Services</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach (var item in Model.IDiagnostics)
+                        {
+                            @* var grandPayment = item.totalServicePayment ?? 0;  *@
+                            var grandPurchase = Model.IPurchase
+                        .Where(p => p.diagnosisId_holder != null && p.diagnosisId_holder == item.diagnostic_Id)
+                            .SelectMany(p => p.purchaseDetails)
+                            .Sum(pd => pd.sellingPrice * pd.quantity);
+
+                            @* var grandTotal = grandPayment + grandPurchase;
+                            var displayTotal = grandTotal.ToString("N2"); *@
+
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.diagnostic_Id)</td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.petId)
+                                    @Html.Raw(" - ")
+                                    @Html.DisplayFor(modelItem => item.pet.owner.fname)
+                                    @Html.Raw(' ')
+                                    @Html.DisplayFor(modelItem => item.pet.owner.lname)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(modelItem => item.petId)
+                                    @Html.Raw(" - ")
+                                    @Html.DisplayFor(modelItem => item.pet.petName)
+                            </td>
+                            <td>
+                                    @{
+                                        var diagnosticDetails = item.IdiagnosticDetails
+                                        .Select(d => d.Services.serviceName)
+                                        .Distinct();
+                                        var Services = string.Join(" , ", diagnosticDetails);
+                                    }
+                                    @Services
+                            </td>
+                            <td>
+                              @*   <span>@displayTotal</span> *@
+                            </td>
+                            <td class="remarks-cell">
+                                    @Html.DisplayFor(modelItem => item.status)
+                            </td>
+                            <td>
+                                <form method="post" asp-action="SetRemarks">
+                                    <input type="hidden" name="diagnosticId" value="@item.diagnostic_Id" />
+                                        @if (string.IsNullOrEmpty(item.status))
+                                        {
+                                        @* <input type="hidden" name="grandtotal" value="@grandTotal" /> *@
+
+                                        <button class="btn btn-success">Complete</button>
+                                        <a asp-action="Edit" asp-route-id="@item.diagnostic_Id" asp-route-date="@item.date" class="btn btn-primary">Add-On</a>
+
+                                        // for show and hide of VIEW CART button
+                                   @*     var selectPurchase = Model.IPurchase.Select(p => p.diagnosisId);
+                                          var purchases = string.Join(",", selectPurchase);
+
+                                        @if (@purchases.Contains(item.diagnostic_Id.ToString()))
+                                            {
+                                               <a asp-action="PurchaseDetailsView" asp-route-id="@item.diagnostic_Id" class="btn btn-warning">View Cart</a>
+                                        } *@
+
+                                    }
+                                </form>
+                            </td>
+                        </tr>
+                        }
+                </tbody>
+
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('.remarks-cell').each(function () {
+                var remarks = $(this).text().trim();
+                if (!remarks) {
+                    $(this).text('Pending');
+                }
+            });
+            //refresh the result for total purchase
+            function updateDiagnostics() {
+                $.ajax({
+                    url: '@Url.Action("DiagnosticBill")',
+                    type: 'GET',
+                    success: function (data) {
+                        $('#diagnosticTable').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('An error occurred: ' + error);
+                    }
+                });
+            }
+
+            // Example trigger for updating diagnostics
+            $(document).on('click', '#addProductButton', function () {
+                updateDiagnostics();
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,86 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+
+
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+        <h3>Are you sure you want to Cancel this Appointment?</h3>
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    <p style="margin:0;">Appointment ID</p>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Appointment.AppointId)
+                </dd>
+                <dt class="col-sm-2">
+                    <p style="margin:0;">Full Name</p>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Appointment.fname) @Html.Raw(' ') @Html.DisplayFor(model => model.Appointment.lname)
+                </dd>
+                <dt class="col-sm-2">
+                    <p style="margin:0;">Services</p>
+                </dt>
+                <dd class="col-sm-10">
+                    @{
+                        var services = Model.IAppDetails
+                        .Select(s => s.Services.serviceName);
+
+                        <p style="margin:0;">@string.Join(", ", services)</p>
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Appointment.date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Appointment.date)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Appointment.time)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Appointment.time)
+                </dd>
+
+               @*  <dt class="col-sm-2">
+                       @Html.DisplayNameFor(model => model.AppointmentDetails.remarks)
+                </dt>
+
+                <dd class="col-sm-10 remarks-cell">
+             
+                    @{
+                        var remarks = Model.IAppDetails
+                       // .Select(S => S.remarks)
+                        .Distinct()
+                        .ToList();
+                    }
+                    <p style="margin:0;">@string.Join(", ", remarks)</p>
+                </dd> *@
+            </dl>
+        </div>
+
+        <!-- form for delete -->
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Appointment.AppointId" />
+            <a asp-action="Index" class="btn btn-secondary px-4">Cancel</a>
+            <input type="submit" value="Confirm" class="btn btn-primary px-4" />
+       
+        </form>
+    </div>
+</div>
+@section Scripts{
+   @{
+       await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('.remarks-cell').each(function () {
+                var remarks = $(this).text().trim();
+                if (!remarks) {
+                    $(this).text('Uncompleted')
+                }
+            })
+        })
+    </script>
+}

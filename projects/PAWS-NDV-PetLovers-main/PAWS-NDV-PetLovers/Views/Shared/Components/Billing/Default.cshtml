@@ -1,0 +1,159 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+
+@{
+    ViewData["Title"] = "Billing VC";
+}
+
+<div class="card p-3">
+    <div class="table-responsive">
+        @* Diagnostic Services Table *@
+        <span class="fw-bold">Billing Summary</span>
+        <table class="table table-bordered text-center">
+        
+            <thead>
+                <tr>
+               
+                    <th>Services</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var diagnostic in Model.Diagnostics.IdiagnosticDetails)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => diagnostic.Services.serviceName)</td>
+                        <td>P @Html.DisplayFor(modelItem => diagnostic.Services.serviceCharge)</td>
+                        <td>1</td>
+                        <td>P @Html.DisplayFor(modelItem => diagnostic.Services.serviceCharge)</td>
+                    </tr>
+                }
+
+                @if (Model.IPurchaseDetails.Count() > 0)
+                {
+                    <tr>
+                        <th class="pt-3">Purchases</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                    var Products = Model.IPurchaseDetails
+                    .GroupBy(pd => new { pd.productId, pd.product.productName, pd.product.sellingPrice })
+                    .Select(g => new
+                    {
+                        ProductId = g.Key.productId,
+                        ProductName = g.Key.productName,
+                        ProductPrice = g.Key.sellingPrice,
+                        TotalQuantity = g.Sum(pd => pd.quantity),
+                        TotalPayment = g.Sum(pd => pd.product.sellingPrice * pd.quantity)
+                    })
+                    .ToList();
+
+                    @foreach (var purchase in Products)
+                    {
+                        <tr>
+                            <td>@purchase.ProductName</td>
+                            <td>P @purchase.ProductPrice</td>
+                            <td>@purchase.TotalQuantity</td>
+                            <td>P @purchase.TotalPayment</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <div>
+            @* Calculate the grand total including services and products *@
+            @{
+                var serviceTotal = Model.Diagnostics.IdiagnosticDetails.Sum(d => d.Services.serviceCharge);
+                var purchaseTotal = Model.IPurchaseDetails.Sum(p => p.sellingPrice * p.quantity);
+                var totalPayment = serviceTotal + purchaseTotal;
+            }
+
+              <div class="text-end pt-3">
+                <form method="post" asp-action="BillPayment" asp-controller="Billing" id="paymentForm">
+                    <div class="row  bg-secondary bg-opacity-10 p-3">
+                        <div class="col-12 ">
+                            <label class="control-label fw-bold me-5">Grand Total:  </label>
+                            <span class="fw-bold text-danger">@totalPayment.ToString("C") </span>
+                            <input type="hidden" name="Billing.grandTotal" value="@totalPayment" />
+                            <input type="hidden" name="Billing.changeAmount" id="changeAmount" value="0" /> <!-- Hidden input for changeAmount -->
+                        </div>
+                        <div class="col ">
+                            <label asp-for="Billing.cashReceive" class="control-label fw-bold">Cash Tendered: </label>
+                            <input asp-for="Billing.cashReceive" class="form-control d-inline decimal-input fw-bold mt-1" style="width: 110px;" required />
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-3">
+                        <input type="hidden" name="diagnosticId" value="@Model.Diagnostics.diagnostic_Id" />
+                        <input type="submit" class="btn btn-confirm px-4 btn-lg " value="Pay Now" />
+                    </div>
+                </form>
+             </div>
+        </div>
+
+        @* Confirmation Modal *@
+        <div class="modal fade" id="confirmPaymentModal" tabindex="-1" aria-labelledby="confirmPaymentLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 fw-bold" id="confirmPaymentLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- This content will be dynamically updated -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-confirm" id="confirmPaymentBtn">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Capture the form submission event
+                $('#paymentForm').on('submit', function (event) {
+                    event.preventDefault(); // Prevent the form from submitting
+
+                    // Get the values for cash tendered and grand total
+                    var cashReceive = parseFloat($('input[name="Billing.cashReceive"]').val());
+                    var grandTotal = parseFloat('@totalPayment');
+
+                    // Check if cash tendered is greater than or equal to grand total
+                    if (cashReceive >= grandTotal) {
+                        // Calculate change
+                        var change = cashReceive - grandTotal;
+
+                        // Update the modal content with cash tendered and change
+                        $('#confirmPaymentModal .modal-body').html(`
+                                    <p style="font-size:18;" class="text-center">Are you sure you want to proceed with this payment?</p>
+                                    <p>Total Payment: <strong>P ${grandTotal.toFixed(2)}</strong></p>
+                                    <p>Cash Tendered: <strong>P ${cashReceive.toFixed(2)}</strong></p>
+                                    <p>Change: <strong>P ${change.toFixed(2)}</strong></p>
+                                `);
+
+                        // Set the change amount in the hidden input
+                        $('#changeAmount').val(change);
+
+                        // Open the confirmation modal
+                        $('#confirmPaymentModal').modal('show');
+                    } else {
+                        // Display an error if the tendered amount is less than the total
+                        alert('Cash tendered must be equal to or greater than the total payment.');
+                    }
+                });
+
+                // If the user confirms, submit the form
+                $('#confirmPaymentBtn').on('click', function () {
+                    $('#paymentForm').off('submit').submit(); // Allow form submission
+                });
+            });
+        </script>
+    </div>
+</div>

@@ -1,0 +1,184 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+@if (TempData["Message"] != null)
+{
+    //bootstrap not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center ">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Profile</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body">
+
+            <!-- Profile Details -->
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="fw-semibold text-muted">Account ID</p>
+                        <p>@Html.DisplayFor(model => model.userAccount.acc_Id)</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="fw-semibold text-muted">Full Name</p>
+                        <p>
+                            @Html.DisplayFor(model => model.userAccount.fname) @Html.Raw(" ")
+                            @Html.DisplayFor(model => model.userAccount.mname) @Html.Raw(" ")
+                            @Html.DisplayFor(model => model.userAccount.lname)
+                        </p>
+                    </div>
+                    <div class="col-6">
+                        <p class="fw-semibold text-muted">Email</p>
+                        <p>@Html.DisplayFor(model => model.userAccount.email)</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="fw-semibold text-muted ">Contact #</p>
+                        <p>@Html.DisplayFor(model => model.userAccount.contact)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-end p-3">
+
+            <!-- Button trigger modal -->         
+            <a asp-action="Edit" class="btn btn-cancel btn-lg">Edit Info</a>
+
+            <button type="button" class="btn btn-confirm btn-lg" data-bs-toggle="modal" data-bs-target="#Sb_Changepass">
+                Change Password
+            </button>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade " id="Sb_Changepass" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                        <div class="modal-header text-center">
+                            <h1 class="modal-title fs-5 text-black fw-bold bg-white " id="staticBackdropLabel"></h1>
+                            <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+
+                    <form method="post" asp-action="ChangePassword">
+                        <div class="modal-body">
+                            <div asp-validation-summary="ModelOnly" class="text-danger "></div>
+
+                            @* <div class="mb-4">
+                                <div class="form-floating mb-3 position-relative">
+                                    <input type="password" class="form-control password-field" name="oldPassword" placeholder="Old Password" required>
+                                    <label>Old Password</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password-icon" style="cursor: pointer;">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-floating mb-3 position-relative">
+                                    <input type="password" class="form-control password-field" name="passWord" placeholder="New Password" required>
+                                    <label>New Password</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password-icon" style="cursor: pointer;">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-floating mb-3 position-relative">
+                                    <input type="password" class="form-control password-field" name="ConfirmPassword" placeholder="Confirm Password" required>
+                                    <label>Confirm Password</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 toggle-password-icon" style="cursor: pointer;">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> *@
+
+                            <div class="mb-4">
+                                <div class="form-group mb-3 position-relative">
+                                    <label class="control-label">Old Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control password-field" name="oldPassword" placeholder="Old Password" required>
+                                        <span class="input-group-text toggle-password-icon" style="cursor: pointer;">
+                                            <i class="fas fa-eye togglePasswordIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-group mb-3 position-relative">
+                                    <label class="control-label">New Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control password-field" name="passWord" placeholder="New Password" required>
+                                        <span class="input-group-text toggle-password-icon" style="cursor: pointer;">
+                                            <i class="fas fa-eye togglePasswordIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="form-group mb-3 position-relative">
+                                    <label class="control-label">Confirm Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control password-field" name="ConfirmPassword" placeholder="Confirm Password" required>
+                                        <span class="input-group-text toggle-password-icon" style="cursor: pointer;">
+                                            <i class="fas fa-eye togglePasswordIcon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-cancel btn-lg px-4" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4" />
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+ 
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        <script>
+            $(document).ready(function () {
+                var hasPasswordError = @Html.Raw(Json.Serialize(Model.HasPasswordError));
+                if (hasPasswordError) {
+                    var modal = new bootstrap.Modal($('#Sb_Changepass')[0]);
+                    modal.show();
+                }
+            });
+
+        </script>
+    }
+

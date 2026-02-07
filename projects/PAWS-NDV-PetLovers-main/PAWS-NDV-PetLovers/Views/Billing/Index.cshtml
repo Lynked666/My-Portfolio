@@ -1,0 +1,67 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Billing Dashboard -> INVOICE DASHBOARD";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["Message"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Invoice Dashbord</h1>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="btn-group btn-group-toggle pt-5 mx-3" data-toggle="buttons">
+           
+                <a role="presentation" asp-action="SwitchToDboardTab" asp-route-tabName="DBoard_Diagnostics" asp-controller="Billing" class="@(Model.activeBoardTab == PAWS_NDV_PetLovers.ViewModels.DBoardTab.DBoard_Diagnostics ? "active" : string.Empty) btn btn-success btn-lg ">Diagnosis</a>
+          
+         
+           
+                <a role="presentation" asp-action="SwitchToDboardTab" asp-route-tabName="DBoard_Purchase" asp-controller="Billing" class="@(Model.activeBoardTab == PAWS_NDV_PetLovers.ViewModels.DBoardTab.DBoard_Purchase ? "active" : string.Empty) btn btn-success btn-lg">Purchases</a>
+
+            
+  
+     
+       </div>
+
+       
+                    @switch (Model.activeBoardTab)
+                    {
+                        case PAWS_NDV_PetLovers.ViewModels.DBoardTab.DBoard_Diagnostics:
+                            @await Component.InvokeAsync("DBoard_Diagnostics")
+                            //name of the component Folder
+                            break;
+
+                        case PAWS_NDV_PetLovers.ViewModels.DBoardTab.DBoard_Purchase:
+                            @await Component.InvokeAsync("DBoard_Purchase")
+                            break;
+
+                        default:
+                            @await Component.InvokeAsync("DBoard_Diagnostics")
+                            break;
+                    }
+
+
+
+    
+    </div>
+</div>
+
+

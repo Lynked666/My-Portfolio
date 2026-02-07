@@ -1,0 +1,353 @@
+@model PAWS_NDV_PetLovers.ViewModels.RecordsVm
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!-- Alert Placeholder -->
+<div id="alertPlaceholder">
+    @if (TempData["SuccessMessage"] != null)
+    {
+
+        //bootstrap not for modal
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show text-center" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 50000;">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+</div>
+@* Owner *@
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Client Information</h1>
+                </div>
+            </div>
+        </div>
+            <div class="pt-5  p-3 ">
+                <a class="btn btn-md btn-cancel btn-lg" asp-action="Index">Back to List</a>
+                <a class="btn btn-md btn-update btn-lg" asp-action="EditOwner" asp-route-id="@Model.Owner.id">Edit Client Profile</a>
+            </div>
+            <div class="card p-3">
+                <div class="row ">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.id" class="control-label"></label>
+                        <input type="text" asp-for="Owner.id" class="form-control bg-light" readonly />
+                    </div>
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.fname" class="control-label"></label>
+                        <input asp-for="Owner.fname" class="form-control" readonly />
+                        <span asp-validation-for="Owner.fname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.lname" class="control-label"></label>
+                        <input asp-for="Owner.lname" class="form-control" readonly />
+                        <span asp-validation-for="Owner.lname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.mname" class="control-label"></label>
+                        <input asp-for="Owner.mname" class="form-control" readonly />
+                        <span asp-validation-for="Owner.mname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.gender" class="control-label"></label>
+                        <input asp-for="Owner.gender" class="form-control" readonly />
+                        <span asp-validation-for="Owner.gender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.contact" class="control-label"></label>
+                    <input asp-for="Owner.contact" class="form-control" readonly />
+                        <span asp-validation-for="Owner.contact" class="text-danger"></span>
+                    </div>
+                    <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.email" class="control-label"></label>
+                    <input asp-for="Owner.email" class="form-control" readonly />
+                        <span asp-validation-for="Owner.email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group  col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Owner.address" class="control-label"></label>
+                    <input asp-for="Owner.address" class="form-control" readonly />
+                        <span asp-validation-for="Owner.address" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-lg-3" id="apppad">
+                        <label asp-for="Owner.registeredDate" class="control-label"></label>
+                        <input type="hidden" asp-for="Owner.registeredDate" class="form-control" readonly />
+                        <input value="@Model.Owner.registeredDate?.ToString("MMM. dd, yyyy")" class="form-control" readonly />
+                    </div>
+
+
+                    <div class="form-group visually-hidden col-lg-3 col-md-6">
+
+                        @if (Model.Owner.lastUpdate.HasValue)
+                        {
+                            <label asp-for="Owner.lastUpdate" class="control-label"></label>
+                            <input type="hidden" asp-for="Owner.lastUpdate" readonly/>
+                            <input value="@Model.Owner.lastUpdate?.ToString("MMM. dd, yyyy")" class="form-control" readonly />
+                        }
+                        else
+                        {
+                            <label asp-for="Owner.lastUpdate" class="control-label" hidden></label>
+                            <input asp-for="Owner.lastUpdate" class="form-control dateInput" hidden readonly />
+                        }
+
+                    </div>
+                   
+                </div>
+            </div>
+
+
+
+            @* add the Pet form here using looop with button edits *@
+            @* Pets *@
+            
+
+                <div class="form-group text-end p-3 pt-2">
+                    @*modal button*@
+                    <button type="button" class="btn btn-confirm btn-newpet btn-sm " asp-action="EditPet" asp-controller="Owners" data-bs-toggle="modal" data-bs-target="#editPetModal" data-id="@Model.Owner.id">
+                        Add New Pet
+                    </button>
+                </div>
+
+
+                <div class="card p-3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" id="PetTable">
+                            <thead>
+                                <tr>
+                                    <th>Pet Id</th>
+                                    <th>Pet name</th>
+                                    <th>Specie</th>
+                                    <th>Gender</th>
+                                    <th>Birth date</th>
+                                    <th>Age</th>
+                                    <th>Breed</th>
+                                    <th>Color</th>
+                                    <th>Registered Date</th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.IPets)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.petName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.species)</td>
+                                <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                <td>@item.bdate?.ToString("MMM. dd, yyyy")</td>
+                                <td>@Html.DisplayFor(modelItem => item.age)</td>
+                                <td>@Html.DisplayFor(modelItem => item.breed)</td>
+                                <td>@Html.DisplayFor(modelItem => item.color)</td>
+                                <td>@item.registeredDate?.ToString("MMM. dd, yyyy")</td>
+                                <td>
+
+                                    <a asp-action="DiagnosHistory" asp-controller="Pets" asp-route-id="@item.id" asp-route-ownerId="@item.ownerId" class="btn btn-cancel  btn-sm">History</a>
+                                    <a asp-action="Edit" asp-controller="Pets" class="btn btn-update btn-sm" asp-route-id="@item.id">Update</a>
+                                    @* <a asp-action="Details" asp-controller="Pets" class="btn btn-info btn-md" asp-route-id="@item.id">Details</a> *@
+                                  
+                                    @*  <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.id">Delete</a> *@
+                                </td>
+                            </tr>
+
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+        @*     @if(Model.btnCnl != null)
+            {
+                <div class="form-group justify-content-end">
+                    <input type="submit" value="Save" class="btn btn-primary px-5" />
+                    <a class="btn btn-md btn-secondary my-2 px-5" asp-action="Dashboard" asp-controller="Appointments">Back</a>
+                </div>
+            }
+            else
+            {
+                <div class="form-group justify-content-end">
+                    <input type="submit" value="Save" class="btn btn-primary px-5" />
+                    <a class="btn btn-md btn-secondary my-2 px-5" asp-action="Index">Back</a>
+                </div>
+            } *@
+    </div>
+</div>
+
+<!-- Modal --><!-- Modal -->
+<div class="modal fade" id="editPetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editPetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5 fw-bold " id="editPetModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="petrow p-2">
+                    <form method="post" asp-action="addNewPet" id="addPetForm">
+                        <div class="row">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Pet.id" />
+                            <div id="errorMessages" class="alert alert-danger" style="display:none;"></div>
+                            <!-- Form Fields -->
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.petName" class="control-label"></label>
+                                <input asp-for="Pet.petName" class="form-control bg-light" />
+                                <span asp-validation-for="Pet.petName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.species" class="control-label"></label>
+                                <select asp-for="Pet.species" class="form-select bg-light" required>
+                                    <option value="" selected hidden>----</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                </select>
+                                <span asp-validation-for="Pet.species" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.breed" class="control-label"></label>
+                                <input asp-for="Pet.breed" class="form-control bg-light" />
+                                <span asp-validation-for="Pet.breed" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label class="control-label" asp-for="Pet.gender"></label>
+                                <select asp-for="Pet.gender" class="form-select bg-light" required>
+                                    <option value="" hidden>----</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <span asp-validation-for="Pet.gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.bdate" class="control-label"></label>
+                                <input asp-for="Pet.bdate" class="form-control bg-light birthdate" />
+                                <span asp-validation-for="Pet.bdate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.age" class="control-label"></label>
+                                <input asp-for="Pet.age" type="text" class="form-control bg-light age" readonly />
+                                <span asp-validation-for="Pet.age" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.color" class="control-label"></label>
+                                <input asp-for="Pet.color" class="form-control bg-light" />
+                                <span asp-validation-for="Pet.color" class="text-danger"></span>
+                            </div>
+                            <div class="form-group visually-hidden col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.ownerId" class="control-label bg-light"></label>
+                                <input asp-for="Pet.ownerId" type="text" class="form-control bg-light" value="@Model.Owner.id" readonly />
+                                <span asp-validation-for="Pet.ownerId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group visually-hidden   col-lg-4 col-md-6" id="apppad">
+                                <label asp-for="Pet.registeredDate" class="control-label"></label>
+                                <input type="date" asp-for="Pet.registeredDate" class="form-control bg-light maxDate" id="dateInput" readonly />
+                                <span asp-validation-for="Pet.registeredDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="modal-footer pt-3">
+                                <button type="button" class="btn btn-secondary btn-cancel px-4" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" value="Save" class="btn btn-primary btn-confirm px-4" id="savePetBtn" />
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @*
+
+        MODAL AJAX AND JQEURY SCRIPT
+        SOURCE : https://chatgpt.com/share/199ab4a7-1b0a-4e32-88d7-3d2a5e0d7d84*@
+    <script>
+
+
+        $(document).ready(function () {
+            // Check if there is a success message in TempData
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                showAlert(successMessage, 'success');
+            }
+
+            $('#addPetForm').submit(function (e) {
+                e.preventDefault(); // Prevent form from submitting normally
+                var form = $(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("addNewPet", "Owners")',
+                    data: form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            $('#editPetModal').modal('hide');
+                            showAlert('Pet added successfully!', 'success');
+
+                            // Redirect to the same page to show the success message
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500); // Small delay to ensure the modal has fully closed
+                        } else {
+                            // displayValidationErrors(response.errors);
+
+                            showAlert(response.message || 'Error adding pet', 'danger');
+                        }
+                    }
+                });
+            });
+        });
+
+        function showAlert(message, type) {
+            var alertPlaceholder = $('#alertPlaceholder');
+            var alertHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                                                ${message}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                             </div>`;
+            alertPlaceholder.html(alertHTML);
+
+            // Automatically close the alert after 3 seconds
+            setTimeout(function () {
+                $('.alert').alert('close');
+            }, 3000);
+        }
+
+        function displayValidationErrors(errors) {
+            // Clear existing error messages
+            $('.text-danger').text('');
+
+            errors.forEach(error => {
+                var errorElement = document.createElement('span');
+                errorElement.className = 'text-danger';
+                errorElement.innerText = error;
+
+                var fieldName = error.split(' ')[0].toLowerCase(); // Extract field name from error message
+                var inputField = document.querySelector('[name*="' + fieldName + '"]');
+                if (inputField) {
+                    inputField.parentNode.appendChild(errorElement);
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+}

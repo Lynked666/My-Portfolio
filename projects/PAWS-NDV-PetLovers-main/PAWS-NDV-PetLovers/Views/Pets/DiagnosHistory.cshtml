@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PAWS_NDV_PetLovers.Models.Transactions.Diagnostics>
+@{
+    ViewData["Title"] = "DiagnosHistory";
+    var ownerId = ViewBag.OwnerId;
+}
+
+<div class="container-fluid bg p-0 container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Diagnostic History</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 mx-3">
+            @* Display the ownerId even if there are no diagnostic results *@
+            <a asp-action="Edit" asp-controller="Owners" asp-route-id="@ownerId" class="btn btn-secondary btn-newbooking">Back to Owner</a>
+        </div>
+
+        <div class="card p-3">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center hover">
+                    <thead>
+                        <tr>
+                            <th class="col-lg-3">Diagnostic ID</t>
+                            <th>Services</th>
+                            <th class="col-lg-2">Date</th>
+                            <th class="col-lg-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.diagnostic_Id)</td>
+                                <td>
+                                    @{
+                                        var service = item.IdiagnosticDetails
+                                        .Select(dd => dd.Services.serviceName)
+                                        .Distinct();
+                                        var serviceName = string.Join(", ", service);
+                                    }
+                                    <span>@serviceName</span>
+                                </td>
+                                <td>@item.date?.ToString("MMM. dd, yyyy")</td>
+                                <td>
+                                    <a asp-action="ViewHistory" asp-controller="Pets" asp-route-id="@item.diagnostic_Id" class="btn btn-cancel">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.ReportsVm
+@{
+    ViewData["Title"] = "Transaction Summary";
+}
+
+<div class="container mt-4">
+    <form method="post" asp-action="TransacSumm" asp-controller="PawsReport" class="d-flex justify-content-center">
+        <div class="row mt-3 justify-content-center">
+            <div class="form-group col-12">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+            <div class="form-group col-lg-4 col-auto">
+                <label for="startingDate" class="control-label">Start Date</label>
+                <input type="date" name="startDate" class="form-control" value="@Model.startDate?.ToString("yyyy-MM-dd")" required />
+            </div>
+
+            <div class="form-group col-lg-4 col-auto">
+                <label for="endingDate" class="control-label">End Date</label>
+                <input type="date" name="endDate" class="form-control" value="@Model.endDate?.ToString("yyyy-MM-dd")" required />
+            </div>
+
+            <div class="form-group text-start col-lg-2 col-auto mt-auto">
+                <input type="submit" value="View" class="btn btn-primary btn-cancel ms-3 mt-3 px-5" />
+            </div>
+        </div>
+    </form>
+
+        <div class="card p-3 mt-3">
+         <div class="table-responsive">
+        @if (Model.Filtered)
+        {
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Billing Id</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(Model.IBilling.Count() > 0)
+                    {
+                        @foreach (var transac in Model.IBilling)
+                        {
+                            <tr>
+                                <td>@transac.date.ToString("MMM. dd, yyyy")</td>
+                                <td>@transac.billingId</td>
+
+                                    @if (transac.DiagnosticsId != null)
+                                    {
+                                        var fullName = $"{@transac.diagnostics.pet.owner.fname} {@transac.diagnostics.pet.owner.lname}";
+                                        <td>@fullName</td>
+                                        <td>@transac.grandTotal?.ToString("C")</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@transac.purchase.customerName</td>
+                                        <td>@transac.grandTotal?.ToString("C")</td>
+                                    }
+                                </tr>
+
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">No Transaction Found</td>
+                            </tr>
+                        }
+                </tbody>
+
+                    @if (Model.IBilling.Count() > 0)
+                    {
+                        <tfoot class="bg-secondary bg-opacity-10">
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Grand Total:</strong></td>
+                                <td>
+                                    @{
+                                        var grandTotal = Model.IBilling.Select(b => b.grandTotal).Sum();
+                                    }
+                                    <span class="fw-bold">@grandTotal?.ToString("C")</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    }
+            </table>
+           
+        }
+    </div>
+        </div>
+</div>
+
+    

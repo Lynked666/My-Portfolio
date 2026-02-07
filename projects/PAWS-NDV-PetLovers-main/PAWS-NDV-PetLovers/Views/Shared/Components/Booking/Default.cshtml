@@ -1,0 +1,216 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Index Appointment  =>> Vc Booking";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["SuccessMessage"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close btn-lg" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="text-end pt-3">
+    <!-- Set current date as default -->
+    <a asp-action="Create" asp-route-date="@DateTime.Now.ToString("yyyy-MM-dd")" class="btn btn-primary btn-confirm btn-lg me-3">
+       New Booking
+    </a>
+    <!-- <a asp-action="AppointmentHistory" class="btn btn-success px-4">History</a> -->
+</div>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="card p-3" >
+    <div class="table-responsive">
+        <table class="table table-bordered text-center hover " id="AppointmentsTable">
+            <thead>
+                <tr>
+                    @* <th class="text-center">Booking Id</th> *@
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Service</th>
+                    <th class="text-center">Contact No.</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Time</th>
+                    <th class="text-center">Remarks</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.IAppointments)
+                {
+                    <tr>
+                        @* <td class="text-center">@item.AppointId</td> *@
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.fname) @Html.Raw(" ") @Html.DisplayFor(modelItem => item.lname)
+                        </td>
+                        <td class="text-center">
+                            @{
+                                // Get distinct service names
+                                var services = item.IAppDetails
+                                .Select(d => d.Services.serviceName)
+                                .Distinct()
+                                .ToList();
+
+                                // Take the first 2 services for display
+                                var serviceDisplay = services.Take(2);
+
+                                // Get the remaining services (if more than 2)
+                                var remainingServices = services.Skip(2);
+                            }
+
+                            <span>
+                                @string.Join(", ", serviceDisplay) <!-- Display first 2 services -->
+                                @if (services.Count > 2)
+                                {
+                                    <strong>
+                                        <!-- Display ellipsis and remaining services as a tooltip -->
+                                        <span title="@string.Join(", ", remainingServices)">...</span>
+                                    </strong>
+                                }
+                            </span>
+                        </td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.contact)</td>
+                        <td>@item.date.ToString("MMM. dd, yyyy")</td>
+                        <td>@Html.DisplayFor(modelItem => item.time)</td>
+                        <td class="remarks-cell"></td>
+                        <td class="text-center">
+                            <form asp-action="DiagnosAppointment" asp-controller="C_Diagnostics" method="get">
+                                <div class="btn-group" role="group">
+                                    @{
+                                        // Check if owner exists and matches appointment details
+                                        var ownerExists = Model.IOwner
+                                        .FirstOrDefault(o => o.fname == item.fname
+                                        && o.lname == item.lname
+                                        && o.mname == item.mname);
+                                    }
+
+
+
+                                    <button type="button" class="btn btn-secondary btn-cancel btn-sm me-1" data-id="@item.AppointId" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        Cancel
+                                    </button>
+
+
+                                    <a class="btn btn-update btn-sm  me-1"                         
+                                       asp-action="Edit"
+                                       asp-route-id="@item.AppointId"
+                                       asp-route-getdate="@item.date.ToString("yyyy-MM-dd")"
+                                       asp-route-time="@item.time.ToString("HH:mm:ss")">Update</a>
+
+
+                                    @if (ownerExists == null)
+                                    {
+
+                                        <!-- Register Button -->
+
+                                        <a class="btn btn-info btn-sm btn-confirm me-1" asp-action="Create" asp-controller="Owners"
+                                           asp-route-fname="@item.fname"
+                                           asp-route-lname="@item.lname"
+                                           asp-route-mname="@item.mname"
+                                           asp-route-contact="@item.contact"
+                                           asp-route-btnCnl="true">
+                                            Register
+                                        </a>
+
+                                        <!-- Cancel Button with Modal -->
+                                    }
+
+                                    @if (item.remarks == null)
+                                    {
+                                        @if (ownerExists != null)
+                                        {
+                                            if(Context.Session.GetString("UserRole") == "Admin")
+                                            {
+                                                <a asp-action="CreateDiagnosis" asp-controller="Billing" asp-route-id="@item.ownerId" asp-route-btnCnl="booking" class="btn btn-success btn-confirm btn-sm me-1">
+                                                    Attend
+                                                </a>
+                                            }
+                                           
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <!-- Get the selected services -->
+                                        IList<int> selectedIds = new List<int>();
+                                        var selectedServices = item.IAppDetails
+                                        .Select(d => d.Services.serviceId);
+
+                                        // Generate hidden inputs for each selected service ID
+                                        foreach (var service in selectedServices)
+                                        {
+                                            selectedIds.Add(service);
+                                        }
+
+                                        var selectedId = string.Join(",", selectedIds);
+                                    
+
+                                        <!-- Update Button -->
+                                        <a class="btn btn-primary btn-sm me-1" asp-action="Edit" asp-route-id="@item.AppointId"
+                                           asp-route-getDate="@item.date.Date" asp-route-serviceId="@selectedId">
+                                            Update
+                                        </a>
+                                    }
+
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h1 class="modal-title fs-5 fw-bold" id="staticBackdropLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this Appointment?
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-lg btn-cancel px-4 " data-bs-dismiss="modal">Close</button>
+
+                <form asp-action="Delete" asp-controller="Appointments" method="post">
+                    <input type="hidden" name="id" id="appointmentId" />
+                    <input type="submit" value="Confirm" class="btn btn-lg px-4 btn-confirm" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/AppointmentDataTables/AppointmentsTable.js" defer></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        //modal pass AppointId using JS
+        var staticBackdrop = document.getElementById('staticBackdrop');
+        staticBackdrop.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var appointId = button.getAttribute('data-id'); // Extract data-id from the button
+            var modalInput = document.getElementById('appointmentId'); // Find the hidden input field
+            modalInput.value = appointId; // Set the input value
+        });
+
+        $(document).ready(function () {
+            $('.remarks-cell').each(function () {
+                var remarks = $(this).text().trim();
+                if (!remarks) {
+                    $(this).text('Incomplete');
+                }
+            });
+
+    });
+    </script>
+
+

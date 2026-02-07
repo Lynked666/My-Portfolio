@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PAWS_NDV_PetLovers.Models.Transactions.Purchase>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-0 bg container-bord">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Purchase Bill</h1>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-primary" asp-action="Create">Add New Purchase</a>
+            
+        <div class="card p-3">  
+            <div class="table-responsive">
+                <table class="table table table-bordered text-center hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Purchase Id</th>
+                            <th>Customer Name</th>
+                            <th>Grand Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr class="text-center">
+                            <td class="text-center" >@Html.DisplayFor(modelItem => item.purchaseId)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.customerName)</td>
+                           @*  <td>@Html.DisplayFor(modelItem => item.totalProductPayment)</td> *@
+                            <td class="remarks-cell">
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+                            <td>
+                                <form method="post" asp-action="SetStatus">
+                                    <a asp-action="Edit" class="btn btn-update btn-sm">Update</a>
+                                    <input type="submit" value="Paid" class="btn btn-confirm btn-sm"/>
+                                    <button class="btn btn-danger btn-sm" name="Void">Void</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                        }
+         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('.remarks-cell').each(function () {
+                var remarks = $(this).text().trim();
+                if (!remarks) {
+                    $(this).text('Pending');
+                }
+            });
+         });
+    
+    </script>
+}

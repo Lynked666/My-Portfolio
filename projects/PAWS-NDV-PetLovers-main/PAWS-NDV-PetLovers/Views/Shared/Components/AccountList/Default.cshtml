@@ -1,0 +1,101 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "Account List VC";
+}
+
+<div class="card p-3">
+    <div class="table-responsive">
+    <table class="table table-bordered mt-4 text-center">
+        <thead>
+            <tr>
+                <th class="text-center col-lg-2">Account Id</th>
+                <th class="text-center">Username</th>
+                <th class="text-center col-lg-3">Date Created</th>
+                <th class="text-center col-lg-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.IuserAccount.Count() > 0)
+            {
+                foreach (var acc in Model.IuserAccount)
+                {
+                    <tr>
+                        <td>@acc.acc_Id</td>
+                        <td>@acc.userName</td>
+                        <td>@acc.dateCreated?.ToString("MMM. dd, yyyy")</td>
+                        <td>
+                            <form id="actionForm_@acc.acc_Id" method="post" asp-controller="UserAccounts" asp-action="ManageAccount" >
+                                <input type="hidden" name="action" class="actionInput" value="">
+                                <input type="hidden" name="userId" value="@acc.acc_Id">
+
+                                @if (acc.IsActive)
+                                {
+                                    
+                                            <a class="btn btn-update btn-sm px-4" href="#" onclick="showConfirmationModal('Reset', '#actionForm_@acc.acc_Id')">Reset</a>
+                                            <a class="btn btn-danger btn-sm" href="#" onclick="showConfirmationModal('Deactivate', '#actionForm_@acc.acc_Id')">Deactivate</a>
+                                      @*  <a class="btn btn-danger btn-sm" href="#" onclick="showConfirmationModal('Delete', '#actionForm_@acc.acc_Id')">Delete</a> *@
+                                       
+                                    
+                                }
+                                else
+                                {
+                                    
+                                        
+                                           <a class="btn btn-confirm btn-sm px-4" href="#" onclick="showConfirmationModal('Activate', '#actionForm_@acc.acc_Id')">Activate</a>
+                                        <a class="btn btn-danger btn-sm px-4" href="#" onclick="showConfirmationModal('Delete', '#actionForm_@acc.acc_Id')">Delete</a>
+                                       
+                                }
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No findings</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="confirmationModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p style="font-size:18px;" id="confirmationMessage">Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer text-end">
+                <button type="button" class="btn btn-cancel btn-lg px-4 " data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-confirm btn-lg px-4" id="confirmActionBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Show the confirmation modal with the action message
+    window.showConfirmationModal = function(action, formId) {
+        $('#confirmationMessage').text(`Are you sure you want to ${action}?`); // Use backticks for template literals
+        $('#confirmationModal').modal('show'); // Display modal
+
+        // Handle confirmation button click
+        $('#confirmActionBtn').off('click').on('click', function() {
+            $(formId).find('.actionInput').val(action); // Set the action in the hidden input
+            $(formId).submit(); // Submit the corresponding form
+            $('#confirmationModal').modal('hide'); // Hide modal after confirmation
+        });
+    };
+});
+</script>

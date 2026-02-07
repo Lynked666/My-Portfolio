@@ -1,0 +1,47 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Billing History -> ALL TRANSACTION HISTORY";
+}
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+
+            <div>
+                <div class="container p-2">
+                    <h1 class ="fw-bold">Transaction History</h1>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="btn-group btn-group-toggle pt-5 mx-3" data-toggle="buttons">
+            <a role="presentation" asp-action="SwitchToHistoryTab" asp-route-tabName="All" class="@(Model.activeHistoryTab == PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.All ? "active" : string.Empty) btn btn-success btn-lg">All</a>
+            <a role="presentation" asp-action="SwitchToHistoryTab" asp-route-tabName="Diagnostics" class="@(Model.activeHistoryTab == PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.Diagnostics ? "active" : string.Empty) btn btn-success btn-lg">Diagnosis</a>
+            <a role="presentation" asp-action="SwitchToHistoryTab" asp-route-tabName="Purchase" class="@(Model.activeHistoryTab == PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.Purchase ? "active" : string.Empty) btn btn-success btn-lg">Purchases</a>
+        </div>
+
+
+        @switch (Model.activeHistoryTab)
+        {
+            case PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.All:
+                @await Component.InvokeAsync("AllBillingHistory")
+                break;
+
+            case PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.Diagnostics:
+                @await Component.InvokeAsync("DiagnosticBillingHistory")
+                break;
+
+            case PAWS_NDV_PetLovers.ViewModels.BillingHistoryTab.Purchase:
+                @await Component.InvokeAsync("PurchaseBillingHistory")
+                break;
+        
+            default:
+                @await Component.InvokeAsync("AllBillingHistory")
+                break;
+        }
+    </div>
+</div>

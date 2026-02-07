@@ -1,0 +1,62 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+
+@{
+    ViewData["Title"] = "EditDetails";
+}
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+    <div class="container p-0">
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Edit Diagnosis</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-3">
+            <div class="table-responsive">
+                <form method="post" asp-action="EditDetails">
+                     <table class="table table-striped">
+                         <thead>
+                             <tr class="no-col text-center">
+                                 <th>
+                                    Service Name 
+                                 </th>
+                                <th>
+                                    Diagnosis
+                                </th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             @* get the service details individually to pass on the controller *@
+                            @for (int i = 0; i < Model.Diagnostics.IdiagnosticDetails.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(model => Model.Diagnostics.IdiagnosticDetails[i].Services.serviceName)
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control bg-light" rows="5" style="resize: none;" name="Diagnostics.IdiagnosticDetails[@i].details">@Model.Diagnostics.IdiagnosticDetails[i].details</textarea>
+                                    </td>
+
+                                    @* id holder for diagnosticDetails *@
+                                    <input type="hidden" name="Diagnostics.IdiagnosticDetails[@i].diagnosticDet_Id" value="@Model.Diagnostics.IdiagnosticDetails[i].diagnosticDet_Id" />
+
+                                </tr>
+                            }
+          
+                         </tbody>
+                     </table>
+
+                     <div class="form-group mt-4 text-end mb-4 me-4">
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@Model.Diagnostics.diagnostic_Id" asp-route-tabName="Diagnostics">Cancel</a>
+                        <input type="hidden" name="id" value="@Model.Diagnostics.diagnostic_Id" />
+                        <input type="submit" class="btn btn-primary px-3" value="Save"/>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

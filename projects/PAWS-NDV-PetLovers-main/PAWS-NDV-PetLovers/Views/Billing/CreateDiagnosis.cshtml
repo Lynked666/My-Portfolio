@@ -1,0 +1,689 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Create Diagnosis";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["Message"] != null)
+{
+        <!-- utilize bootstrap, not for modal-->
+    <div id="success-alert" class="alert alert-warning alert-dismissible fade show text-justify" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container-fluid bg p-0 container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+        <div class="row p-3">
+
+
+            <div class="container p-0 bg-custom-color text-center ">
+                <div>
+                    <div class="container p-2">
+                        <h1 class="fw-bold">Check-up Form</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <form method="post" asp-action="CreateDiagnosis">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group col-lg-3 col-md-6 pt-5">
+                    <label class="control-label">Owner ID - Name</label>
+                    @{
+                        var fullName = $"{Model.Owner.id} - {Model.Owner.fname} {Model.Owner.lname}";
+                    }
+                    <input name="id" class="form-control" value="@fullName" readonly />
+                </div>
+               
+
+                <div class="form-group col-lg-3 col-md-6 pt-5 mt-4">
+                    <!-- Button trigger modal -->
+                    @if(Model.PetFollowUps == null)
+                    {
+                        <button type="button" class="btn btn-confirm btn-sm  " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Select Pet
+                        </button>
+                    }
+              
+                  
+                </div>
+
+
+                <div class="container text-center p-3">
+                    <h3>Pet Information</h3>
+                </div>
+
+                @if (Model.PetFollowUps != null)
+                {
+                <div class="form-group col-lg-3 col-md-6 visually-hidden" id="apppad">
+                    <label asp-for="Diagnostics.petId" class="control-label"></label>
+                    <input asp-for="Diagnostics.petId" class="form-control petId" value="@Model.PetFollowUps.Diagnostics.petId" readonly required />
+                </div>   
+            
+                  <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Pet Name</label>
+                        <input id="petName" value="@Model.PetFollowUps.Diagnostics.pet.petName" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Breed</label>
+                        <input id="breed" class="form-control" value="@Model.PetFollowUps.Diagnostics.pet.breed" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Gender</label>
+                            <input id="gender" class="form-control" value="@Model.PetFollowUps.Diagnostics.pet.gender" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Age</label>
+                        <input id="age" class="form-control" value="@Model.PetFollowUps.Diagnostics.pet.age" readonly />
+                    </div>
+
+                }
+                else
+                {
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label asp-for="Diagnostics.petId" class="control-label"></label>
+                        <input asp-for="Diagnostics.petId" class="form-control petId"  readonly required />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Pet Name</label>
+                        <input id="petName" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Breed</label>
+                        <input id="breed" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Gender</label>
+                        <input id="gender" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6" id="apppad">
+                        <label class="control-label">Age</label>
+                        <input id="age" class="form-control" readonly />
+                    </div>
+
+                    @* <div class="form-group col-lg-3 col-md-6">
+                <label class="control-label">Birth Date</label>
+                <input id="bdate" type="datetime" class="form-control" readonly />
+                </div>
+                *@
+              
+                }
+           
+                        <div class="form-group col-lg-3" id="apppad">
+                            <!-- Hidden Field for Date -->
+                            <label asp-for="Diagnostics.date" class="control-label"></label>
+                            <input asp-for="Diagnostics.date" class="form-control dateInput" readonly />
+                        </div>
+                        <div class="form-group col-lg-3" id="apppad">
+                            <!-- Hidden Field for Date -->
+                            <label asp-for="Diagnostics.weight" class="control-label"></label>
+                            <input asp-for="Diagnostics.weight" class="form-control bg-light decimal-input" placeholder="Input weight" required />
+                        </div>
+                
+          
+
+          @*       <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Pet Id</label>
+                    <input class="form-control petId" readonly />
+                </div> *@
+
+            
+             </div>
+
+
+                  <!-- Diagnostics Details -->
+                    <div class="col-12 pt-3 ">
+
+                            <div class="text-end">
+                                    @if (Model.PetFollowUps != null)
+                                    {
+                                        <th class="text-end ">
+                                            <button type="button" class="btn btn-confirm btn-sm visually-hidden" id="addRow">Add Service</button>
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        <th class="text-end">
+                                            <button type="button" class="btn btn-confirm btn-sm" id="addRow">Add Service</button>
+                                        </th>
+                                    }
+                            </div>
+
+                        <table class="table mt-2" id="DetailsTable">
+
+                                <thead>
+                                    <tr class="no-col pt-2">
+                                        <th class="text-center">Service Name</th>
+                                        <th class="text-center">Details</th>
+                                        <th> </th>
+                            
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                             <!-- Loop through existing services if any -->
+                                    @if (Model.Appointment != null)
+                                    {
+                                        <input type="hidden" name="appointId" value="@Model.Appointment.AppointId" />
+                                        for (int i = 0; i < Model.Appointment.IAppDetails.Count(); i++)
+                                        {
+                                            var detail = Model.Appointment.IAppDetails[i].serviceID;
+
+                                            <tr class="detailRow">
+                                                <td>
+                                                    <div class="form-group mt-2">
+                                                        <!-- Use the value attribute in the select to set the selected service ID -->
+                                                        <select name="Diagnostics.IdiagnosticDetails[@i].serviceId" class="form-select service-select" required value="@detail">
+                                                            <option value="" data-price="0" disabled>Select Service</option>
+
+                                                            <!-- Loop through NA-type services -->
+                                                            @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                            {
+                                                                if (service.serviceId == detail)
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-follow="@((service.followUp ? "true" : "false"))"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()"
+                                                                            selected="selected">
+                                                                            @service.serviceName
+                                                                    </option>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-follow="@((service.followUp ? "true" : "false"))"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()">
+                                                                        @service.serviceName
+                                                                    </option>
+                                                                }
+                                                
+                                                            }
+
+                                                            <!-- Laboratory services grouped under "Laboratory test" optgroup -->
+                                                            @{
+                                                                // Get all distinct service types for conditional rendering
+                                                                var checkType = Model.Services
+                                                                .Select(s => s.serviceType)
+                                                                .Distinct();
+                                                                // Convert types to lowercase for easier comparison
+                                                                var typepo = string.Join(",", checkType).ToLower();
+                                                            }
+
+                                                            @if (typepo.Contains("lab"))
+                                                            {
+                                                                <optgroup label="Laboratory test">
+                                                                    @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                                    {
+                                                                        if (service.serviceId == detail)
+                                                                        {
+                                                                            <option value="@service.serviceId"
+                                                                                    data-price="@service.serviceCharge"
+                                                                                    data-follow="@((service.followUp ? "true" : "false"))"
+                                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                                    data-service-name="@service.serviceName.ToLower()"
+                                                                                    selected="selected">
+                                                                                @service.serviceName
+                                                                            </option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@service.serviceId"
+                                                                                    data-price="@service.serviceCharge"
+                                                                                     data-follow="@((service.followUp ? "true" : "false"))"
+                                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                                    data-service-name="@service.serviceName.ToLower()">
+                                                                                @service.serviceName
+                                                                            </option>
+                                                                        }
+
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="prescription">
+                                                        <textarea name="Diagnostics.IdiagnosticDetails[@i].details" class="form-control bg-light" rows="7" style="resize: true;" placeholder="(Optional)"></textarea>
+                                                    </div>
+                                                </td>
+
+                                                <!-- Follow-up section for specific services -->
+                                                <td>
+                                                    <div class="followUp visually-hidden">
+                                                        <label>Next Visit (Optional)</label>
+                                                        <input type="date" name="Diagnostics.IPetFollowUps[@i].date" class="form-control bg-light minDate" placeholder="(Optional)" />
+                                                        <input type="number" name="Diagnostics.IPetFollowUps[@i].serviceId" value="@detail" class="visually-hidden" />
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="m-auto">
+                                                         <button type="button" class="form-control btn btn-danger removeRow">Remove</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                     
+                                    else if (Model.PetFollowUps != null)
+                                    {
+
+                                        <input type="hidden" name="followUpId" value="@Model.PetFollowUps.Id" />
+                                        <input type="hidden" name="followupId" value="@Model.PetFollowUps.Diagnostics.pet.ownerId" />
+                                        var detail = Model.PetFollowUps.serviceId;
+                                        <tr class="detailRow">
+                                            <td>
+                                                <div class="form-group mt-2">
+                                                    <!-- Use the value attribute in the select to set the selected service ID -->
+                                                    <select name="Diagnostics.IdiagnosticDetails[0].serviceId" class="form-select service-select" required value="@detail">
+                                                        <option value="" data-price="0" disabled>Select Service</option>
+
+                                                        <!-- Loop through NA-type services -->
+                                                        @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                        {
+                                                            if (service.serviceId == detail)
+                                                            {
+                                                                <option value="@service.serviceId"
+                                                                        data-price="@service.serviceCharge"
+                                                                        data-follow="@((service.followUp ? "true" : "false"))"
+                                                                        data-service-type="@service.serviceType.ToLower()"
+                                                                        data-service-name="@service.serviceName.ToLower()"
+                                                                        selected="selected">
+                                                                    @service.serviceName
+                                                                </option>
+                                                            }
+                                                          @*   else
+                                                            {
+                                                                <option value="@service.serviceId"
+                                                                        data-price="@service.serviceCharge"
+                                                                        data-follow="@((service.followUp ? "true" : "false"))"
+                                                                        data-service-type="@service.serviceType.ToLower()"
+                                                                        data-service-name="@service.serviceName.ToLower()">
+                                                                    @service.serviceName
+                                                                </option>
+                                                            } *@
+                                                        }
+
+                                                        <!-- Laboratory services grouped under "Laboratory test" optgroup -->
+                                                        @{
+                                                            // Get all distinct service types for conditional rendering
+                                                            var checTypes = Model.Services
+                                                            .Select(s => s.serviceType)
+                                                            .Distinct();
+                                                            // Convert types to lowercase for easier comparison
+                                                            var typepo = string.Join(",", checTypes).ToLower();
+                                                        }
+
+                                                        @if (typepo.Contains("lab"))
+                                                        {
+                                                          @*   <optgroup label="Laboratory test"> *@
+                                                                @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                                {
+                                                                    if (service.serviceId == detail)
+                                                                    {
+                                                                        <option value="@service.serviceId"
+                                                                                data-price="@service.serviceCharge"
+                                                                                data-follow="@((service.followUp ? "true" : "false"))"
+                                                                                data-service-type="@service.serviceType.ToLower()"
+                                                                                data-service-name="@service.serviceName.ToLower()"
+                                                                                selected="selected">
+                                                                            @service.serviceName
+                                                                        </option>
+                                                                    }
+                                                                 @*    else
+                                                                    {
+                                                                        <option value="@service.serviceId"
+                                                                                data-price="@service.serviceCharge"
+                                                                                data-follow="@((service.followUp ? "true" : "false"))"
+                                                                                data-service-type="@service.serviceType.ToLower()"
+                                                                                data-service-name="@service.serviceName.ToLower()">
+                                                                            @service.serviceName
+                                                                        </option>
+                                                                    } *@
+
+                                                                }
+                                                            @* </optgroup> *@
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            
+                                            <td colspan="2">
+                                                <div class="prescription">
+                                                    <textarea name="Diagnostics.IdiagnosticDetails.details" class="form-control bg-light" rows="7" style="resize: true;" placeholder="(Optional)"></textarea>
+                                                </div>
+                                            </td>
+
+                                    <td>
+                                        <div class="followUp visually-hidden">
+                                            <label>Next Visit (Optional)</label>
+                                            <input type="date" name="Diagnostics.IPetFollowUps[0].date" class="form-control bg-light minDate" placeholder="(Optional)" />
+                                            <input type="number" name="Diagnostics.IPetFollowUps[0].serviceId" value="@Model.PetFollowUps.serviceId" class="visually-hidden" />
+
+                                        </div>
+                                    </td>
+
+
+                                    <td class="visually-hidden">
+                                        <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                    </td>
+                              
+                                        </tr>
+                                        
+                                    }
+
+                  
+                                    else
+                                    {
+                                        <tr class="detailRow">
+                                            <td>
+                                                <div class="form-group mt-2">
+                                                    <select name="Diagnostics.IdiagnosticDetails[0].serviceId" class="form-control service-select" required>
+                                                        <option value="" data-price="0" disabled selected>Select Service</option>
+
+                                                        @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                        {
+                                                            <option value="@service.serviceId"
+                                                                    data-price="@service.serviceCharge"
+                                                                    data-follow="@((service.followUp ? "true" : "false"))"
+                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                    data-service-name="@service.serviceName.ToLower()">
+                                                                @service.serviceName
+                                                            </option>
+                                                        }
+
+                                                        @* for display laboratory items *@
+                                                        @{
+                                                            //check services
+                                                            var checkTypes = Model.Services
+                                                            .Select(s => s.serviceType)
+                                                            .Distinct();
+
+                                                            var type = string.Join(",", checkTypes).ToLower();
+
+                                                        }
+                                                        @if (type.Contains("lab"))
+                                                        {
+                                                            <optgroup label="Laboratory test">
+                                                                @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-follow="@((service.followUp ? "true" : "false"))"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()">
+                                                                        @service.serviceName
+                                                                    </option>
+                                                                }
+                                                            </optgroup>
+                                                        }
+
+                                                    </select>
+                                                    <input type="hidden" name="Diagnostics.IdiagnosticDetails[0].totalServicePayment" class="service-charge" value="" />
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="prescription">
+                                                    <textarea name="Diagnostics.IdiagnosticDetails[0].details" class="form-control bg-light" rows="7" style="resize: none;" placeholder="(Optional)"></textarea>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <div class="followUp visually-hidden">
+                                                    <label>Next Visit (Optional)</label>
+                                                    <input type="date" name="Diagnostics.IPetFollowUps[0].date" class="form-control bg-light minDate" placeholder="(Optional)" />
+                                                    <input type="number" name="Diagnostics.IPetFollowUps[0].serviceId" value="" class="visually-hidden" />
+
+                                                </div>
+                                            </td>
+
+
+                                            <td>
+                                                <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                            </td>
+                                        </tr>
+                            
+                                    }
+                                </tbody>
+                        </table>
+                    </div>
+          
+                @if (Model.btnCnl == "booking")
+                {
+                    <div class="form-group text-end">
+                        <a class="btn btn-md btn-cancel btn-lg my-2 px-4" asp-action="SwitchToTab" asp-route-tabName="booking" asp-controller="Appointments">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4" />
+                    </div>
+                }
+                else if (Model.btnCnl == "followUp")
+                {
+                    <div class="form-group text-end">
+                        <a class="btn btn-md btn-cancel btn-lg my-2 px-4" asp-action="SwitchToTab" asp-route-tabName="followUp" asp-controller="Appointments">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4" />
+                    </div>
+                
+                }
+                else
+                {
+                    <div class="form-group text-end">
+                        <a class="btn btn-md btn-cancel btn-lg my-2 px-4" asp-action="Diagnosis">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4" />
+                    </div>
+                }
+            </form>
+        </div>
+</div>
+</div>
+    <!-- Modal for selecting existing records -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="OwnerSelectionForm">
+                        <table class="table table-striped w-100" id="OwnerTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Selector</th>
+                                    <th class="text-center">Pet ID</th>
+                                    <th class="text-center">Pet Name</th>
+                                    <th class="text-center">Breed</th>
+                                    <th class="text-center">Gender</th>
+                                    <th class="text-center">Age</th>
+                                   @*  <th class="text-center">Bdate</th> *@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pet in Model.Owner.Pets)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="radio" name="SelectedPetId"
+                                                   value="@pet.id"
+                                                   data-petid="@pet.id"
+                                                   data-petname="@pet.petName"
+                                                   data-breed="@pet.breed"
+                                                   data-gender="@pet.gender"
+                                                   data-age="@pet.age"
+                                                  @*  data-bdate="@pet.bdate" *@ />
+                                        </td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => pet.id)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => pet.petName)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => pet.breed)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => pet.gender)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => pet.age)</td>
+                                        @* <td class="text-center">@Html.DisplayFor(modelItem => pet.bdate)</td> *@
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="SelectPetButton">Select</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        $('#SelectPetButton').click(function () {
+            var selectedPet = $('input[name="SelectedPetId"]:checked');
+            if (selectedPet.length > 0) {
+
+                var petId = selectedPet.data('petid'); // Corrected case
+                var petName = selectedPet.data('petname'); // Corrected case
+                var breed = selectedPet.data('breed');
+                var gender = selectedPet.data('gender');
+                var age = selectedPet.data('age');
+               // var bdate = selectedPet.data('bdate');
+
+                $('.petId').val(petId);
+                $('#petName').val(petName);
+                $('#breed').val(breed);
+                $('#gender').val(gender);
+                $('#age').val(age);
+                //$('#bdate').val(bdate);
+
+                $('#staticBackdrop').modal('hide');
+            }
+            else {
+                alert("Please select a Pet.");
+            }
+
+        });
+           $(document).ready(function () {
+            // Function to handle showing/hiding follow-up date input based on selected service
+            function updateFollowUp(row) {
+                var selectedService = row.find('.service-select option:selected').data('service-name');
+                var selectedServiceBool = row.find('.service-select option:selected').data('follow');
+                var followUpDiv = row.find('.followUp');
+
+                // Ensure selectedServiceBool is properly treated as a boolean
+                var isFollowUpNeeded = selectedServiceBool === true || selectedServiceBool === "true" || selectedServiceBool == 1 || selectedServiceBool === "1"; // Cover multiple cases
+
+                // Log the boolean value
+                console.log('Boolean value of isFollowUpNeeded:', isFollowUpNeeded);
+
+             
+
+                // Show or hide the follow-up div based on isFollowUpNeeded
+                if (isFollowUpNeeded) {
+                    followUpDiv.removeClass('visually-hidden'); // Show follow-up div
+                } else {
+                    followUpDiv.addClass('visually-hidden'); // Hide follow-up div
+                    followUpDiv.find('input').val(''); // Clear input if hidden
+                }
+            }
+            // Function to update the service ID field based on selected option
+            function updateServiceId(row) {
+                var selectedServiceId = row.find('.service-select option:selected').val(); // Get selected service ID
+                row.find('input[name*="serviceId"]').val(selectedServiceId); // Set the hidden service ID input field
+            }
+         
+            // Function to update row names after a row is removed
+            function updateRowNames() {
+                $('#DetailsTable tbody tr').each(function (index) {
+                    // Update name attributes for each row's select and input fields
+                    $(this).find('select[name*="Diagnostics.IdiagnosticDetails"]').attr('name', `Diagnostics.IdiagnosticDetails[${index}].serviceId`);
+                    $(this).find('input[name*="Diagnostics.IdiagnosticDetails"]').attr('name', `Diagnostics.IdiagnosticDetails[${index}].totalServicePayment`);
+                    $(this).find('textarea[name*="Diagnostics.IdiagnosticDetails"]').attr('name', `Diagnostics.IdiagnosticDetails[${index}].details`);
+
+                    // Update name attributes for follow-up fields
+                    $(this).find('input[name*="Diagnostics.IPetFollowUps"]').each(function () {
+                        if ($(this).attr('name').includes("date")) {
+                            $(this).attr('name', `Diagnostics.IPetFollowUps[${index}].date`);
+                        } else if ($(this).attr('name').includes("serviceId")) {
+                            $(this).attr('name', `Diagnostics.IPetFollowUps[${index}].serviceId`);
+                        }
+
+                    });
+                });
+            }
+
+
+            // Event listener for when service selection changes
+            $(document).on('change', '.service-select', function () {
+                var row = $(this).closest('tr');
+                updateFollowUp(row); // Update follow-up display based on selected service
+                updateServiceId(row); // Update the hidden service ID field when service is selected
+            });
+
+            // Initial check for services loaded from model on page load
+            $('#DetailsTable tbody .detailRow').each(function () {
+                var row = $(this);
+                updateFollowUp(row); // Apply logic to each existing row
+            });
+
+            // Add a new row to the table when "Add Service" button is clicked
+            $('#addRow').click(function () {
+                var rowCount = $('#DetailsTable tbody tr').length;
+                var newRow = $('.detailRow').first().clone(); // Clone the first row
+
+                // Reset input values in the new row and ensure follow-up is hidden by default
+                newRow.find('input, select, textarea').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\[\d+\]/, '[' + rowCount + ']'); // Update name attribute for the new row
+                        $(this).attr('name', newName);
+                    }
+                    $(this).val(''); // Clear the value of the input/select
+                });
+
+                // Reset the hidden service ID field for the new row
+                newRow.find('input[name*="serviceId"]').val('');
+
+                // Append the new row and hide follow-up by default
+                newRow.appendTo($('#DetailsTable tbody')); // Append new row to table body
+                newRow.find('.followUp').addClass('visually-hidden'); // Ensure follow-up is hidden initially
+                updateRowNames(); // Update names for all rows
+            });
+
+            // Remove a row when "Remove" button is clicked
+            $(document).on('click', '.removeRow', function () {
+                if ($('#DetailsTable tbody tr').length > 1) {
+                    $(this).closest('tr').remove(); // Remove the closest row
+                    updateRowNames(); // Update names for remaining rows
+                }
+            });
+
+            // Event listener for when service selection changes
+            $(document).on('change', '.service-select', function () {
+                var row = $(this).closest('tr');
+                var selectedServiceId = $(this).val(); // Get selected service ID
+
+                // Update the ServiceId input field within the same row
+                row.find('input[name*="serviceId"]').val(selectedServiceId);
+            });
+        });
+    </script>
+}

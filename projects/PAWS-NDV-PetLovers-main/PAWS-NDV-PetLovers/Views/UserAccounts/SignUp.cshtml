@@ -1,0 +1,89 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "_Login.cshtml";
+}
+<div class="container">
+    <form method="post" asp-action="SignUp" class="p-4">
+        <div class="row justify-content-center">
+            <div class="card border-0 shadow-lg rounded-4" style="max-width: 750px;">
+
+                    <!-- Header with Icon -->
+                    <div class="card-header bg-signup text-light text-center py-4 mt-2 rounded-top">
+                        <h4 class="fw-bold mb-0">User Information</h4>
+                        <p class="mb-0">Edit your profile and account details</p>
+                    </div>
+
+                    <div class="card-body p-5 ">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <!-- Profile Section -->
+                        <h5 class="card-title text-secondary mb-4 fw-semibold">Profile Details</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="userAccount.fname" class="form-label text-muted">First Name</label>
+                                <input asp-for="userAccount.fname" class="form-control border-secondary" placeholder="Enter your first name" required />
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="userAccount.lname" class="form-label text-muted">Last Name</label>
+                                <input asp-for="userAccount.lname" class="form-control border-secondary" placeholder="Enter your last name" required />
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="userAccount.mname" class="form-label text-muted">Middle Name</label>
+                                <input asp-for="userAccount.mname" class="form-control border-secondary" placeholder="Enter your middle name"  />
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="userAccount.contact" class="form-label text-muted">Contact</label>
+                                <input asp-for="userAccount.contact" class="form-control border-secondary" id="contact"  placeholder="Enter your contact number" required />
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="userAccount.email" class="form-label text-muted">Email</label>
+                                <input asp-for="userAccount.email" type="email" class="form-control border-secondary" placeholder="Enter your email" required />
+                            </div>
+                        </div>
+                        <!-- Account Section -->
+                        <h5 class="card-title text-secondary mt-5 mb-4 fw-semibold">Account Details</h5>
+
+
+                    <div class="mb-4">
+                        <div class="form-group mb-3 position-relative">
+                            <label class="control-label">New Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control password-field" name="passWord" placeholder="Enter New Password" required>
+                                <span class="input-group-text toggle-password-icon" style="cursor: pointer;">
+                                    <i class="fas fa-eye togglePasswordIcon"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-group mb-3 position-relative">
+                            <label class="control-label">Confirm Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control password-field" name="ConfirmPassword" placeholder="Enter Confirm Password" required>
+                                <span class="input-group-text toggle-password-icon" style="cursor: pointer;">
+                                    <i class="fas fa-eye togglePasswordIcon"></i>
+                                </span>
+                            </div>
+                            
+                        </div>
+                    </div>
+               
+
+                        <!-- Save Button with Icon -->
+                        
+
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-success px-5 py-2 fw-bold shadow-sm rounded-pill">
+                                <i class="bi bi-save me-2"></i> Save Changes
+                            </button>
+                 
+                        <p class="mt-2"></p>
+                        <a asp-action="Logout" asp-controller="Logins" class="">Back To Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

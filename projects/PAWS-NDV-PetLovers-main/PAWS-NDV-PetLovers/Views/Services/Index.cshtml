@@ -1,0 +1,79 @@
+﻿@model IEnumerable<PAWS_NDV_PetLovers.Models.Records.Services>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["Message"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Service</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between pt-3 px-3 pt-5">
+            <a class="btn btn-primary btn-confirm btn-lg" asp-action="Create">New Service</a>
+            @* <a class="btn btn-warning" asp-action="VoidServices"> Void Services</a> *@
+        </div>
+  
+        <div class="card p-3">
+            <div class="row ">
+                <div class="table-responsive text-center">
+                    <table class="table table-bordered text-center hover mt-4" id="ServicesTbl">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="visually-hidden">Service ID</th>
+                                <th>Name</th>
+                                <th>Charge</th>
+                                <th class="col-lg-2">Settings</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ( var item in Model)
+                            {
+                                <tr class="text-center">
+                                    <td class="visually-hidden">@Html.DisplayFor(modelItem => item.serviceId)</td>
+
+                                    @if(item.serviceType != "NA"){
+                                        <td>@Html.DisplayFor(modelItem => item.serviceName)
+                                            @Html.Raw('-') 
+                                            @Html.DisplayFor(modelItem => item.serviceType)
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.DisplayFor(modelItem => item.serviceName)</td>
+                                    }
+          
+                                    <td>@Html.DisplayFor(modelItem => item.serviceCharge)</td>
+                                    <td><a class="btn btn-update btn-sm" asp-route-id="@item.serviceId" asp-action="Edit">Update</a>  
+                                       @*  <a class="btn btn-danger" asp-route-id="@item.serviceId" asp-action="Delete">Delete</a></td> *@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,370 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Update Appointment</h1>
+                </div>
+            </div>
+        </div>
+
+        <form asp-action="Edit" method="post" class="container p-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Appointment.AppointId" hidden />
+
+            <div class="container p-0">
+                <div class="row p-3">
+                    @* appointments *@
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.fname" class="control-label"></label>
+                        <input asp-for="Appointment.fname" class="form-control" />
+                        <span asp-validation-for="Appointment.fname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.lname" class="control-label"></label>
+                        <input asp-for="Appointment.lname" class="form-control" />
+                        <span asp-validation-for="Appointment.lname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.mname" class="control-label"></label>
+                        <input asp-for="Appointment.mname" class="form-control" />
+                        <span asp-validation-for="Appointment.mname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.contact" class="control-label"></label>
+                        <input id="contact" asp-for="Appointment.contact" class="form-control" />
+                        <span asp-validation-for="Appointment.contact" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.date" class="control-label"></label>
+                        <input asp-for="Appointment.date" class="form-control minDate" id="appointmentDate" type="date" />
+                        <span asp-validation-for="Appointment.date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-4" id="apppad">
+                        <label asp-for="Appointment.time" class="control-label"></label>
+                        <select id="timeDropdown" name="Appointment.time" class="form-select" required>
+                            <!-- Times will be loaded here -->
+                        </select>
+                        <span asp-validation-for="Appointment.time" class="text-danger"></span>
+                    </div>
+
+
+                    <!-- Services Table -->
+
+                    <div class="table-responsive p-3">
+                            <table class="table table-striped text-center" id="DetailsTable">
+                                <thead>
+                                    <tr class="no-col pt-4 text-center">
+                                        <th class="col-lg-8">Service Name</th>
+                                        <th class="col-lg-4">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loop through existing services if any -->
+                                    @if (Model.Appointment != null && Model.Appointment.IAppDetails.Any())
+                                    {
+                                        for (int i = 0; i < Model.Appointment.IAppDetails.Count(); i++)
+                                        {
+                                            var detail = Model.Appointment.IAppDetails.ElementAt(i).serviceID;
+                                            <tr class="detailRow">
+                                                <td>
+                                                    <div class="form-group mt-2">
+                                                        <select name="Appointment.IAppDetails[@i].serviceID" class="form-select service-select" required>
+                                                            <option value="" data-price="0" disabled>Select Service</option>
+                                                            <!-- Loop through NA-type services and set the selected service -->
+                                                            @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                            {
+                                                                if (service.serviceId == detail)
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()"
+                                                                            selected="selected">
+                                                                        @service.serviceName
+                                                                    </option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()">
+                                                                        @service.serviceName
+                                                                    </option>
+                                                                }
+                                                            }
+
+                                                            @* Laboratory services grouped under "Laboratory test" optgroup *@
+                                                            @{
+                                                                // Get all distinct service types for conditional rendering
+                                                                var checkTypes = Model.Services
+                                                                .Select(s => s.serviceType)
+                                                                .Distinct();
+
+                                                                // Convert types to lowercase for easier comparison
+                                                                var type = string.Join(",", checkTypes).ToLower();
+                                                            }
+
+                                                            @if (type.Contains("lab"))
+                                                            {
+                                                                <optgroup label="Laboratory test">
+                                                                    @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                                    {
+                                                                        if (service.serviceId == detail)
+                                                                        {
+                                                                            <option value="@service.serviceId"
+                                                                                    data-price="@service.serviceCharge"
+                                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                                    data-service-name="@service.serviceName.ToLower()"
+                                                                                    selected="selected">
+                                                                                @service.serviceName
+                                                                            </option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@service.serviceId"
+                                                                                    data-price="@service.serviceCharge"
+                                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                                    data-service-name="@service.serviceName.ToLower()">
+                                                                                @service.serviceName
+                                                                            </option>
+                                                                        }
+                                                                    }
+                                                                </optgroup>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td class="pt-3">
+                                                    <button type="button" class="btn btn-danger btn-sm removeRow">Remove</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr class="detailRow">
+                                            <td>
+                                                <div class="form-group mt-2">
+                                                    <select name="Diagnostics.IdiagnosticDetails[0].serviceId" class="form-control service-select" required>
+                                                        <option value="" data-price="0" disabled selected>Select Service</option>
+                                                        @foreach (var service in Model.Services.Where(s => s.serviceType == "NA"))
+                                                        {
+                                                            <option value="@service.serviceId"
+                                                                    data-price="@service.serviceCharge"
+                                                                    data-follow="@((service.followUp ? "true" : "false"))"
+                                                                    data-service-type="@service.serviceType.ToLower()"
+                                                                    data-service-name="@service.serviceName.ToLower()">
+                                                                @service.serviceName
+                                                            </option>
+                                                        }
+
+                                                        @* for display laboratory items *@
+                                                        @{
+                                                            var checkTypes = Model.Services
+                                                            .Select(s => s.serviceType)
+                                                            .Distinct();
+
+                                                            var type = string.Join(",", checkTypes).ToLower();
+                                                        }
+                                                        @if (type.Contains("lab"))
+                                                        {
+                                                            <optgroup label="Laboratory test">
+                                                                @foreach (var service in Model.Services.Where(s => s.serviceType != "NA"))
+                                                                {
+                                                                    <option value="@service.serviceId"
+                                                                            data-price="@service.serviceCharge"
+                                                                            data-follow="@((service.followUp ? "true" : "false"))"
+                                                                            data-service-type="@service.serviceType.ToLower()"
+                                                                            data-service-name="@service.serviceName.ToLower()">
+                                                                        @service.serviceName
+                                                                    </option>
+                                                                }
+                                                            </optgroup>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+
+
+                            <div class=" text-end pb-5">
+                                <button type="button" class="btn btn-success btn-confirm px-2" id="addRow">Add Service</button>
+                            </div>
+
+                            <div class="form-group text-end pt-5">
+                                <a class="btn btn-cancel btn-lg px-4" asp-action="ResetDateTime" asp-route-id="@Model.Appointment.AppointId" asp-route-prevSched="@Model.Appointment.time.ToString("HH:mm:ss")">Cancel</a>
+                                <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4" />
+                            </div>
+                    </div>
+                </div>
+
+            
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+
+            function fetchAvailableTimes() {
+                var selectedDate = $('#appointmentDate').val();
+                var preselectedTime = '@Model.Appointment.time'; // Get the preselected time from the model
+                console.log('Selected Date:', selectedDate);
+                console.log('Preselected Time:', preselectedTime); // Debug log
+
+                if (selectedDate) {
+                    $.ajax({
+                        url: '@Url.Action("GetAvailableTimes", "Appointments")',
+                        type: 'GET',
+                        data: { date: selectedDate },
+                        success: function (data) {
+                            var timeDropdown = $('#timeDropdown');
+                            timeDropdown.empty(); // Clear existing options
+
+                            var hasAvailableTimes = false;
+
+                            // Add AM options
+                            if (data.availableAM && data.availableAM.length > 0) {
+                                var amGroup = $('<optgroup>', { label: 'Morning' });
+                                $.each(data.availableAM, function (index, value) {
+                                    var option = $('<option>', {
+                                        value: value,
+                                        text: value + ' am'
+                                    });
+
+                                    // Check if this value matches the preselected time
+                                    if (preselectedTime && preselectedTime.trim() === value.trim()) {
+                                        option.prop('selected', true);
+                                    }
+
+                                    amGroup.append(option);
+                                });
+                                timeDropdown.append(amGroup);
+                                hasAvailableTimes = true;
+                            }
+
+                            // Add PM options
+                            if (data.availablePM && data.availablePM.length > 0) {
+                                var pmGroup = $('<optgroup>', { label: 'Afternoon' });
+                                $.each(data.availablePM, function (index, value) {
+                                    var option = $('<option>', {
+                                        value: value,
+                                        text: value
+                                    });
+
+                                    // Check if this value matches the preselected time
+                                    if (preselectedTime && preselectedTime.trim() === value.trim()) {
+                                        option.prop('selected', true);
+                                    }
+
+                                    pmGroup.append(option);
+                                });
+                                timeDropdown.append(pmGroup);
+                                hasAvailableTimes = true;
+                            }
+
+                            // If no available times, add "Fully booked" option
+                            if (!hasAvailableTimes) {
+                                timeDropdown.append($('<option>', {
+                                    value: '',
+                                    text: 'Fully booked',
+                                    disabled: true,
+                                    selected: true
+                                }));
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error fetching available times:', error);
+                        }
+                    });
+                }
+            }
+
+            // Trigger the date change event on page load if date is pre-filled
+            if ($('#appointmentDate').val()) {
+                fetchAvailableTimes();
+            }
+
+            $('#appointmentDate').change(fetchAvailableTimes);
+
+        });
+
+
+            $(document).ready(function () {
+            // Function to update the name attributes of input/select elements in each row
+            function updateRowNames() {
+                $('#DetailsTable tbody tr').each(function (index) {
+                    $(this).find('input, select, textarea').each(function () {
+                        var name = $(this).attr('name');
+                        if (name) {
+                            // Replace only the index inside the square brackets
+                            var newName = name.replace(/\[\d+\]/, '[' + index + ']');
+                            $(this).attr('name', newName);
+                        }
+                    });
+                });
+            }
+
+           
+
+            // Event handler for when a service is selected
+            $(document).on('change', 'select.service-select', function () {
+                updateTotalPrice(); // Update total price whenever a service is selected or changed
+            });
+
+            // Add a new row to the table when "Add Service" button is clicked
+            $('#addRow').click(function () {
+                var rowCount = $('#DetailsTable tbody tr').length;
+                var newRow = $('.detailRow').first().clone(); // Clone the first row
+
+                newRow.find('input, select, textarea').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\[\d+\]/, '[' + rowCount + ']'); // Update name attribute for the new row
+                        $(this).attr('name', newName);
+                    }
+                    $(this).val(''); // Clear the value of the input/select
+                });
+
+                newRow.appendTo($('#DetailsTable tbody')); // Append new row to table body
+                updateRowNames(); // Update names for all rows
+            });
+
+            // Remove a row when "Remove" button is clicked
+            $(document).on('click', '.removeRow', function () {
+                if ($('#DetailsTable tbody tr').length > 1) {
+                    $(this).closest('tr').remove(); // Remove the closest row
+                    updateRowNames(); // Update names for remaining rows
+                }
+            });
+
+        });
+        
+    </script>
+
+}

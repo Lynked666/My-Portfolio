@@ -1,0 +1,156 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.AppointmentVm
+@{
+    ViewData["Title"] = "Vc FollowUp";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["SuccessMessage"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close btn-cancel" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card p-3">
+    <div class="table-responsive text-center">
+        <table class="table table-bordered text-center hover" id="PetFollowUpTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Pet Name</th>
+                    <th class="text-center">Owner Name</th>
+                    <th class="text-center">Service</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center col-lg-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.IPetFollowUps)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Diagnostics.pet.petName)</td>
+
+                        @{
+                            var ownerName = $"{item.Diagnostics.pet.owner.fname} {item.Diagnostics.pet.owner.lname}";
+                        }
+                        <td>@ownerName</td>
+
+                        @{
+                            var Services = Model.Services.FirstOrDefault(s => s.serviceId == item.serviceId);
+
+                        }
+                        <td>@Services.serviceName</td>
+
+                        <td>
+                            @item.date.ToString("MMM. dd, yyyy")
+                        </td>
+
+
+                        <td>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary me-1 btn-cancel btn-sm" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdropCancel">
+                                Cancel
+                            </button>
+
+                            @if(Context.Session.GetString("UserRole") == "Admin")
+                            {
+                                <a asp-action="CreateDiagnosis" asp-controller="Billing" asp-route-id="@item.Diagnostics.pet.ownerId" asp-route-followupId="@item.Id" asp-route-btnCnl="followUp" class="btn btn-confirm btn-sm me-1">
+                                    Attend
+                                </a>
+                            }
+                          
+                         @*    <button type="button" class="btn btn-success me-1" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdropAttended">
+                                Attend
+                            </button> *@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Cencel Modal -->
+<div class="modal fade" id="staticBackdropCancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this record?
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-cancel btn-lg px-4" data-bs-dismiss="modal">Close</button>
+
+                <form asp-action="Cancel" asp-controller="PetFollowUp" method="post">
+                    <input type="hidden" name="id" id="followupId" />
+                    <input type="submit" value="Confirm" class="btn btn-confirm btn-lg px-4" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Attended Modal -->
+<div class="modal fade" id="staticBackdropAttended" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success bg-opacity-50">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure that this record is currently attended?
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <form asp-action="Attend" asp-controller="PetFollowUp" method="post">
+                    <input type="hidden" name="id" id="followupIdAttend" />
+                    <input type="submit" value="Confirm" class="btn btn-primary" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/AppointmentDataTables/PetFollowUpTable.js" defer> </script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#staticBackdropCancel').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id'); // Extract data-id from the button
+                var modalInput = $('#followupId'); // Find the hidden input field
+                modalInput.val(id); // Set the input value
+            });
+
+
+            $('#staticBackdropAttended').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id'); // Extract data-id from the button
+                var modalInput = $('#followupIdAttend'); // Find the hidden input field
+                modalInput.val(id); // Set the input value
+            });
+
+        });
+
+
+    </script>
+
+

@@ -1,0 +1,57 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Services
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Update Service</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container p-0">
+            <div class="">
+                <form method="post" asp-action="Edit" class="card p-5">
+                    <input asp-for="serviceId" hidden/>
+
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="w-50 card p-3 d-flex justify-content-center align-content-center">
+                            <div class="form-group" id="apppad">
+                                <label asp-for="serviceName" class="control-label"></label>
+                                <input asp-for="serviceName" class="form-control" />
+                                <span asp-validation-for="serviceName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group" id="apppad">
+                                <label asp-for="serviceCharge" class="control-label"></label>
+                                <input asp-for="serviceCharge" class="form-control" />
+                                <span asp-validation-for="serviceCharge" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-lg-8 mt-4 mb-3" id="apppad">
+                                <input class="form-check-input" name="followUp" asp-for="followUp" type="checkbox">
+                                <label class="form-check-label" asp-for="followUp"></label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                        <div class="form-group mt-4 text-end">
+                            <a asp-action="Index" class="btn btn-cancel btn-lg px-4">Cancel</a>
+                            <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4 " />
+                        </div>
+                </form>
+             </div>
+        </div>
+    </div>
+
+</div>

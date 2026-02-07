@@ -1,0 +1,122 @@
+﻿        @model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+
+@{
+    ViewData["Title"] = "Billing Diagnostic - Edit";
+}
+
+
+<div class="container p-0 bg container-bord shadow mb-5 bg-white rounded">
+
+
+
+    <div class="container p-0 ">
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Pet Information</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <form method="post" asp-action="Edit"> <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="row p-3 pt-3">
+
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label class="control-label">Owner ID - Name</label>
+                        <input value="@($"{Model.Diagnostics.pet.owner.id} - {Model.Diagnostics.pet.owner.fname} {Model.Diagnostics.pet.owner.lname}")" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.diagnostic_Id" class="control-label"></label>
+                        <input class="form-control" asp-for="Diagnostics.diagnostic_Id" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.petId" class="control-label"></label>
+                        <input asp-for="Diagnostics.petId" class="form-control " readonly />
+                    </div>
+
+          
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.pet.petName" class="control-label"></label>
+                        <input asp-for="Diagnostics.pet.petName" class="form-control" readonly />
+                    </div>
+                    
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.pet.breed" class="control-label"></label>
+                        <input asp-for="Diagnostics.pet.breed" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.pet.gender" class="control-label"></label>
+                        <input asp-for="Diagnostics.pet.gender" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-6 mb-3" id="apppad">
+                        <label asp-for="Diagnostics.weight" class="control-label"></label>
+                        <input asp-for="Diagnostics.weight" class="form-control bg-light decimal-input " placeholder="Input weight" value="@Model.Diagnostics.weight" required />
+                    </div>
+
+
+            </div>
+
+
+            <div class="row p-3 mt-1">
+                <div class="form-group col-lg-3 visually-hidden" id="apppad">
+                    <!-- Hidden Field for Date -->
+                    <label asp-for="Diagnostics.date" class="control-label"></label>
+                    <input type="hidden" asp-for="Diagnostics.date" class="form-control dateInput" value="@Model.Diagnostics.date" readonly />
+                    <input value="@Model.Diagnostics.date?.ToString("MMM. dd, yyyy")" class="form-control" readonly />
+
+                </div>
+        
+            </div>
+
+    </form>
+
+       
+                    <div class="btn-group btn-group-toggle pt-1 pb-4 mx-3" data-toggle="buttons">
+                    
+                                <a role="presentation" asp-action="SwitchToBillingTab" asp-route-tabName="Diagnosis" asp-route-id="@Model.Diagnostics.diagnostic_Id" class="@(Model.activeBillingTab == PAWS_NDV_PetLovers.ViewModels.BillingTab.Diagnosis ? "active" : string.Empty) btn btn-success btn-lg">Service</a>
+                   
+                                <a role="presentation" asp-action="SwitchToBillingTab" asp-route-tabName="Purchase" asp-route-id="@Model.Diagnostics.diagnostic_Id" class="@(Model.activeBillingTab == PAWS_NDV_PetLovers.ViewModels.BillingTab.Purchase ? "active" : string.Empty) btn btn-success btn-lg">Purchase</a>
+                    
+                                <a role="presentation" asp-action="SwitchToBillingTab" asp-route-tabName="Billing" asp-route-id="@Model.Diagnostics.diagnostic_Id" class="@(Model.activeBillingTab == PAWS_NDV_PetLovers.ViewModels.BillingTab.Billing ? "active" : string.Empty) btn btn-success btn-lg">Billing</a>
+                   
+                    </div>
+        
+
+                    @switch (Model.activeBillingTab)
+                    {
+                        case PAWS_NDV_PetLovers.ViewModels.BillingTab.Diagnosis:
+                            @await Component.InvokeAsync("Diagnostics", new {id = Model.Diagnostics.diagnostic_Id})  //Service on View
+                        break;
+
+                                        case PAWS_NDV_PetLovers.ViewModels.BillingTab.Purchase:
+                                            @await Component.InvokeAsync("Purchase", new { id = Model.Diagnostics.diagnostic_Id, errorMessage = Model.errorMessage, RemoveErrorMessage = Model.RemoveErrorMessage})
+                                         break;
+
+                                        case PAWS_NDV_PetLovers.ViewModels.BillingTab.Billing:
+                                            @await Component.InvokeAsync("Billing", new { id = Model.Diagnostics.diagnostic_Id, PaymentErrorMessage = Model.PaymentErrorMessage})
+                                        break;
+
+                                        default:
+                                        @await Component.InvokeAsync("Diagnosis", new { id = Model.Diagnostics.diagnostic_Id })
+                                        break;
+                    }
+
+   
+</div>
+
+<script src="~/js/TransactionsDT/modalProductTable.js"async></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

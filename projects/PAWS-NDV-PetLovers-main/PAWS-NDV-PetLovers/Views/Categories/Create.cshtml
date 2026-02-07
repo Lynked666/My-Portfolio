@@ -1,0 +1,147 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Category
+@{
+    ViewData["Title"] = "Create";
+}
+@* add nag details ug delete bai *@
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Add New Category</h1>
+                </div>
+            </div>
+        </div>
+
+
+
+        <form method="post" asp-action="Create">
+            <div class="card p-3 pt-4">
+                <!-- Owner -->
+                <div class="row">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group col-lg-4">
+                        <label asp-for="categoryName" class="control-label"></label>
+                        <input asp-for="categoryName" class="form-control bg-light" />
+                        <span asp-validation-for="categoryName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-8">
+                        <label asp-for="description" class="control-label"></label>
+                        <textarea asp-for="description" class="form-control  bg-light" rows="5" style="resize: none;"></textarea>
+                        <span asp-validation-for="description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group visually-hidden">
+                        <label asp-for="registeredDate" class="control-label"></label>
+                        <input asp-for="registeredDate" class="form-control bg-light dateInput" readonly />
+                    </div>
+                </div>
+                <!-- End of Category -->
+
+                <!-- Products Table -->
+                    <div class="table-responsive">
+                    <table id="ProductsTbl" class="table table table-striped text-center hover  mt-3">
+                            <thead>
+                                <tr class="text-center no-col pt-3">
+                                    <th><p style="margin:0;">Product Name</p></th>
+                                    <th><p style="margin:0;">Supplier Price</p></th>
+                                    <th><p style="margin:0;">Selling Price</p></th>
+                                    <th><p style="margin:0;">Qty On Hand</p></th>
+                                   @*  <th><p style="margin:0;">Expiry Date</p></th> *@
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="productRow">
+                                    <td class="col-3">
+                                        <input name="Products[0].productName" class="form-control " required placeholder="Enter Product Name" />
+                                    </td>
+                                    <td class="col-2">
+                                        <input name="Products[0].supplierPrice" class="form-control" oninput="validateDecimalInput(this)" required placeholder="Enter Supplier Price" />
+                                    </td>
+                                    <td class="col-2">
+                                        <input name="Products[0].sellingPrice" class="form-control " oninput="validateDecimalInput(this)" required placeholder="Enter Selling Price" />
+                                    </td>
+                                    <td class="col-2">
+                                        <input type="number" name="Products[0].quantity" class="form-control" required placeholder="Enter Quantity" />
+                                    </td>
+                                    @* <td class="col-2">
+                                        <input type="date" name="Products[0].expiryDate" class="form-control " placeholder="Optional" />
+                                    </td> *@
+                                    <td class="col-1">
+                                        <button type="button" class="btn btn-danger removeRow">Remove</button>
+                                    </td>
+                                   @*  <div class="col-2 visually-hidden">
+                                       <input type="date" name="Products[0].registeredDate" class="form-control dateInput" />
+                                    </div> *@
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                        <div class="form-group text-end pt-4 pb-4">
+                            <th colspan="2"><button type="button" class="btn btn-confirm btn-sm" id="addRow">Add Row</button></th>
+                        </div>
+               
+                <!-- End of Products Table -->
+                <!-- Form Actions -->
+                <div class="form-group text-end mt-4">
+                    <a asp-action="Index" class="btn btn-secondary btn-cancel btn-lg">Cancel</a>
+                    <input type="submit" value="Create" class="btn  btn-confirm btn-lg" id="AddCategoryButton" />
+                </div>
+                <!-- End of Form Actions -->
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Function to update the name attributes of the rows
+            function updateRowNames() {
+                $('#ProductsTbl tbody tr').each(function (index) {
+                    $(this).find('input').each(function () {
+                        var name = $(this).attr('name');
+                        if (name) {
+                            var newName = name.replace(/\d+/, index);
+                            $(this).attr('name', newName);
+                        }
+                    });
+                });
+            }
+
+            // Add row
+            $('#addRow').click(function () {
+                var rowCount = $('#ProductsTbl tbody tr').length;
+                var newRow = $('.productRow').first().clone();
+
+                newRow.find('input').each(function () {
+                    var name = $(this).attr('name');
+                    if (name) {
+                        var newName = name.replace(/\d+/, rowCount);
+                        $(this).attr('name', newName);
+                        if ($(this).attr('id') !== 'dateInput') {
+                            $(this).val(''); // Clear the value of the input/select except dateInput
+                        }
+                    }
+                });
+
+                newRow.appendTo($('#ProductsTbl tbody'));
+            });
+
+            // Remove row
+            $(document).on('click', '.removeRow', function () {
+                if ($('#ProductsTbl tbody tr').length > 1) {
+                    $(this).closest('tr').remove();
+                    updateRowNames(); // Update the name attributes of the remaining rows
+                }
+            });
+        });
+    </script>
+}

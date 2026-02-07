@@ -1,0 +1,173 @@
+﻿
+@model PAWS_NDV_PetLovers.ViewModels.ReportsVm
+@{
+    ViewData["Title"] = "Follow-Up Visit Report";
+}
+@{
+    #region == abandoned View == 
+
+    /*
+    <div class="bg-custom-color mb-3 py-2">
+        <div class="container">
+        <h1>Follow-Up Visit Report</h1>
+            </div>
+        </div>
+
+
+
+    <div class="container">
+    <form method="post" asp-action="FollowUpVisitReport">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div class="row">
+            <div class="form-group col-lg-3 col-12 col-md-6">
+                <label for="startingDate" class="control-label">Start Date</label>
+                <input type="date" name="startDate" class="form-control" value="@Model.startDate?.ToString("yyyy-MM-dd")" required />
+            </div>
+
+                <div class="form-group col-lg-3 col-12 col-md-6">
+                    <label for="endingDate" class="control-label">End Date</label>
+                    <input type="date" name="endDate" class="form-control" value="@Model.endDate?.ToString("yyyy-MM-dd")" required />
+                </div>
+
+            <div class="form-group mt-auto col-auto">
+                @switch (Model.SelectType)
+                    {
+                        case "custom":
+
+                        <select id="selectType" name="SelectType" class="form-control bg-light me-4 form-select" required>
+                            <option value="" hidden>--Select</option>
+                            <option value="custom" selected>Custom</option>
+                            <option value="all">All</option>
+                        </select>
+                    break;
+
+                        case "all":
+                        <select id="selectType" name="SelectType" class="form-control bg-light me-4  form-select" required>
+                            <option value="" hidden>--Select</option>
+                            <option value="custom">Custom</option>
+                            <option value="all" selected>All</option>
+                        </select>
+                    break;
+
+                        default:
+
+                            <select id="selectType" name="SelectType" class="form-control bg-light me-4  form-select" required>
+                                <option value="" hidden selected>--Select</option>
+                                <option value="custom">Custom</option>
+                                <option value="all">All</option>
+                            </select>
+
+                break;
+            }
+            </div>
+
+            <div id="statusVisibility" class=" form-group mt-auto  col-auto statusVisibility">
+                @switch (Model.Status)
+                    {
+                        case "inProgress":
+                        <select name="Status" class="form-control bg-light me-4  form-select" required>
+                            <option value="" hidden>--Status</option>
+                            <option value="inProgress" selected>In Progress</option>
+                            <option value="complete">Complete</option>
+                        </select>
+                    break;
+
+                        case "complete":
+
+                            <select name="Status" class="form-control bg-light me-4  form-select" required>
+                                <option value="" hidden>--Status</option>
+                                <option value="inProgress">In Progress</option>
+                                <option value="complete" selected>Complete</option>
+                            </select>
+
+                    break;
+
+                        default:
+                        <select name="Status" class="form-control bg-light me-4 form-select" required>
+                            <option value="" hidden>--Status</option>
+                            <option value="inProgress">In Progress</option>
+                            <option value="complete">Complete</option>
+                        </select>
+                break;
+            }
+            </div>
+
+                <div class="form-group col-lg-3 col-12 col-md-6 mt-auto">
+                    <input type="submit" value="View" class="btn btn-primary ms-3 mt-3 px-5" />
+                </div>
+
+                <div class="mt-4">
+                <table class="table table-striped ReportsTable">
+                        <thead>
+                            <tr>
+                            <th>Owner Name</th>
+                            <th>Pet Name</th>
+                            <th>Date</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <!-- Add other relevant columns here -->
+                    </tr>
+                    </thead>
+                        <tbody>
+                        @if (Model.Filtered)
+                            {
+                            @if (Model.IPetFollowUps != null && Model.IPetFollowUps.Any())
+                                {
+                                foreach (var followUp in Model.IPetFollowUps)
+                                    {
+                                        <tr>
+
+                                            @{
+                                            var fullname = $"{followUp.Diagnostics.pet.owner.fname} {followUp.Diagnostics.pet.owner.lname}";
+
+                                        }
+                                        <td>@fullname</td>
+                                        <td>@followUp.Diagnostics.pet.petName</td>
+                                        <td>@followUp.date.ToShortDateString()</td>
+
+                                            <td>
+                                            @followUp.Services.serviceName
+                                        </td>
+                                        <!-- Modern Status Design with Badge and Icons -->
+                                            <td>
+
+                                            @if (followUp.status == "Attended")
+                                                {
+                                                <span class="badge bg-success text-white rounded-pill">
+                                                    <i class="bi bi-check-circle-fill"></i> Complete
+                                            </span>
+                                            }
+                                            else if (followUp.status == "Cancelled")
+                                                {
+                                                <span class="badge bg-danger text-white rounded-pill">
+                                                    <i class="bi bi-hourglass-split"></i> Cancelled
+                                            </span>
+                                            }
+                                            else
+                                                {
+                                                <span class="badge bg-secondary text-white rounded-pill">
+                                                    <i class="bi bi-exclamation-circle-fill"></i> In Progress
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            }
+                            else
+                                {
+                                    <tr>
+                                    <td colspan="4" class="text-center">No appointments found for the selected date range.</td>
+                                    <td></td>
+                                    <td></td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+     </div>
+             </div>
+    </form>
+    */
+    #endregion
+}

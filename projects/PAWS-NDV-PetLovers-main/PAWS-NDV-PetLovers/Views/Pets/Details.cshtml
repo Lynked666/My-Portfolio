@@ -1,0 +1,91 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Pet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-3">
+    <div class="container">
+        <h1> PET DETAILS </h1>
+    </div>
+</div>
+
+<div class="container">
+  
+
+    <div>
+        <h4>Pet</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.petName)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.petName)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.species)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.species)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.breed)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.breed)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.bdate)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.bdate)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.age)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.age)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.color)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.color)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.gender)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.gender)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.owner)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.owner.id)
+                @Html.Raw(' ')
+                @Html.Raw('-')
+                @Html.Raw(' ')
+                @Html.DisplayFor(model => model.owner.fname)
+                @Html.Raw(' ')
+                @Html.DisplayFor(model => model.owner.lname)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.registeredDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.registeredDate)
+            </dd>
+        </dl>
+    </div>
+    
+        <div class="d-inline">
+            <a asp-controller="Owners" asp-action="Edit" class="btn btn-primary btn-md" asp-route-id="@Model.ownerId">View Owner</a>
+        </div>
+
+        <div class="d-inline">
+            <a asp-action="Index" class="btn btn-secondary btn-md">View All Pets</a>
+        </div>
+
+</div>

@@ -1,0 +1,55 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Edit Profile</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-5 bg-light">
+            <form method="post" asp-action="Edit">
+
+       
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <!-- Profile Section -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label asp-for="userAccount.fname" class="form-label text-muted">First Name</label>
+                    <input asp-for="userAccount.fname" class="form-control border-secondary" placeholder="Enter your first name" required />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label asp-for="userAccount.lname" class="form-label text-muted">Last Name</label>
+                    <input asp-for="userAccount.lname" class="form-control border-secondary" placeholder="Enter your last name" required />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label asp-for="userAccount.mname" class="form-label text-muted">Middle Name</label>
+                    <input asp-for="userAccount.mname" class="form-control border-secondary" placeholder="Enter your middle name"  />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label asp-for="userAccount.contact" class="form-label text-muted">Contact</label>
+                    <input asp-for="userAccount.contact" class="form-control border-secondary" placeholder="Enter your contact number" required />
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label asp-for="userAccount.email" class="form-label text-muted">Email</label>
+                    <input asp-for="userAccount.email" type="email" class="form-control border-secondary" placeholder="Enter your email" />
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a asp-action="Profile" class="btn btn-cancel btn-lg px-4">Cancel</a>
+                <input type="submit" class="btn btn-confirm  btn-lg px-4" value="Save"/>
+            </div>
+            </form>
+
+    </div>
+    </div>

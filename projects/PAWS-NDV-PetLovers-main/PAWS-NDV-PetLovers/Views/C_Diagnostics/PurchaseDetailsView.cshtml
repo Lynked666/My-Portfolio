@@ -1,0 +1,68 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "PurchaseDetailsView";
+}
+@*this index view is abandoned *@
+
+<div class="container">
+
+    <a asp-action="Edit"  class="btn btn-secondary mt-3">Back to Bill</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th class="text-center">Id</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Stock</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Order Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.IPurchaseDetails)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.purchaseId)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.product.productName)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.product.category.categoryName)
+                    </td>
+
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.product.quantity)
+                    </td>
+
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.product.sellingPrice)
+                  
+                    </td>
+
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+                    <form asp-action="RemoveProductFromPurchase" method="post">
+                        <input type="hidden" value="@item.purchaseId" name="purchaseId" />
+                        <input type="hidden" value="@item.productId" name="productId" />
+                        <input type="hidden" value="@item.quantity" name="quantity" />
+                        <input type="hidden" value="@item.Purchase.diagnosisId_holder" name="diagnosticId" />
+                        <td><button class="btn btn-danger" name="">Remove</button></td>
+                    </form>
+                </tr>
+
+            }
+        </tbody>
+
+      
+    </table>
+    <div class="mt-4 text-end">
+
+      
+        <span class="fw-bold">Total Payment: @Model.totalPurchasePayment </span>
+    </div>
+</div>

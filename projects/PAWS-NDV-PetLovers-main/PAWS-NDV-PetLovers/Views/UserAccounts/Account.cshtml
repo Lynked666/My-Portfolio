@@ -1,0 +1,55 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.UserAccountVm
+@{
+    ViewData["Title"] = "Account Index";
+}
+<!-- Alert Placeholder -->
+@if (TempData["Message"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Account</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group btn-group-toggle pt-5 p-3" data-toggle="buttons">
+            
+                
+                    <a role="presentation" asp-action="SwitchToTab" asp-route-tabName="accountList" class="@(Model.activeAccountTab == PAWS_NDV_PetLovers.ViewModels.AccountTab.accountList ? "active" : string.Empty) btn btn-success btn-lg ">Account List</a>
+                
+
+                
+                    <a role="presentation" asp-action="SwitchToTab" asp-route-tabName="createStaff" class="@(Model.activeAccountTab == PAWS_NDV_PetLovers.ViewModels.AccountTab.createStaff ? "active" : string.Empty) btn btn-success">Add Staff</a>
+                
+        </div>
+
+        @switch (Model.activeAccountTab)
+        {
+            case PAWS_NDV_PetLovers.ViewModels.AccountTab.accountList:
+                @await Component.InvokeAsync("AccountList")
+                break;
+
+            case PAWS_NDV_PetLovers.ViewModels.AccountTab.createStaff:
+                @await Component.InvokeAsync("CreateStaff", new { vm = Model })
+                break;
+        }
+
+    </div>
+</div>
+
+
+   

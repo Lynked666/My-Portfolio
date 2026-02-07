@@ -1,0 +1,51 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Category
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0 ">
+
+
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Update Category</h1>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="Edit">
+            <div class="row p-3 w-50 d-flex justify-content-center">
+               <div class="w-100">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="categoryName" class="control-label"></label>
+                        <input asp-for="categoryName" class="form-control bg-light" />
+                        <span asp-validation-for="categoryName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="description" class="control-label"></label>
+                        <textarea asp-for="description" class="form-control bg-light" rows="5" style="resize: none;"></textarea>
+                        <span asp-validation-for="description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group visually-hidden">
+                        <label asp-for="lastUpdate" class="control-label"></label>
+                        <input asp-for="lastUpdate" class="form-control bg-light dateInput" readonly />
+                    </div>
+               </div>
+
+            </div>
+            <div class="text-end mt-3 p-3 pb-3">
+                <a class="btn btn-cancel btn-lg px-4" asp-action="Index">Cancel</a>
+                <input type="submit" value="Save" class="btn btn-confirm btn-lg px-4"/>
+            </div>
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,77 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-3">
+    <div class="container">
+        <h1>Product Details</h1>
+    </di>
+</div>
+
+<div class="main container">
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.id)
+            </dd>           
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.productName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.productName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.supplierPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.supplierPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.sellingPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.sellingPrice)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.quantity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.quantity)
+            </dd>
+                        <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.registeredDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.registeredDate)
+            </dd>
+                @if (Model.lastUpdate.HasValue)
+                {
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.lastUpdate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.lastUpdate)
+                    </dd>
+                }
+                else
+                {
+                    <dt class="col-sm-2 visually-hidden">
+                        @Html.DisplayNameFor(model => model.lastUpdate)
+                    </dt>
+                    <dd class="col-sm-10 visually-hidden">
+                        @Html.DisplayFor(model => model.lastUpdate)
+                    </dd>
+                }
+            </dl>
+    </div>
+    <div class="">
+        <a asp-action="Index" class="btn btn-secondary px-3">Back to list</a>
+    </div>
+</div>
+

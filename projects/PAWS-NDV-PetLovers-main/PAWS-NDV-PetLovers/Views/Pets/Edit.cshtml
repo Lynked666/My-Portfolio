@@ -1,0 +1,130 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Pet
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<div class="container-fluid bg p-0 container-bord shadow  mb-5 bg-white rounded">
+
+    <div class="container p-0">
+
+
+        <div class="container p-0 bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Edit Pet</h1>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Alert Placeholder -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 20000;">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+   @*  <div class="d-flex justify-content-end pt-3 px-3 mb-1">
+        <a asp-controller="Owners" asp-action="Edit" class="btn btn-cancel btn-lg" asp-route-id="@Model.ownerId">View Owner</a>
+    </div> *@
+
+    <div class="card mb-4 p-3">
+        <form method="post" asp-action="Edit">
+            <div class="row petrow p-2">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="id" />
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="petName" class="control-label"></label>
+                    <input asp-for="petName" class="form-control bg-light" readonly />
+                    <span asp-validation-for="petName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="species" class="control-label"></label>
+                    <select asp-for="species" class="form-select bg-light" required>
+                        <option value="" selected hidden>----</option>
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                    </select>
+                    <span asp-validation-for="species" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="breed" class="control-label"></label>
+                    <input asp-for="breed" class="form-control bg-light" />
+                    <span asp-validation-for="breed" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="bdate" class="control-label"></label>
+                    <input type="date" asp-for="bdate" class="form-control bg-light birthdate" />
+                    <span asp-validation-for="bdate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="age" class="control-label"></label>
+                    <input asp-for="age" type="text" class="form-control bg-light age" readonly />
+                    <span asp-validation-for="age" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label asp-for="color" class="control-label"></label>
+                    <input asp-for="color" class="form-control bg-light" />
+                    <span asp-validation-for="color" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6">
+                    <label class="control-label" asp-for="gender"></label>
+                    <select asp-for="gender" class="form-select bg-light" required>
+                        <option value=""  hidden>----</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <span asp-validation-for="gender" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-4 col-md-6 visually-hidden">
+                    <label asp-for="ownerId" class="control-label bg-light"></label>
+                  @*   <select asp-for="ownerId" class="form-control" asp-items="ViewBag.ownerId"></select> *@
+                    <input asp-for="ownerId" type="text" class="form-control bg-light" readonly/>
+                    <span asp-validation-for="ownerId" class="text-danger"></span>
+                </div>
+
+                    <div class="form-group col-lg-4 col-md-6 visually-hidden" id="apppad">
+                        <label asp-for="registeredDate" class="control-label"></label>
+                        <input type="hidden" asp-for="registeredDate" class="form-control bg-light" readonly/>
+                        <input value="@Model.registeredDate?.ToString("MMM. dd, yyyy")" class="form-control bg-light" readonly />
+                    </div>
+                    <div class="form-group col-lg-4 col-md-6 visually-hidden">
+                    @if (Model.lastUpdate.HasValue)
+                    {
+                        <label asp-for="lastUpdate" class="control-label"></label>
+                        <input type="hidden" asp-for="lastUpdate" class="form-control" readonly />
+                        <input value="@Model.lastUpdate?.ToString("MMM. dd, yyyy")" class="form-control" readonly />
+
+                }
+                else
+                {
+                    <label asp-for="lastUpdate" class="control-label" hidden></label>
+                    <input asp-for="lastUpdate" class="form-control dateInput " hidden readonly />
+                }
+                </div>
+                <div class="col-12">
+
+                </div>
+                <div class="form-group text-end p-3">
+                    <a asp-action="Edit" asp-route-id="@Model.ownerId" asp-controller="Owners" class="btn btn-cancel btn-lg px-4">Cancel</a>
+                    <input type="submit" value="Save" class="btn btn-lg btn-confirm px-4" />
+                </div>
+               </div>
+            </form>
+        
+    </div>
+
+</div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

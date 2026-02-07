@@ -1,0 +1,485 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "Edit";
+}
+@*this index view is abandoned *@
+
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>Diagnostics Billing</h1>
+                </div>
+            </div> 
+        </div>
+
+
+        <form method="post" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="container">
+                <h3>Pet Information</h3>
+            </div>
+            <div class="row">
+    
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.diagnostic_Id" class="control-label"></label>
+                    <input class="form-control" asp-for="Diagnostics.diagnostic_Id" readonly />
+                </div>
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.petId" class="control-label"></label>
+                    <input asp-for="Diagnostics.petId" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.pet.petName" class="control-label"></label>
+                    <input asp-for="Diagnostics.pet.petName" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.pet.breed" class="control-label"></label>
+                    <input asp-for="Diagnostics.pet.breed" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.pet.gender" class="control-label"></label>
+                    <input asp-for="Diagnostics.pet.gender" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.pet.age" class="control-label"></label>
+                    <input asp-for="Diagnostics.pet.age" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label asp-for="Diagnostics.pet.bdate" class="control-label"></label>
+                    <input asp-for="Diagnostics.pet.bdate" class="form-control" readonly />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-6">
+                    <label class="control-label">Owner ID - Name</label>
+                    <input value="@($"{Model.Diagnostics.pet.owner.id} - {Model.Diagnostics.pet.owner.fname} {Model.Diagnostics.pet.owner.lname}")" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="form-group col-lg-3">
+                    <!-- Hidden Field for Date -->
+                    <label asp-for="Diagnostics.date" class="control-label"></label>
+                    <input asp-for="Diagnostics.date" class="form-control dateInput" value="@Model.Diagnostics.date" readonly />
+                </div>
+                <div class="form-group col-lg-3">
+                    <!-- Hidden Field for Date -->
+                    <label asp-for="Diagnostics.weight" class="control-label"></label>
+                    <input asp-for="Diagnostics.weight" class="form-control bg-light decimal-input" placeholder="Input weight" value="@Model.Diagnostics.weight" required />
+                </div>
+            </div>
+
+
+       
+
+
+            <div class="bg-secondary bg-opacity-10 py-2 mt-3">
+                <h3 class="ps-3">Pet Service</h3>
+            </div>
+            <table class="table  border mt-2">
+                <thead>
+                    <tr>
+                        <th>Service Name</th>
+                        <th>Details</th>
+                        <th>Service Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (int i = 0; i < Model.Diagnostics.IdiagnosticDetails.Count; i++)
+                    {
+                        <tr>
+                            @if(Model.Appointment.IAppDetails.Count > 0)
+                            {
+                                <td>
+                                    @Html.DisplayFor(model => Model.Appointment.IAppDetails[i].Services.serviceName)
+                                </td>
+                            }
+                            <td>
+                                @Html.DisplayFor(model => Model.Diagnostics.IdiagnosticDetails[i].Services.serviceName)
+                            </td>
+
+                            <td>
+                                <textarea class="form-control bg-light" rows="5" style="resize: none;" name="Diagnostics.IdiagnosticDetails[@i].details">@Model.Diagnostics.IdiagnosticDetails[i].details</textarea>
+                            </td>
+
+                            <td>
+                                <!-- Display service price formatted as currency -->
+                                @{
+                                    double price = (double)Model.Diagnostics.IdiagnosticDetails[i].totalServicePayment;
+                                    var decimalAdded = price.ToString("N2");
+                                    var displayPrice = $"P{decimalAdded}";
+                                }
+                                <span>@displayPrice</span>
+                            </td>
+                            @* Holds the diagnosticDet_Id *@
+                            <input type="hidden" name="Diagnostics.IdiagnosticDetails[@i].diagnosticDet_Id" value="@Model.Diagnostics.IdiagnosticDetails[i].diagnosticDet_Id" />
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="fixed-bottom visually-hidden">
+                <div class="form-group fw-bold">
+                    <span class="bg-secondary bg-opacity-10 px-2">
+                        Total Payment:
+                      @*   @{
+                            double payment = (double)Model.Diagnostics.totalServicePayment;
+                            var currency = payment.ToString("N2");
+                            var totalPayment = $"P{currency}";
+                        }
+                        @totalPayment *@
+                    </span>
+                </div>
+            </div>
+
+            <div class="mt-5 text-end button-container">
+
+                  <a asp-action="Index" asp-controller="BillingDashboard" class="btn btn-secondary px-3">Cancel</a>
+                    @* General Saving for Edit *@
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropSelectedProduct">
+                        Buy Products
+                    </button>
+                    <input type="submit" value="Save" class="btn btn-primary px-4" />
+                </div>
+
+     
+        </form>
+
+    </div>
+</div>
+@{
+   #region == source for purchase == 
+   /*
+        *
+        <!-- Modal for selecting Products  / Select Product - INDEX-->
+        *
+        <!--vIEW Cart-->
+        <div class="container">
+
+        @{
+        var purchase = Model.totalPurchasePayment;
+        }
+
+        @if (purchase != 0)
+        {
+
+        <div class="bg-secondary bg-opacity-10 py-2">
+        <h3 class="ps-3">Selected Products</h3>
+        </div>
+        <table class="table border">
+        <thead>
+        <tr>
+
+        <th class="text-center">Id</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Stock</th>
+        <th class="text-center">Price</th>
+        <th class="text-center">Order Quantity</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.IPurchaseDetails)
+        {
+        <tr>
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.purchaseId)
+        </td>
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.product.productName)
+        </td>
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.product.category.categoryName)
+        </td>
+
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.product.quantity)
+        </td>
+
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.product.sellingPrice)
+
+        </td>
+
+        <td class="text-center">
+        @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <form asp-action="RemoveProductFromPurchase" method="post">
+        <input type="hidden" value="@item.purchaseId" name="purchaseId" />
+        <input type="hidden" value="@item.productId" name="productId" />
+        <input type="hidden" value="@item.quantity" name="quantity" />
+        <input type="hidden" value="@item.Purchase.diagnosisId_holder" name="diagnosticId" />
+        <input type="hidden" value="@item.Purchase.date" name="date" />
+        <td><button class="btn btn-danger" name="">Remove</button></td>
+
+        </form>
+        </tr>
+        }
+        </tbody>
+        </table>
+        }
+
+
+
+        </div>
+
+
+
+        <!-- Modal for View Selected Product / Create -->
+        <div class="modal fade" id="staticBackdropSelectedProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+        <form method="post" asp-action="CreatePurchase">
+        <div class="modal-header bg-primary">
+        <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Selected Product List</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+        @if (ViewData["ErrorMessage"] != null)
+        {
+        <div class="alert alert-danger">
+        @ViewData["ErrorMessage"]
+        </div>
+        }
+        @* Display Selected Product*@
+        <div class="row justify-content-center">
+        <table class="table border w-75" id="purchaseTable">
+        <thead>
+        <tr>
+        <th class="text-center">Id</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Stock</th>
+        <th class="text-center">Price</th>
+        <th>Order Quantity</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <!--pRODUCT WILL DISPLAY HERE-->
+
+        </tbody>
+
+        </table>
+        </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+        <input type="date" name="Purchase.Date" class="dateInput visually-hidden" />
+        <input name="Purchase.diagnosisId_Holder" class="visually-hidden" value="@Model.Diagnostics.diagnostic_Id" />
+        @{
+        var customerName = $"{Model.Diagnostics.pet.owner.fname} {Model.Diagnostics.pet.owner.lname}";
+        }
+        <input class="visually-hidden" name="Purchase.customerName" value="@customerName" />
+
+
+        <button type="button" id="AddProductBtn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Select Product
+        </button>
+
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+        <div class="modal-header bg-primary">
+        @* <h1 class="modal-title fs-5" id="staticBackdropLabel">Select Product</h1>  *@
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form>
+        <table class="table hover" id="modalProductTbl">
+        <thead>
+        <tr>
+        <th class="text-center">Select</th>
+        <th class="text-center">Id</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Category</th>
+        <th class="text-center">Stock</th>
+        <th class="text-center">Price</th>
+        <th class="text-center">Order Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @{
+        var Iproducts = Model.IProducts.Where(p => p.quantity > 0).Select(p => p);
+        }
+        @foreach (var product in @Iproducts)
+        {
+        <tr>
+        <td class="text-center"><input type="checkbox" class="selectProduct form-check-input" data-id="@product.id" data-name="@product.productName" data-category="@product.category.categoryName" data-qty="@product.quantity" data-price="@product.sellingPrice" /></td>
+        <td class="text-center">@product.id</td>
+        <td class="text-center">@product.productName</td>
+        <td class="text-center">@product.category.categoryName</td>
+        <td class="text-center">@product.quantity</td>
+        <td class="text-center">@product.sellingPrice</td>
+        <td><input type="number" class="form-control orderQtyInput orderItemQty" min="1" max="@product.quantity" value="1" /></td>
+        </tr>
+        }
+        </tbody>
+        </table>
+
+
+        <div class="modal-footer">
+        <div class="text-danger me-2" id="selectionWarning" style="display:none;">Product is already selected.</div>
+        <button type="button" class="btn btn-secondary bg-opacity-10" id="ViewSelectedProduct">Cancel</button>
+
+        @* <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> *@
+        <button type="button" class="btn btn-primary" id="SelectProductButton">Add</button>
+        </div>
+        </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        */
+#endregion
+}
+
+
+
+<script src="~/js/TransactionsDT/modalProductTable.js" defer></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        $(document).ready(function () {
+            var rowIndex = 0; // Initialize row index counter
+
+            // Reset the quantity input fields when the modal is shown
+            $('#staticBackdrop').on('show.bs.modal', function () {
+                $('.orderQtyInput').val(1); // Reset quantity to 1 or any default value
+
+                $('#selectionWarning').hide(); // Hide warning when showing the modal
+            });
+
+            $('#AddProductBtn').on('click', function () {
+                $('#staticBackdropSelectedProduct').modal('hide');
+            });
+
+            $('#ViewSelectedProduct').on('click', function () {
+                $('#selectionWarning').hide();
+                // Dismiss the modal after adding the products
+                $('#staticBackdrop').modal('hide');
+
+                $('#staticBackdropSelectedProduct').modal('show');
+            });
+
+            // Add selected products to the main table -- Modal
+            $('#SelectProductButton').on('click', function () {
+                var productAlreadySelected = false;
+                var quantityExceedsLimit = false;
+
+                // Check if any products are selected
+                if ($('.selectProduct:checked').length === 0) {
+                    $('#selectionWarning').text('Please select a product.').show();
+                    return; // Exit the function to prevent further processing
+                }
+
+                $('.selectProduct:checked').each(function () {
+                    var productId = $(this).data('id');
+                    var productName = $(this).data('name');
+                    var productCategory = $(this).data('category');
+                    var qtyOnHand = $(this).data('qty');
+                    var price = $(this).data('price');
+                    var orderQty = $(this).closest('tr').find('.orderQtyInput').val();
+
+                    // Check if product is already selected
+                    if ($("#purchaseTable input[type='hidden'][value='" + productId + "']").length > 0) {
+                        productAlreadySelected = true;
+                        return;
+                    }
+
+                    // Check if selected quantity exceeds available quantity
+                    if (parseInt(orderQty) > parseInt(qtyOnHand)) {
+                        quantityExceedsLimit = true;
+                        return;
+                    }
+
+                    // Create a new row with the selected product details and include the unique index
+                    var newRow = `
+                        <tr class="detailRow">
+                            <td class="text-center"><input type="hidden" name="Purchase.purchaseDetails[${rowIndex}].ProductId" value="${productId}" /> ${productId}</td>
+                            <td class="text-center">${productName}</td>
+                            <td class="text-center">${productCategory}</td>
+                            <td class="text-center">${qtyOnHand}</td>
+                            <td class="text-center">${price}</td>
+                            <td class="text-center"><input type="number" name="Purchase.purchaseDetails[${rowIndex}].quantity" class="form-control orderItemQty" value="${orderQty}" min="1" max="${qtyOnHand}" /></td>
+                            <td class="text-center"><input type="hidden" name="Purchase.purchaseDetails[${rowIndex}].sellingPrice" class="form-control w-50" value="${price}"/></td>
+                   
+                            <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                        </tr>
+            
+                    `;
+                        
+                    $('#purchaseTable tbody').append(newRow);
+                    rowIndex++; // Increment the row index counter
+                });
+
+
+                if (productAlreadySelected) {
+                    $('#selectionWarning').text('Product is already selected.').show();
+                } else if (quantityExceedsLimit) {
+                    $('#selectionWarning').text('Selected quantity exceeds available stock.').show();
+                } else {
+                    $('#selectionWarning').hide();
+                    // Dismiss the modal after adding the products
+                    $('#staticBackdrop').modal('hide');
+                    $('#staticBackdropSelectedProduct').modal('show');
+                }
+
+                // Uncheck all checkboxes after adding
+                $('.selectProduct').prop('checked', false);
+
+            });
+
+            // Remove row from the table
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+            });
+
+            // Validate quantity input on change
+            $(document).on('input', '.orderItemQty', function () {
+                var max = $(this).attr('max');
+                var value = $(this).val();
+                if (parseInt(value) < 1) {
+                    $(this).val(1); // Set value to 1 if less than 1
+                } else if (parseInt(value) > parseInt(max)) {
+                    $(this).val(max); // Limit value to max if exceeds
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            // Check if there's an error message and open the modal automatically
+            if ('@ViewData["ErrorMessage"]' !== '') {
+                $('#staticBackdropSelectedProduct').modal('show');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,83 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Product
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Add New Product</h1>
+                </div>
+            </div>
+        </div>
+     @*    <div class="pt-4 px-4">
+           <a asp-action="Create" asp-controller="Categories" class="btn btn-primary"> Add Category</a>
+        </div>
+ *@
+        <div class="row justify-content-center">
+            <div class="card p-3">
+                <div class="card  ">
+                    <form method="post" asp-action="Create">
+                       <div class="container p-0">
+                           <div class="row p-3">
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <div class="form-group col-lg-4" id="apppad">
+                                        <label asp-for="CategoryId" class="control-label"></label>
+                                        <select asp-for="CategoryId" class="form-select" asp-items="@ViewBag.CategoryList" required></select>
+                                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-lg-4" id="apppad">
+                                            <label asp-for="productName" class="control-label"></label>
+                                            <input asp-for="productName" class="form-control"/>
+                                            <span asp-validation-for="productName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-lg-4" id="apppad">
+                                            <label asp-for="supplierPrice" class="control-label"></label>
+                                            <input asp-for="supplierPrice" class="form-control" oninput="validateDecimalInput(this)" />
+                                            <span asp-validation-for="supplierPrice" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-lg-4" id="apppad">
+                                        <label asp-for="sellingPrice" class="control-label"></label>
+                                        <input asp-for="sellingPrice" class="form-control" oninput="validateDecimalInput(this)" />
+                                        <span asp-validation-for="sellingPrice" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-lg-4" id="apppad">
+                                        <label asp-for="quantity" class="control-label"></label>
+                                        <input asp-for="quantity" class="form-control" />
+                                        <span asp-validation-for="quantity" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-lg-4 visually-hidden" id="apppad">
+                                        <label asp-for="registeredDate" class="control-label"></label>
+                                        <input asp-for="registeredDate" class="form-control dateInput" />
+                                        <span asp-validation-for="registeredDate" class="text-danger"></span>
+                                    </div>
+
+                                            @*       <div class="form-group col-12">
+                                            <label asp-for="expiryDate" class="control-label"></label>
+                                            <input asp-for="expiryDate" class="form-control" />
+                                            <span asp-validation-for="expiryDate" class="text-danger"></span>
+                                        </div> *@
+                  
+                                    <div class="form-group text-end p-3 pt-5">
+                                        <a asp-action="Index" class="btn  btn-cancel btn-lg px-4">Cancel</a>
+                                        <input type="submit" class="btn  btn-confirm btn-lg px-4" value="Create" />
+                                    </div>
+                            </div>
+                       </div>
+                    </form>
+                    
+                @* end of row *@
+                
+       
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.TransactionsVm
+@{
+    ViewData["Title"] = "View History";
+}
+
+<div class="container p-0 bg container-bord">
+    <div class="container p-0">
+        
+
+        <div class="container p-0  bg-custom-color">
+            <div>
+                <div class="container p-2">
+                    <h1>History Information</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="p-3">
+            <a asp-action="Edit" asp-route-id="@Model.Diagnostics.pet.ownerId" asp-controller="Owners" class="btn btn-cancel my-2">View Owner</a>
+            <a asp-action="DiagnosHistory" asp-route-id="@Model.Diagnostics.petId" asp-route-ownerId="@Model.Diagnostics.pet.ownerId" class="btn btn-cancel my-2">Back to History</a>
+        </div>
+
+            <div class="row mt-3 p-3">
+                <div class="form-group col-lg-3">
+                    <!-- Hidden Field for Date -->
+                    <label asp-for="Diagnostics.date" class="control-label"></label>
+                    <input type="hidden" asp-for="Diagnostics.date" class="form-control dateInput" value="@Model.Diagnostics.date" readonly />
+                    <input class="form-control" value="@Model.Diagnostics.date?.ToString("MMM. dd, yyyy")" readonly />
+                </div>
+                <div class="form-group col-lg-3">
+                    <!-- Hidden Field for Date -->
+                    <label asp-for="Diagnostics.weight" class="control-label"></label>
+                <input asp-for="Diagnostics.weight" class="form-control bg-light decimal-input" placeholder="Input weight" value="@Model.Diagnostics.weight" readonly />
+                </div>
+            </div>
+
+            <div class="card p-5 table-bordered">
+                <div class="table-responsive">
+                     <table class="table  text-center hover">
+
+                            <thead>
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>Diagnosis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Diagnostics.IdiagnosticDetails)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Services.serviceName)
+                                        </td>
+
+                                        <td>
+                                            <textarea class="form-control bg-light" rows="10" style="resize: none;" readonly>@item.details</textarea>
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+    </div>
+</div>

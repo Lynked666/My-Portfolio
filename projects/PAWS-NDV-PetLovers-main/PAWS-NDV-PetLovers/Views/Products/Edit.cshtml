@@ -1,0 +1,123 @@
+﻿@model PAWS_NDV_PetLovers.Models.Records.Product
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!-- Alert Placeholder -->
+@if (TempData["SuccessMessage"] != null)
+{
+    //utilize bootstrap, not for modal
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
+
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+    <div class=" container p-0">
+
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Edit Product</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="card p-3">
+                <div class="card-body p-3">
+                   <form method="post" asp-action="Edit">
+                        <div class="row">
+                           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="id"/>
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label asp-for="CategoryId" class="control-label"></label>
+                                <select asp-for="CategoryId" class="form-select" asp-items="@ViewBag.categoryList"></select>
+                                <span asp-validation-for="category" class="text-danger"></span>
+                            </div>
+      
+                           <div class="form-group col-lg-4 col-md-12" id="apppad">
+                               <label asp-for="productName" class="control-label"></label>
+                               <input asp-for="productName" class="form-control" />
+                               <span asp-validation-for="productName" class="text-danger"></span>
+                           </div>
+
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label asp-for="supplierPrice" class="control-label"></label>
+                                <input asp-for="supplierPrice" class="form-control" oninput="validateDecimalInput(this)" />
+                                <span asp-validation-for="supplierPrice" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label asp-for="sellingPrice" class="control-label"></label>
+                                <input asp-for="sellingPrice" class="form-control" oninput="validateDecimalInput(this   )" />
+                                <span asp-validation-for="sellingPrice" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label asp-for="quantity" class="control-label"></label>
+                                <input asp-for="quantity" class="form-control" readonly/>
+                                <span asp-validation-for="quantity" class="text-danger"></span>
+                            </div>
+
+                            @* <div class="form-group col-lg-6 col-md-12">
+                                <label asp-for="expiryDate" class="control-label"></label>
+                                <input asp-for="expiryDate" class="form-control" />
+                                <span asp-validation-for="expiryDate" class="text-danger"></span>
+                            </div> *@
+
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label asp-for="registeredDate" class="control-label"></label>
+                                <input asp-for="registeredDate" class="form-control" readonly/>
+                                <span asp-validation-for="registeredDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-12" id="apppad">
+                                <label for="addQnty" class="control-label">Add Qnty.</label>
+                                <input type="text" name="stockAdjustmentNav[0].stock" class="form-control" placeholder="(Optional)"
+                                maxlength="5" pattern="\d{0,4}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                             </div>
+
+
+
+                            @*Key Points: Note
+                            type="text": Using text allows for maxlength to limit the number of characters.
+                            maxlength="4": Limits the input to 4 digits.
+                            pattern="\d{0,4}": Validates that the input is up to 4 digits.
+                            oninput: The regex ensures that only numeric input is allowed.
+
+                            <input type="text" name="stockAdjustmentNav.addQnty" class="form-control" placeholder="(Optional)"
+                            maxlength="5" pattern="\d{0,4}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                            *@
+                            @if (Model.lastUpdate.HasValue)
+                            {
+                                <div class="form-group col-lg-6 col-md-12">
+                                    <label asp-for="lastUpdate" class="control-label"></label>
+                                    <input asp-for="lastUpdate" class="form-control" readonly />
+                                    <span asp-validation-for="lastUpdate" class="text-danger"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group col-lg-6 col-md-12 visually-hidden">
+                                    <label asp-for="lastUpdate" class="control-label"></label>
+                                    <input asp-for="lastUpdate" class="form-control dateInput"  readonly/>
+                                    <span asp-validation-for="lastUpdate" class="text-danger"></span>
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group d-flex justify-content-end mt-3">
+                            <a asp-action="Index" class="btn btn-cancel px-4 btn-lg me-1">Cancel</a>
+                            <input type="submit" class="btn btn-confirm px-4 btn-lg me-2" value="Save" />
+                        </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

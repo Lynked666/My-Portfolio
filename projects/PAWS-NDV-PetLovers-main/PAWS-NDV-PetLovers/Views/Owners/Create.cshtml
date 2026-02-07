@@ -1,0 +1,181 @@
+﻿@model PAWS_NDV_PetLovers.ViewModels.RecordsVm
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container p-0 bg container-bord shadow  mb-5 bg-white rounded">
+
+    <div class="container p-0">
+
+        <div class="container p-0  bg-custom-color text-center">
+            <div>
+                <div class="container p-2">
+                    <h1 class="fw-bold">Create New Client</h1>
+                </div>
+            </div>
+        </div>
+
+    
+        <form method="post" asp-action="CreatePost" >
+      
+            <div class="card p-3">
+                <div class="owner">
+
+                    <div class=" row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.fname" class="control-label"></label>
+                        <input asp-for="Owner.fname" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.fname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.lname" class="control-label"></label>
+                        <input asp-for="Owner.lname" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.lname" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-md-4 col-sm-12"id="apppad">
+                        <label asp-for="Owner.mname" class="control-label"></label>
+                        <input asp-for="Owner.mname" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.mname" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.gender" class="control-label"></label>
+                        <select asp-for="Owner.gender" class="form-select bg-light">
+                            <option value="" selected>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Owner.gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.contact" class="control-label"></label>
+                        <input id="contact" asp-for="Owner.contact" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.contact" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.email" class="control-label"></label>
+                        <input asp-for="Owner.email" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12" id="apppad">
+                        <label asp-for="Owner.address" class="control-label"></label>
+                        <input asp-for="Owner.address" class="form-control bg-light" />
+                        <span asp-validation-for="Owner.address" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12 visually-hidden" id="apppad">
+                        <label asp-for="Owner.registeredDate" class="control-label"></label>
+                        <input asp-for="Owner.registeredDate" class="form-control bg-light dateInput" readonly />
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pt-4"></div>
+            <div class="container p-0  bg-custom-color text-center">
+                <div>
+                    <div class="container p-2">
+                        <h1 class="fw-bold">Pet</h1>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Pets Table -->
+            <div class="card p-3 pt-5">        
+                <div class="table-responsive">
+                    
+                <table id="PetTable" class="table table-striped text-center">
+                    <thead >
+                        <tr class="no-col">
+                            <th><p style="margin:0;">Pet Name</p></th>
+                            <th><p style="margin:0;">Gender</p></th>
+                            <th><p style="margin:0;">Specie</p></th>
+                            <th><p style="margin:0;">Breed</p></th>
+                            <th><p style="margin:0;">Birth date</p></th>
+                            <th><p style="margin:0;">Age</p></th>
+                            <th><p style="margin:0;">Color</p></th>
+                            <th><p style="margin:0;">Actions</p></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="detailRow">
+                            <td class="col-2">
+                                <input name="Owner.Pets[0].petName" class="form-control" required placeholder="Enter Pet Name" />
+                            </td>
+                            <td class="col-2">
+                                <select name="Owner.Pets[0].gender" class="form-select bg-light" required>
+                                    <option value="" selected hidden>----</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </td>
+                            <td class="col-1">
+                                <select name="Owner.Pets[0].species" class="form-select bg-light" required>
+                                    <option value="" selected hidden>----</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                </select>
+                            </td>
+                            <td class="col-2">
+                                <input name="Owner.Pets[0].breed" class="form-control bg-light" required />
+                            </td>
+                            <td class="col-1">
+                                <input name="Owner.Pets[0].bdate" class="form-control bg-light birthdate" type="date" required />
+                            </td>
+                            <td class="text-center">
+                                <input name="Owner.Pets[0].age" class="form-control bg-light age" type="text" readonly />
+                            </td>
+                            <td>
+                                <input name="Owner.Pets[0].color" class="form-control bg-light" required />
+                            </td>
+                         
+                            <td >
+                                <button type="button" class="btn btn-danger removeRow">Remove</button>
+                            </td>
+                            <td>
+                                <input type="date" name="Owner.Pets[0].registeredDate" class="form-control bg-light maxDate" id="dateInput" hidden readonly />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="form-group pb-5 text-end">
+                    <button type="button" class="btn btn-confirm btn-sm text-end" id="addRow">Add Row</button>
+                </div>
+            </div>
+       
+
+                <div class="form-group mt-5 text-end mb-4 p-3">
+      
+                    @if(Model.btnCnl != null)
+                    {
+                        <input type="hidden" name="btnCnl" value="@Model.btnCnl" />
+                        <a asp-action="Dashboard" asp-controller="Appointments" class="btn btn-cancel btn-lg px-4 ">Cancel</a>
+                    }
+                    else
+                    {
+                      <a asp-action="Index" class="btn btn-cancel btn-lg px-4">Cancel</a>
+                    }
+       
+                     <input type="submit" value="Create" class="btn btn-confirm btn-lg px-4  " />
+                </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
